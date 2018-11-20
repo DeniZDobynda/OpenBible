@@ -11,30 +11,15 @@ import UIKit
 class LeftSelectionViewController: SidePanelViewController {
 
     
-    var manager: Manager! {
-        didSet {
-            if let m = manager {
-                books = m.getBooks()
-                // the only place it matters
-                if let modules = manager?.getModulesKey(), var title = modules.0 {
-                    if let t2 = modules.1 {
-                        title.append(" | \(t2)")
-                    }
-                    moduleButton?.setTitle(title, for: .normal)
-                }
-            }
-        }
-    }
+    var manager: Manager! { didSet { updateUI() } }
     var rightSpace: CGFloat = 0.0 {
         didSet {
             rightConstraint.constant = rightSpace
-            rightButtonConstraint.constant = rightSpace // guess why :)
+            rightButtonConstraint.constant = rightSpace
         }
     }
     
     @IBOutlet weak var moduleButton: UIButton!
-    private var heightForRowNotSelected: CGFloat = 50.0
-    private var heightForRowSelected: CGFloat = 60.0
     private var selectedIndexPath: IndexPath?
     
     @IBOutlet private weak var rightConstraint: NSLayoutConstraint!
@@ -55,19 +40,12 @@ class LeftSelectionViewController: SidePanelViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        books = manager.getBooks()
         rightConstraint.constant = rightSpace
         rightButtonConstraint.constant = rightSpace
-        heightForRowSelected = bookTable.bounds.width / 5
         bookTable.dataSource = self
         bookTable.delegate = self
-        // commented due to inactivity
-//        if let modules = manager?.getModulesKey(), var title = modules.0 {
-//            if let t2 = modules.1 {
-//                title.append("|\(t2)")
-//            }
-//            moduleButton?.setTitle(title, for: .normal)
-//        }
+        bookTable.rowHeight = UITableView.automaticDimension
+        bookTable.estimatedRowHeight = 36.3
         moduleButton.contentEdgeInsets = UIEdgeInsets(size: 10.0)
         moduleButton.clipsToBounds = true
         moduleButton.layer.cornerRadius = moduleButton.frame.height / 2
@@ -84,6 +62,10 @@ class LeftSelectionViewController: SidePanelViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateUI()
+    }
+    
+    private func updateUI() {
         if let m = manager {
             books = m.getBooks()
             if let modules = manager?.getModulesKey(), var title = modules.0 {
@@ -94,8 +76,7 @@ class LeftSelectionViewController: SidePanelViewController {
             }
         }
     }
-    
-    
+
 }
 
 extension LeftSelectionViewController: BookTableViewCellDelegate {
@@ -105,29 +86,10 @@ extension LeftSelectionViewController: BookTableViewCellDelegate {
     }
 }
 
-
 extension LeftSelectionViewController: ModalDelegate {
     func modalViewWillResign() {
         bookTable?.reloadData()
         delegate?.setNeedsReload()
-    }
-}
-
-extension LeftSelectionViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let sel = selectedIndexPath , indexPath == sel, let b = books {
-            //            let cell = tableView.cellForRow(at: indexPath) as! BookTableViewCell
-            let cellsAcross: CGFloat = 5
-            let spaceBetweenCells: CGFloat = 10
-            let dim = (tableView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-
-            let countOfNumbers = b[indexPath.row].chapters!.count
-            var countOfRows = countOfNumbers / Int(cellsAcross)
-            countOfRows += countOfNumbers % Int(cellsAcross) == 0 ? 0 : 1
-
-            return heightForRowNotSelected + dim * CGFloat(countOfRows) + spaceBetweenCells * CGFloat(countOfRows -  1) - 10
-        }
-        return heightForRowNotSelected
     }
 }
 
@@ -145,26 +107,22 @@ extension LeftSelectionViewController: UITableViewDataSource {
         cell.autoresizingMask = .flexibleHeight
         return cell
     }
-    
+}
+
+extension LeftSelectionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch selectedIndexPath{
-        case .none:
-            selectedIndexPath = indexPath
-            tableView.reloadRows(at: [indexPath], with: .none)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-        case .some:
-            if selectedIndexPath == indexPath {
-                selectedIndexPath = nil
-                tableView.deselectRow(at: indexPath, animated: true)
-                tableView.reloadRows(at: [indexPath], with: .none)
-            } else {
-                let old = selectedIndexPath
-                tableView.deselectRow(at: selectedIndexPath!, animated: false)
-                tableView.reloadRows(at: [old!], with: .none)
-                selectedIndexPath = indexPath
-                tableView.reloadRows(at: [old!, indexPath], with: .none)
-                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-            }
-        }
+        guard let cell = tableView.cellForRow(at: indexPath) as? BookTableViewCell else { return }
+        cell.isExpanded = !cell.isExpanded
+        cell.setSelected(cell.isExpanded, animated: true)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? BookTableViewCell else { return }
+        cell.isExpanded = false
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }

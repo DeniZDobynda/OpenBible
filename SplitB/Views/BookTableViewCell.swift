@@ -20,8 +20,32 @@ class BookTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollecti
         return Int(book.number)
     }
     
+    var isExpanded = false {
+        didSet {
+            if isExpanded {
+                var height = (numbersCollection.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
+                var c = count / Int(cellsAcross)
+                if count % Int(cellsAcross) != 0 {
+                    c += 1
+                }
+                height *= CGFloat(c)
+                height += spaceBetweenCells * CGFloat(c - 1)
+                collectionViewHeight.constant = height
+            } else {
+                collectionViewHeight.constant = 0.0
+            }
+            
+        }
+    }
+    
+    
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var numbersCollection: UICollectionView!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    
+    private var count: Int { return book.chapters?.array.count ?? 0 }
+    private let cellsAcross: CGFloat = 5
+    private let spaceBetweenCells: CGFloat = 10
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,7 +73,7 @@ class BookTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollecti
     // MARK: - Collection View Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return book.chapters?.array.count ?? 0
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -57,19 +81,11 @@ class BookTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollecti
         if let cell = c as? NumberCollectionViewCell {
             cell.number = indexPath.row + 1
         }
-        c.backgroundColor = UIColor.white
         return c
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Compute the dimension of a cell for an NxN layout with space S between
-        // cells.  Take the collection view's width, subtract (N-1)*S points for
-        // the spaces between the cells, and then divide by N to find the final
-        // dimension for the cell's width and height.
-        
-        let cellsAcross: CGFloat = 5
-        let spaceBetweenCells: CGFloat = 10
         let dim = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
         return CGSize(width: dim, height: dim)
     }

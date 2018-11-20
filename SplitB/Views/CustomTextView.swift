@@ -51,7 +51,7 @@ class CustomTextView: UIView {
         }
         sub = String(s[s.index(s.startIndex, offsetBy: charRange.lowerBound)..<s.index(s.startIndex, offsetBy: charRange.upperBound)])
         count = sub.indicesOf(string: "\r\n").count
-        ixEnd += count
+        charRange.length -= count
         while(charRange.upperBound < s.count - 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.upperBound + 1)])) {
             charRange.length += 1
             ixEnd += 1
