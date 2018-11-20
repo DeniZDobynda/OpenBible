@@ -4,9 +4,9 @@ import QuartzCore
 class ContainerViewController: UIViewController {
   
   enum SlideOutState {
-    case bothCollapsed
+    case collapsed
     case leftPanelExpanded
-    case rightPanelExpanded
+//    case rightPanelExpanded
   }
   
     var manager: Manager? = Manager(in: AppDelegate.context)
@@ -14,15 +14,15 @@ class ContainerViewController: UIViewController {
   var centerNavigationController: UINavigationController!
   var centerViewController: CenterViewController!
   
-  var currentState: SlideOutState = .bothCollapsed {
+  var currentState: SlideOutState = .collapsed {
     didSet {
-      let shouldShowShadow = currentState != .bothCollapsed
+      let shouldShowShadow = currentState != .collapsed
       showShadowForCenterViewController(shouldShowShadow)
     }
   }
   var leftViewController: LeftSelectionViewController?
   
-  var rightViewController: SidePanelViewController?
+//  var rightViewController: SidePanelViewController?
   
   let centerPanelExpandedOffset: CGFloat = 60
   
@@ -39,8 +39,6 @@ class ContainerViewController: UIViewController {
     
     centerNavigationController.didMove(toParent: self)
     
-    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-    centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
   }
 }
 
@@ -58,22 +56,22 @@ extension ContainerViewController: CenterViewControllerDelegate {
     animateLeftPanel(shouldExpand: notAlreadyExpanded)
   }
   
-  func toggleRightPanel() {
-    
-    let notAlreadyExpanded = (currentState != .rightPanelExpanded)
-    
-    if notAlreadyExpanded {
-      addRightPanelViewController()
-    }
-    
-    animateRightPanel(shouldExpand: notAlreadyExpanded)
-  }
+//  func toggleRightPanel() {
+//
+//    let notAlreadyExpanded = (currentState != .rightPanelExpanded)
+//
+//    if notAlreadyExpanded {
+//      addRightPanelViewController()
+//    }
+//
+//    animateRightPanel(shouldExpand: notAlreadyExpanded)
+//  }
   
   func collapseSidePanels() {
     
     switch currentState {
-    case .rightPanelExpanded:
-      toggleRightPanel()
+//    case .rightPanelExpanded:
+//      toggleRightPanel()
     case .leftPanelExpanded:
       toggleLeftPanel()
     default:
@@ -103,17 +101,17 @@ extension ContainerViewController: CenterViewControllerDelegate {
     sidePanelController.didMove(toParent: self)
   }
   
-  func addRightPanelViewController() {
-    
-    guard rightViewController == nil else { return }
-    
-    if let vc = UIStoryboard.rightViewController() {
-      
-      addChildSidePanelController(vc)
-      rightViewController = vc
-        vc.manager = manager
-    }
-  }
+//  func addRightPanelViewController() {
+//
+//    guard rightViewController == nil else { return }
+//
+//    if let vc = UIStoryboard.rightViewController() {
+//
+//      addChildSidePanelController(vc)
+//      rightViewController = vc
+//        vc.manager = manager
+//    }
+//  }
   
   func animateLeftPanel(shouldExpand: Bool) {
     
@@ -123,7 +121,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
       
     } else {
       animateCenterPanelXPosition(targetPosition: 0) { _ in
-        self.currentState = .bothCollapsed
+        self.currentState = .collapsed
         self.leftViewController?.view.removeFromSuperview()
         self.leftViewController = nil
       }
@@ -137,73 +135,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }, completion: completion)
   }
   
-  func animateRightPanel(shouldExpand: Bool) {
-    
-    if shouldExpand {
-      currentState = .rightPanelExpanded
-      animateCenterPanelXPosition(targetPosition: -centerNavigationController.view.frame.width + centerPanelExpandedOffset)
-      
-    } else {
-      animateCenterPanelXPosition(targetPosition: 0) { _ in
-        self.currentState = .bothCollapsed
-        self.rightViewController?.view.removeFromSuperview()
-        self.rightViewController = nil
-      }
-    }
-  }
-  
   func showShadowForCenterViewController(_ shouldShowShadow: Bool) {
     if shouldShowShadow {
       centerNavigationController.view.layer.shadowOpacity = 0.8
     } else {
       centerNavigationController.view.layer.shadowOpacity = 0.0
-    }
-  }
-}
-
-// MARK: Gesture recognizer
-
-extension ContainerViewController: UIGestureRecognizerDelegate {
-  
-  @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
-    
-    let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
-    
-    switch recognizer.state {
-      
-    case .began:
-      if currentState == .bothCollapsed {
-        if gestureIsDraggingFromLeftToRight {
-          addLeftPanelViewController()
-        } else {
-          addRightPanelViewController()
-        }
-        
-        showShadowForCenterViewController(true)
-      }
-      
-    case .changed:
-      if let rview = recognizer.view {
-        rview.center.x = rview.center.x + recognizer.translation(in: view).x
-        recognizer.setTranslation(CGPoint.zero, in: view)
-      }
-      
-    case .ended:
-      if let _ = leftViewController,
-        let rview = recognizer.view {
-        // animate the side panel open or closed based on whether the view has moved more or less than halfway
-        let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
-        animateLeftPanel(shouldExpand: hasMovedGreaterThanHalfway)
-        
-      }
-      if let _ = rightViewController,
-        let rview = recognizer.view {
-        let hasMovedGreaterThanHalfway = rview.center.x < 0
-        animateRightPanel(shouldExpand: hasMovedGreaterThanHalfway)
-      }
-      
-    default:
-      break
     }
   }
 }
@@ -216,9 +152,9 @@ private extension UIStoryboard {
     return main().instantiateViewController(withIdentifier: "LeftViewController") as? LeftSelectionViewController
   }
   
-  static func rightViewController() -> RightSelectionSidePanelViewController? {
-    return main().instantiateViewController(withIdentifier: "RightViewController") as? RightSelectionSidePanelViewController
-  }
+//  static func rightViewController() -> RightSelectionSidePanelViewController? {
+//    return main().instantiateViewController(withIdentifier: "RightViewController") as? RightSelectionSidePanelViewController
+//  }
   
   static func centerViewController() -> CenterViewController? {
     return main().instantiateViewController(withIdentifier: "CenterViewController") as? CenterViewController

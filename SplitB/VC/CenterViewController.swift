@@ -116,9 +116,10 @@ class CenterViewController: UIViewController {
         loadTextManager()
     }
     
-    @IBAction private func previous(_ sender: UIBarButtonItem) {
-        coreManager?.previous()
-        loadTextManager()
+    @IBAction private func menuAction(_ sender: UIBarButtonItem) {
+        delegate?.toggleLeftPanel!()
+//        coreManager?.previous()
+//        loadTextManager()
     }
     
     // MARK: - Private implementation

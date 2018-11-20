@@ -127,9 +127,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Center" id="3VO-XY-H6e">
-                        <barButtonItem key="leftBarButtonItem" title="&lt;" id="mwn-83-W29">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" image="menu" id="mwn-83-W29">
                             <connections>
-                                <action selector="previous:" destination="JnF-gd-Bwh" id="D3W-bn-0tY"/>
+                                <action selector="menuAction:" destination="JnF-gd-Bwh" id="D3W-bn-0tY"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="&gt;" id="kqM-8y-trd">
@@ -397,5 +397,6 @@
     <resources>
         <image name="book" width="75" height="75"/>
         <image name="load" width="75" height="75"/>
+        <image name="menu" width="75" height="75"/>
     </resources>
 </document>
