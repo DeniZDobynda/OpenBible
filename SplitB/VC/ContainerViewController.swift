@@ -6,7 +6,6 @@ class ContainerViewController: UIViewController {
   enum SlideOutState {
     case collapsed
     case leftPanelExpanded
-//    case rightPanelExpanded
   }
   
     var manager: Manager? = Manager(in: AppDelegate.context)
@@ -21,8 +20,6 @@ class ContainerViewController: UIViewController {
     }
   }
   var leftViewController: LeftSelectionViewController?
-  
-//  var rightViewController: SidePanelViewController?
   
   let centerPanelExpandedOffset: CGFloat = 60
   
@@ -55,27 +52,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     
     animateLeftPanel(shouldExpand: notAlreadyExpanded)
   }
-  
-//  func toggleRightPanel() {
-//
-//    let notAlreadyExpanded = (currentState != .rightPanelExpanded)
-//
-//    if notAlreadyExpanded {
-//      addRightPanelViewController()
-//    }
-//
-//    animateRightPanel(shouldExpand: notAlreadyExpanded)
-//  }
+
   
   func collapseSidePanels() {
-    
-    switch currentState {
-//    case .rightPanelExpanded:
-//      toggleRightPanel()
-    case .leftPanelExpanded:
+    if currentState == .leftPanelExpanded {
       toggleLeftPanel()
-    default:
-      break
     }
   }
   
@@ -100,18 +81,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     addChild(sidePanelController)
     sidePanelController.didMove(toParent: self)
   }
-  
-//  func addRightPanelViewController() {
-//
-//    guard rightViewController == nil else { return }
-//
-//    if let vc = UIStoryboard.rightViewController() {
-//
-//      addChildSidePanelController(vc)
-//      rightViewController = vc
-//        vc.manager = manager
-//    }
-//  }
   
   func animateLeftPanel(shouldExpand: Bool) {
     
@@ -151,10 +120,6 @@ private extension UIStoryboard {
   static func leftViewController() -> LeftSelectionViewController? {
     return main().instantiateViewController(withIdentifier: "LeftViewController") as? LeftSelectionViewController
   }
-  
-//  static func rightViewController() -> RightSelectionSidePanelViewController? {
-//    return main().instantiateViewController(withIdentifier: "RightViewController") as? RightSelectionSidePanelViewController
-//  }
   
   static func centerViewController() -> CenterViewController? {
     return main().instantiateViewController(withIdentifier: "CenterViewController") as? CenterViewController

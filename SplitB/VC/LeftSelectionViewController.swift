@@ -131,7 +131,6 @@ extension LeftSelectionViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        delegate?.didSelectModule(modules[indexPath.row])
         switch selectedIndexPath{
         case .none:
             selectedIndexPath = indexPath
@@ -146,7 +145,6 @@ extension LeftSelectionViewController: UITableViewDataSource {
                 let old = selectedIndexPath
                 tableView.deselectRow(at: selectedIndexPath!, animated: false)
                 tableView.reloadRows(at: [old!], with: .none)
-                //                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
                 selectedIndexPath = indexPath
                 tableView.reloadRows(at: [old!, indexPath], with: .none)
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)

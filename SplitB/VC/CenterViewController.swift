@@ -68,9 +68,17 @@ class CenterViewController: UIViewController {
         scrollView.addGestureRecognizer(pinch)
         
         let longTap = UILongPressGestureRecognizer(target: self, action: #selector(longTap(sender:)))
-        longTap.minimumPressDuration = 1
+        longTap.minimumPressDuration = 0.2
         scrollView.panGestureRecognizer.require(toFail: longTap)
         scrollView.addGestureRecognizer(longTap)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(nextChapter))
+        swipeLeft.direction = .left
+        scrollView.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(previousChapter))
+        swipeRight.direction = .right
+        scrollView.addGestureRecognizer(swipeRight)
         
         originalNavBarRect = navigationController?.navigationBar.frame
         originalTabBarRect = tabBarController?.tabBar.frame
@@ -109,12 +117,6 @@ class CenterViewController: UIViewController {
     }
     
     // MARK: - Button actions
-    
-    
-    @IBAction private func next(_ sender: UIBarButtonItem) {
-        coreManager?.next()
-        loadTextManager()
-    }
     
     @IBAction private func menuAction(_ sender: UIBarButtonItem) {
         delegate?.toggleLeftPanel!()
@@ -158,6 +160,17 @@ class CenterViewController: UIViewController {
     
     // MARK: - Selector functions
     
+    @objc private func previousChapter() {
+        coreManager?.previous()
+        loadTextManager()
+    }
+    
+    @objc private func nextChapter() {
+        coreManager?.next()
+        loadTextManager()
+    }
+    
+    
     @objc private func scaled(sender: UIPinchGestureRecognizer) {
         fontSize *= sqrt(sender.scale)
         sender.scale = 1.0
@@ -166,7 +179,7 @@ class CenterViewController: UIViewController {
     
     @objc private func longTap(sender: UILongPressGestureRecognizer) {
         switch sender.state {
-        case .changed:
+        case .began, .changed, .possible:
             let current = sender.location(in: customTextView)
             if let p = firstPointOfSelection {
                 customTextView.selectText(from: p, to: current)
@@ -303,12 +316,6 @@ class CenterViewController: UIViewController {
 // MARK: - Extensions
 
 extension CenterViewController: SidePanelViewControllerDelegate {
-    func didSelectModule(_ module: Module?) {
-        delegate?.collapseSidePanels?()
-        coreManager?.setSecond(module)
-        loadTextManager()
-    }
-    
     func didSelect(chapter: Int, in book: Int) {
         delegate?.collapseSidePanels?()
         coreManager?.chapterNumber = chapter
