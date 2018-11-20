@@ -92,8 +92,12 @@ class Manager {
         return nil
     }
     
-    func getMainModuleName() -> String? {
+    func getMainModuleKey() -> String? {
         return module1?.key
+    }
+    
+    func getSecondaryModuleKey() -> String? {
+        return module2?.key
     }
     
     func setFirst(_ module: Module) {

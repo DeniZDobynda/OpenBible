@@ -47,8 +47,6 @@ class TwoColumnPositioningManager {
             height = prefferedHeight
         }
         
-        
-        
         if isDivider(characterNumber) {
             if current1 < current2 {
                 origin1.match(origin2)

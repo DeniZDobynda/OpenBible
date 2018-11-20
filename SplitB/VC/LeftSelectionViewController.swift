@@ -15,7 +15,7 @@ class LeftSelectionViewController: SidePanelViewController {
         didSet {
             if let m = manager {
                 books = m.getBooks()
-                moduleButton?.setTitle(m.getMainModuleName(), for: .normal)
+                moduleButton?.setTitle(m.getMainModuleKey(), for: .normal)
             }
         }
     }
@@ -54,7 +54,7 @@ class LeftSelectionViewController: SidePanelViewController {
         heightForRowSelected = bookTable.bounds.width / 5
         bookTable.dataSource = self
         bookTable.delegate = self
-        moduleButton?.setTitle(manager?.getMainModuleName(), for: .normal)
+        moduleButton?.setTitle(manager?.getMainModuleKey(), for: .normal)
         
     }
     
@@ -69,7 +69,7 @@ class LeftSelectionViewController: SidePanelViewController {
         super.viewWillAppear(animated)
         if let m = manager {
             books = m.getBooks()
-            moduleButton?.setTitle(m.getMainModuleName(), for: .normal)
+            moduleButton?.setTitle(m.getMainModuleKey(), for: .normal)
 //            bookTable?.scrollToRow(at: IndexPath(row: m.bookNumber - 1, section: 0), at: UITableView.ScrollPosition.middle, animated: true)
         }
     }

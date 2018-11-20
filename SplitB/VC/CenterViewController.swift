@@ -110,6 +110,7 @@ class CenterViewController: UIViewController {
     
     // MARK: - Button actions
     
+    
     @IBAction private func next(_ sender: UIBarButtonItem) {
         coreManager?.next()
         loadTextManager()
@@ -121,6 +122,7 @@ class CenterViewController: UIViewController {
     }
     
     // MARK: - Private implementation
+    
     
     private func loadTextManager(_ forced: Bool = true) {
         var first: [String] = []
@@ -245,6 +247,7 @@ class CenterViewController: UIViewController {
                 if hidden {
                     animationTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (t) in
                         t.invalidate()
+                        self.animationTimer = nil
                     })
                     scrollView.frame.origin.y = current.origin.y + current.height
                     scrollView.contentOffset.y -= org.origin.y - current.origin.y
@@ -274,6 +277,7 @@ class CenterViewController: UIViewController {
                 if let current = currentNavBarRect, let org = originalNavBarRect {
                     animationTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (t) in
                         t.invalidate()
+                        self.animationTimer = nil
                     })
                     scrollView.frame.origin.y = current.origin.y + current.height
                     scrollView.contentOffset.y -= org.origin.y - current.origin.y
