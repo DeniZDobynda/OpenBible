@@ -100,6 +100,10 @@ class Manager {
         return module2?.key
     }
     
+    func getModulesKey() -> (String?, String?) {
+        return (getMainModuleKey(), getSecondaryModuleKey())
+    }
+    
     func setFirst(_ module: Module) {
         if module2?.key == module.key {
             module2 = module1

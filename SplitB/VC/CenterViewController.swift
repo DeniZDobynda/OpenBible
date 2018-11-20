@@ -6,6 +6,7 @@ class CenterViewController: UIViewController {
     
     var delegate: CenterViewControllerDelegate?
     var coreManager: Manager?
+    var overlapped: Bool = false
     
     // MARK: - Private vars
     // MARK: Text
@@ -120,12 +121,9 @@ class CenterViewController: UIViewController {
     
     @IBAction private func menuAction(_ sender: UIBarButtonItem) {
         delegate?.toggleLeftPanel!()
-//        coreManager?.previous()
-//        loadTextManager()
     }
     
     // MARK: - Private implementation
-    
     
     private func loadTextManager(_ forced: Bool = true) {
         var first: [String] = []
@@ -161,13 +159,21 @@ class CenterViewController: UIViewController {
     // MARK: - Selector functions
     
     @objc private func previousChapter() {
-        coreManager?.previous()
-        loadTextManager()
+        if !overlapped {
+            coreManager?.previous()
+            loadTextManager()
+        } else {
+            delegate?.collapseSidePanels!()
+        }
     }
     
     @objc private func nextChapter() {
-        coreManager?.next()
-        loadTextManager()
+        if !overlapped {
+            coreManager?.next()
+            loadTextManager()
+        } else {
+            delegate?.collapseSidePanels!()
+        }
     }
     
     
@@ -336,6 +342,9 @@ extension CenterViewController: TextViewDelegate {
 
 extension CenterViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if overlapped {
+            delegate?.collapseSidePanels!()
+        }
         let heightToBottom = scrollView.contentSize.height - scrollView.contentOffset.y - scrollView.frame.height
         if (self.lastContentOffset - scrollView.contentOffset.y > 0.1
 //            || scrollView.contentOffset.y < 10

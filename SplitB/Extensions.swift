@@ -53,3 +53,9 @@ extension String {
         return indices
     }
 }
+
+extension UIEdgeInsets {
+    init(size: CGFloat) {
+        self.init(top: size, left: size, bottom: size, right: size)
+    }
+}

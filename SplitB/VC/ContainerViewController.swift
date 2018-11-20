@@ -107,8 +107,10 @@ extension ContainerViewController: CenterViewControllerDelegate {
   func showShadowForCenterViewController(_ shouldShowShadow: Bool) {
     if shouldShowShadow {
       centerNavigationController.view.layer.shadowOpacity = 0.8
+        centerViewController.overlapped = true
     } else {
       centerNavigationController.view.layer.shadowOpacity = 0.0
+        centerViewController.overlapped = false
     }
   }
 }

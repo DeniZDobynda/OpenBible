@@ -15,14 +15,20 @@ class LeftSelectionViewController: SidePanelViewController {
         didSet {
             if let m = manager {
                 books = m.getBooks()
-                moduleButton?.setTitle(m.getMainModuleKey(), for: .normal)
+                // the only place it matters
+                if let modules = manager?.getModulesKey(), var title = modules.0 {
+                    if let t2 = modules.1 {
+                        title.append(" | \(t2)")
+                    }
+                    moduleButton?.setTitle(title, for: .normal)
+                }
             }
         }
     }
     var rightSpace: CGFloat = 0.0 {
         didSet {
             rightConstraint.constant = rightSpace
-            rightButtonConstraint.constant = -rightSpace // guess why :)
+            rightButtonConstraint.constant = rightSpace // guess why :)
         }
     }
     
@@ -32,6 +38,7 @@ class LeftSelectionViewController: SidePanelViewController {
     private var selectedIndexPath: IndexPath?
     
     @IBOutlet private weak var rightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var rightButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var bookTable: UITableView!
     
@@ -54,8 +61,18 @@ class LeftSelectionViewController: SidePanelViewController {
         heightForRowSelected = bookTable.bounds.width / 5
         bookTable.dataSource = self
         bookTable.delegate = self
-        moduleButton?.setTitle(manager?.getMainModuleKey(), for: .normal)
-        
+        // commented due to inactivity
+//        if let modules = manager?.getModulesKey(), var title = modules.0 {
+//            if let t2 = modules.1 {
+//                title.append("|\(t2)")
+//            }
+//            moduleButton?.setTitle(title, for: .normal)
+//        }
+        moduleButton.contentEdgeInsets = UIEdgeInsets(size: 10.0)
+        moduleButton.clipsToBounds = true
+        moduleButton.layer.cornerRadius = moduleButton.frame.height / 2
+        moduleButton.layer.borderColor = UIColor.blue.cgColor
+        moduleButton.layer.borderWidth = 1.0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,15 +86,14 @@ class LeftSelectionViewController: SidePanelViewController {
         super.viewWillAppear(animated)
         if let m = manager {
             books = m.getBooks()
-            moduleButton?.setTitle(m.getMainModuleKey(), for: .normal)
-//            bookTable?.scrollToRow(at: IndexPath(row: m.bookNumber - 1, section: 0), at: UITableView.ScrollPosition.middle, animated: true)
+            if let modules = manager?.getModulesKey(), var title = modules.0 {
+                if let t2 = modules.1 {
+                    title.append(" | \(t2)")
+                }
+                moduleButton?.setTitle(title, for: .normal)
+            }
         }
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        bookTable?.reloadData()
-//    }
     
     
 }
@@ -104,11 +120,11 @@ extension LeftSelectionViewController: UITableViewDelegate {
             let cellsAcross: CGFloat = 5
             let spaceBetweenCells: CGFloat = 10
             let dim = (tableView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-            
+
             let countOfNumbers = b[indexPath.row].chapters!.count
             var countOfRows = countOfNumbers / Int(cellsAcross)
             countOfRows += countOfNumbers % Int(cellsAcross) == 0 ? 0 : 1
-            
+
             return heightForRowNotSelected + dim * CGFloat(countOfRows) + spaceBetweenCells * CGFloat(countOfRows -  1) - 10
         }
         return heightForRowNotSelected
