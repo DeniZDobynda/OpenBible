@@ -10,11 +10,10 @@ class CenterViewController: UIViewController {
     
     // MARK: - Private vars
     // MARK: Text
-    private var textStorage: NSTextStorage!
-    private var customTextView: CustomTextView! { didSet { customTextView.delegate = self }}
-    private var textManager: TextManager?
+    var customTextView: CustomTextView! { didSet { customTextView.delegate = self }}
+    var textManager: TextManager?
     private var plistManager = PlistManager()
-    private var fontSize: CGFloat = 30.0 { didSet { plistManager.setFont(size: fontSize) }}
+    var fontSize: CGFloat = 30.0 { didSet { plistManager.setFont(size: fontSize) }}
     
     // MARK: Selection
     private var firstPointOfSelection: CGPoint?
@@ -32,7 +31,7 @@ class CenterViewController: UIViewController {
     private var animationTimer: Timer?
     private var offsetKoefficient: CGFloat = 0.0
     
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     private var currentNavBarRect: CGRect? {
         get { return navigationController?.navigationBar.frame }
@@ -81,6 +80,10 @@ class CenterViewController: UIViewController {
         swipeRight.direction = .right
         scrollView.addGestureRecognizer(swipeRight)
         
+        let edge = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(edgeHandle(sender:)))
+        edge.edges = .left
+        scrollView.addGestureRecognizer(edge)
+        
         originalNavBarRect = navigationController?.navigationBar.frame
         originalTabBarRect = tabBarController?.tabBar.frame
         NotificationCenter.default.addObserver(self, selector: #selector(UIMenuControllerWillHide), name: UIMenuController.willHideMenuNotification, object: nil)
@@ -91,6 +94,7 @@ class CenterViewController: UIViewController {
         if let m = coreManager {
             navigationItem.title = "\(m.get1BookName()) \(m.chapterNumber)"
         }
+        loadTextManager()
     }
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -108,6 +112,7 @@ class CenterViewController: UIViewController {
             animateBars(hidden: isBarsHidden, instant: true)
         }
         offsetKoefficient = scrollView.contentOffset.y / scrollView.contentSize.height
+        delegate?.collapseSidePanels!()
     }
     
     override var canBecomeFirstResponder: Bool { return true }
@@ -125,7 +130,7 @@ class CenterViewController: UIViewController {
     
     // MARK: - Private implementation
     
-    private func loadTextManager(_ forced: Bool = true) {
+    func loadTextManager(_ forced: Bool = true) {
         var first: [String] = []
         var second: [String] = []
         let texts = coreManager?.getTwoStrings()
@@ -176,6 +181,15 @@ class CenterViewController: UIViewController {
         }
     }
     
+    @objc private func edgeHandle(sender: UIScreenEdgePanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            if !overlapped {
+                delegate?.toggleLeftPanel!()
+            }
+        default: break
+        }
+    }
     
     @objc private func scaled(sender: UIPinchGestureRecognizer) {
         fontSize *= sqrt(sender.scale)

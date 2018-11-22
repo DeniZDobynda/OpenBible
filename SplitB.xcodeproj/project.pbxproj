@@ -23,6 +23,9 @@
 		22071C822181E75700A184E3 /* CustomDebugLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C7E2181E75600A184E3 /* CustomDebugLayoutManager.swift */; };
 		22071C832181E75700A184E3 /* TwoColumnContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C7F2181E75600A184E3 /* TwoColumnContainer.swift */; };
 		22071C8521822E8F00A184E3 /* TwoColumnPositioningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C8421822E8F00A184E3 /* TwoColumnPositioningManager.swift */; };
+		22370BDF21A71EBA00C43E72 /* VerseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BDE21A71EBA00C43E72 /* VerseManager.swift */; };
+		22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE021A7235B00C43E72 /* VerseTextManager.swift */; };
+		22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE221A731C800C43E72 /* CenterVersesViewController.swift */; };
 		2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248324421787C4C00DF5C95 /* AppDelegate.swift */; };
 		2248324A21787C4C00DF5C95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2248324821787C4C00DF5C95 /* Main.storyboard */; };
 		2248324D21787C4C00DF5C95 /* SplitB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */; };
@@ -79,6 +82,9 @@
 		22071C7E2181E75600A184E3 /* CustomDebugLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDebugLayoutManager.swift; sourceTree = "<group>"; };
 		22071C7F2181E75600A184E3 /* TwoColumnContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoColumnContainer.swift; sourceTree = "<group>"; };
 		22071C8421822E8F00A184E3 /* TwoColumnPositioningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoColumnPositioningManager.swift; sourceTree = "<group>"; };
+		22370BDE21A71EBA00C43E72 /* VerseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseManager.swift; sourceTree = "<group>"; };
+		22370BE021A7235B00C43E72 /* VerseTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseTextManager.swift; sourceTree = "<group>"; };
+		22370BE221A731C800C43E72 /* CenterVersesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVersesViewController.swift; sourceTree = "<group>"; };
 		2248324121787C4C00DF5C95 /* SplitB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SplitB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2248324421787C4C00DF5C95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2248324921787C4C00DF5C95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -132,7 +138,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		22071C552181A6E800A184E3 /* Core */ = {
+		22071C552181A6E800A184E3 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
 				22071C562181A70D00A184E3 /* Module.swift */,
@@ -140,11 +146,12 @@
 				22071C5A2181A72400A184E3 /* Chapter.swift */,
 				22071C5C2181A72D00A184E3 /* Verse.swift */,
 				22071C5E2181AF2100A184E3 /* Manager.swift */,
+				22370BDE21A71EBA00C43E72 /* VerseManager.swift */,
 				22071C602181B8D900A184E3 /* DownloadManager.swift */,
 				22D568E8218850E800F36B23 /* PlistManager.swift */,
 				22D568EA218853A400F36B23 /* plistHandler.swift */,
 			);
-			path = Core;
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		2248323821787C4C00DF5C95 = {
@@ -175,7 +182,7 @@
 				226259212182FC910032ECE8 /* Protocols */,
 				22CE459E2180A27600183ED3 /* VC */,
 				22CE459F2180A46900183ED3 /* Model */,
-				22071C552181A6E800A184E3 /* Core */,
+				22071C552181A6E800A184E3 /* Core Data */,
 				22CE459B2180A21A00183ED3 /* Supporting Files */,
 				2248325321787C4C00DF5C95 /* Info.plist */,
 				2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */,
@@ -230,6 +237,7 @@
 			children = (
 				22071C7C2181E75500A184E3 /* LeftSelectionViewController.swift */,
 				22071C742181E4CE00A184E3 /* CenterViewController.swift */,
+				22370BE221A731C800C43E72 /* CenterVersesViewController.swift */,
 				22071C722181E4CE00A184E3 /* ContainerViewController.swift */,
 				22071C732181E4CE00A184E3 /* SidePanelViewController.swift */,
 				22CE459C2180A27000183ED3 /* DownloadViewController.swift */,
@@ -243,6 +251,7 @@
 			children = (
 				22CE45A02180A48C00183ED3 /* ModuleOffline.swift */,
 				22071C7D2181E75500A184E3 /* TextManager.swift */,
+				22370BE021A7235B00C43E72 /* VerseTextManager.swift */,
 				22071C7F2181E75600A184E3 /* TwoColumnContainer.swift */,
 				22071C8421822E8F00A184E3 /* TwoColumnPositioningManager.swift */,
 				22071C7E2181E75600A184E3 /* CustomDebugLayoutManager.swift */,
@@ -402,6 +411,7 @@
 				22071C7B2181E4CE00A184E3 /* SidePanelViewControllerDelegate.swift in Sources */,
 				22071C832181E75700A184E3 /* TwoColumnContainer.swift in Sources */,
 				2248324D21787C4C00DF5C95 /* SplitB.xcdatamodeld in Sources */,
+				22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */,
 				22071C612181B8D900A184E3 /* DownloadManager.swift in Sources */,
 				22D568E9218850E800F36B23 /* PlistManager.swift in Sources */,
 				22CE45A12180A48C00183ED3 /* ModuleOffline.swift in Sources */,
@@ -410,9 +420,11 @@
 				22071C8521822E8F00A184E3 /* TwoColumnPositioningManager.swift in Sources */,
 				226259202182E8F60032ECE8 /* CustomTextView.swift in Sources */,
 				22071C5D2181A72D00A184E3 /* Verse.swift in Sources */,
+				22370BDF21A71EBA00C43E72 /* VerseManager.swift in Sources */,
 				22071C812181E75700A184E3 /* TextManager.swift in Sources */,
 				22D568EB218853A400F36B23 /* plistHandler.swift in Sources */,
 				22CE459D2180A27000183ED3 /* DownloadViewController.swift in Sources */,
+				22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */,
 				22D568DF2186EB2300F36B23 /* BookTableViewCell.swift in Sources */,
 				22071C572181A70D00A184E3 /* Module.swift in Sources */,
 				2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */,

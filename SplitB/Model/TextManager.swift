@@ -28,9 +28,7 @@ class TextManager: NSObject {
         textToDisplayInSecond = second
     }
     
-    func getContainer(in bounds: CGSize) -> NSTextContainer {
-        
-        textStorage = NSTextStorage()
+    func placeText(into textStorage: inout NSTextStorage) -> ([Range<Int>], [Int]) {
         var ranges: [Range<Int>] = []
         var dividers: [Int] = []
         
@@ -75,7 +73,7 @@ class TextManager: NSObject {
             let c = textToDisplayInFirst.count
             if m > 0 {
                 textStorage.append(nl)
-                textStorage.append(nl)
+//                textStorage.append(nl)
                 startRange += 1
                 dividers.append(startRange)
                 startRange += 1
@@ -92,7 +90,7 @@ class TextManager: NSObject {
                 startRange += t1.length
                 if (m != c ) {
                     textStorage.append(nl)
-//                    textStorage.append(nl)
+                    //                    textStorage.append(nl)
                     
                     dividers.append(startRange)
                     startRange += 1
@@ -103,7 +101,7 @@ class TextManager: NSObject {
             let c = textToDisplayInSecond.count
             if m > 0 {
                 textStorage.append(nl)
-                textStorage.append(nl)
+//                textStorage.append(nl)
                 startRange += 1
                 dividers.append(startRange)
                 startRange += 1
@@ -121,7 +119,7 @@ class TextManager: NSObject {
                 startRange += t1.length
                 if (m < c ) {
                     textStorage.append(nl)
-//                    textStorage.append(nl)
+                    //                    textStorage.append(nl)
                     
                     dividers.append(startRange)
                     startRange += 1
@@ -129,7 +127,13 @@ class TextManager: NSObject {
                 m += 1
             }
         }
+        return (ranges, dividers)
+    }
+    
+    func getContainer(in bounds: CGSize) -> NSTextContainer {
         
+        textStorage = NSTextStorage()
+        let (ranges, dividers) = placeText(into: &textStorage)
         
         layoutManager = CustomDebugLayoutManager()
         layoutManager.allowsNonContiguousLayout = false
@@ -142,7 +146,6 @@ class TextManager: NSObject {
         textContainer.widthTracksTextView = true
         textContainer.heightTracksTextView = true
         layoutManager.addTextContainer(textContainer)
-        
         
         textStorage.addLayoutManager(layoutManager)
         

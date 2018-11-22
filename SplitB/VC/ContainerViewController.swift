@@ -8,10 +8,10 @@ class ContainerViewController: UIViewController {
     case leftPanelExpanded
   }
   
-    var manager: Manager? = Manager(in: AppDelegate.context)
+    var manager: VerseManager? = VerseManager(in: AppDelegate.context)
     
   var centerNavigationController: UINavigationController!
-  var centerViewController: CenterViewController!
+  var centerViewController: CenterVersesViewController!
   
   var currentState: SlideOutState = .collapsed {
     didSet {
@@ -28,7 +28,7 @@ class ContainerViewController: UIViewController {
     
     centerViewController = UIStoryboard.centerViewController()
     centerViewController.delegate = self
-    centerViewController.coreManager = manager
+    centerViewController.verseManager = manager
     
     centerNavigationController = UINavigationController(rootViewController: centerViewController)
     view.addSubview(centerNavigationController.view)
@@ -123,8 +123,8 @@ private extension UIStoryboard {
     return main().instantiateViewController(withIdentifier: "LeftViewController") as? LeftSelectionViewController
   }
   
-  static func centerViewController() -> CenterViewController? {
-    return main().instantiateViewController(withIdentifier: "CenterViewController") as? CenterViewController
+  static func centerViewController() -> CenterVersesViewController? {
+    return main().instantiateViewController(withIdentifier: "CenterViewController") as? CenterVersesViewController
   }
   
   static func StartViewController() -> UIViewController? {

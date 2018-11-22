@@ -13,16 +13,18 @@ class DownloadViewController: UIViewController {
     
     @IBOutlet weak var table: UITableView! { didSet { table.delegate = self; table.dataSource = self } }
     
-    private var modulesToDownload: [ModuleOffline]! { didSet{ update() }}
-    private var modulesDownloaded: [ModuleOffline]! { didSet{ update() }}
-    private var modulesDownloading: [ModuleOffline]! { didSet{ update() }}
+    private var modules: [ModuleOffline]! //{ didSet{ update() }}
+    private var modulesDownloaded: [String] = []
+    private var modulesDownloading: [IndexPath]? = []
     
     private var downloadManager: DownloadManager = DownloadManager(in: AppDelegate.context)
     private var manager: Manager = Manager(in: AppDelegate.context)
     
+    private let backSelectionView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        modulesToDownload = [
+        backSelectionView.backgroundColor = UIColor.green
+        modules = [
             ModuleOffline("King James Version", "kjv"),
             ModuleOffline("Schlachter 1951", "schlachter"),
             ModuleOffline("KJV Easy Read", "akjv"),
@@ -46,69 +48,19 @@ class DownloadViewController: UIViewController {
             ModuleOffline("Sagradas Escrituras", "sse"),
             ModuleOffline("NT (P Kulish 1871)", "ukranian")
         ]
-        modulesDownloading = []
-        modulesDownloaded = []
         
         if let downloaded = manager.getAvailableModules() {
-            let available = downloaded.map() {$0.key?.lowercased()}
-            for m in modulesToDownload {
-                if available.contains(m.key.lowercased()) {
-                    modulesToDownload.removeAll(where: {$0.key.lowercased() == m.key.lowercased()})
-                    modulesDownloaded.append(m)
-                }
-            }
+            modulesDownloaded = downloaded.map() {$0.key?.lowercased() ?? ""}
         }
     }
     
-    private func update() {
-        performSelector(onMainThread: #selector(updateUI), with: nil, waitUntilDone: false)
-    }
-
-    @objc private func updateUI() {
-        table.reloadData()
-    }
-    
-    func download(moduleOffline: ModuleOffline) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.modulesDownloading.append(moduleOffline)
-            self?.modulesToDownload.removeAll(where: { $0.key == moduleOffline.key })
-            self?.downloadManager.downloadAsync(moduleOffline) { [weak self] (success, error) in
-                if success {
-                    self?.modulesDownloaded.append(moduleOffline)
-                    self?.modulesDownloading.removeAll(where: { $0.key == moduleOffline.key })
-                } else {
-                    DispatchQueue.main.async { [weak self] in
-                        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        self?.present(alert, animated: true, completion: nil)
-                    }
-                    self?.modulesToDownload.append(moduleOffline)
-                    self?.modulesDownloading.removeAll(where: { $0.key == moduleOffline.key })
-                }
-            }
-        }
-    }
-    
-    private func remove(moduleOffline: ModuleOffline) {
-        let alert = UIAlertController(title: "Alert", message: "Delete \(moduleOffline.name) ModuleOffline?", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
-            self?.downloadManager.removeAsync(moduleOffline) { [weak self] (success, error) in
-                if success {
-                    self?.modulesToDownload.append(moduleOffline)
-                    self?.modulesDownloaded?.removeAll(where: { $0.key == moduleOffline.key })
-                } else {
-                    DispatchQueue.main.async { [weak self] in
-                        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        self?.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-            
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
+//    private func update() {
+//        performSelector(onMainThread: #selector(updateUI), with: nil, waitUntilDone: false)
+//    }
+//
+//    @objc private func updateUI() {
+//        table.reloadData()
+//    }
     
 }
 
@@ -116,55 +68,16 @@ class DownloadViewController: UIViewController {
 extension DownloadViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return modulesToDownload?.count ?? 0
-        case 1:
-            return modulesDownloading?.count ?? 0
-        case 2:
-            return modulesDownloaded?.count ?? 0
-        default:
-            return 0
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Download"
-        case 1:
-            return "Downloading"
-        case 2:
-            return "Downloaded"
-        default:
-            return ""
-        }
+        return modules.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "Module Cell", for: indexPath)
-        if indexPath.section == 0 {
-            if let modules = modulesToDownload {
-                let m = modules[indexPath.row]
-                cell.textLabel?.text = m.key
-                cell.detailTextLabel?.text = m.name
-            }
-        } else if indexPath.section == 1 {
-            if let modules = modulesDownloading {
-                let m = modules[indexPath.row]
-                cell.textLabel?.text = m.key
-                cell.detailTextLabel?.text = m.name
-            }
-        } else if indexPath.section == 2 {
-            if let modules = modulesDownloaded {
-                let m = modules[indexPath.row]
-                cell.textLabel?.text = m.key
-                cell.detailTextLabel?.text = m.name
-            }
+        if let modules = modules {
+            let m = modules[indexPath.row]
+            cell.textLabel?.text = m.key
+            cell.detailTextLabel?.text = m.name
+            cell.accessoryType = modulesDownloaded.contains(m.key) ? .checkmark : .none
         }
         return cell
     }
@@ -173,13 +86,78 @@ extension DownloadViewController: UITableViewDataSource {
 extension DownloadViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.section == 0 {
-            download(moduleOffline: modulesToDownload[indexPath.row])
-        } else if indexPath.section == 2 {
-            remove(moduleOffline: modulesDownloaded[indexPath.row])
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        if cell.accessoryType == .none {
+            if cell.selectedBackgroundView == backSelectionView {
+                print("deselected")
+            } else {
+                cell.selectedBackgroundView = backSelectionView
+                let module = modules[indexPath.row]
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    self?.downloadManager.downloadAsync(module) { [weak self] (success, error) in
+                        if success {
+                            self?.modulesDownloaded.append(module.key)
+                            DispatchQueue.main.async {
+                                cell.accessoryType = .checkmark
+                                tableView.beginUpdates()
+                                tableView.endUpdates()
+                            }
+                        } else {
+                            DispatchQueue.main.async { [weak self] in
+                                let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                                self?.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            cell.selectedBackgroundView = UIView()
+                            cell.setSelected(false, animated: false)
+                            tableView.beginUpdates()
+                            tableView.endUpdates()
+                        }
+                    }
+                }
+            }
+        } else  {
+            let module = modules[indexPath.row]
+            let alert = UIAlertController(title: "Alert", message: "Delete \(module.name) Module?", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+                self?.downloadManager.removeAsync(module) { [weak self] (success, error) in
+                    if success {
+                        self?.modulesDownloaded.removeAll(where: { (key) -> Bool in
+                            return key == module.key
+                        })
+                        DispatchQueue.main.async {
+                            cell.accessoryType = .none
+                            tableView.beginUpdates()
+                            tableView.endUpdates()
+                        }
+                    } else {
+                        DispatchQueue.main.async { [weak self] in
+                            let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                            self?.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+                
+            }))
+            self.present(alert, animated: true) {
+                cell.setSelected(false, animated: false)
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
         }
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else {return}
+        if cell.selectedBackgroundView == backSelectionView {
+            cell.setSelected(true, animated: false)
+        }
     }
     
 }

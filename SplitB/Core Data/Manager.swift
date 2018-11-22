@@ -13,12 +13,11 @@ class Manager {
     
     var context: NSManagedObjectContext!
     
-    private lazy var module1: Module! = {
-        if let all = try? Module.getAll(from: context), all.count > 0 {
-            return all[0]
+    private var module1: Module! {
+        didSet {
+            assertModuleConsistency()
         }
-        return nil
-    }()
+    }
     private var module2: Module?
     
     var bookNumber: Int { didSet { plistManager.set(book: bookNumber, chapter: chapterNumber) } }
@@ -55,12 +54,17 @@ class Manager {
         return nil
     }
     
-    
     init (in context: NSManagedObjectContext) {
         self.context = context
         let last = plistManager.getCurrentBookAndChapterIndexes()
-        bookNumber = last.0
-        chapterNumber = last.1
+        bookNumber = last.0 > 0 ? last.0 : 1
+        chapterNumber = last.1 > 0 ? last.1 : 1
+        initMainModule()
+        initSecondModule()
+        assertModuleConsistency()
+    }
+    
+    private func initMainModule() {
         let m1 = plistManager.getPrimaryModule()
         if m1.count > 0 {
             if let modules = try? Module.getAll(from: context) {
@@ -70,12 +74,28 @@ class Manager {
                 }
             }
         }
+        if module1 == nil, let modules = try? Module.getAll(from: context), modules.count > 0 {
+            module1 = modules[0]
+        }
+    }
+    
+    private func initSecondModule() {
         let m2 = plistManager.getSecondaryModule()
         if m2.count > 0 {
             if let modules = try? Module.getAll(from: context) {
                 let filtered = modules.filter {$0.key == m2}
                 module2 = filtered.first
             }
+        }
+    }
+    
+    private func assertModuleConsistency() {
+        if let module = module1,
+            let books = module.books?.array as? [Book],
+            books.count <= bookNumber,
+            books.count > 0 {
+            bookNumber = Int(books[0].number)
+            chapterNumber = 1
         }
     }
     
@@ -123,7 +143,6 @@ class Manager {
         })
     }
     
-    
     func next() {
         if let book = book1, let chapters = book.chapters?.array as? [Chapter] {
             for chapter in chapters {
@@ -143,6 +162,7 @@ class Manager {
             }
         }
     }
+    
     func previous() {
         chapterNumber -= 1
         if chapterNumber == 0, bookNumber != 1, let books = module1.books?.array as? [Book] {
@@ -175,8 +195,13 @@ class Manager {
         return book1?.name ?? ""
     }
     
-    
     func getTwoStrings() -> ([String]?, [String]?) {
+        if module1 == nil {
+            initMainModule()
+        }
+        if module2 == nil {
+            initSecondModule()
+        }
         var s1: [String]? = ["Please, download available modules"]
         var s2: [String]? = nil
         if let chapter = chapter1, let verses = chapter.verses?.array as? [Verse] {
@@ -199,6 +224,5 @@ class Manager {
         }
         return (s1, s2)
     }
-    
     
 }
