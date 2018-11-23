@@ -7,11 +7,53 @@
 //
 
 import UIKit
+import SearchTextField
 
 class CenterVersesViewController: CenterViewController {
 
     var verseTextManager: VerseTextManager?
     var verseManager: VerseManager?
+    
+    @IBOutlet weak var search: SearchTextField!
+    private var isInSearch = false {
+        didSet {
+            topScrollConstraint.constant = isInSearch ? search.frame.height : 0.0
+        }
+    }
+    @IBOutlet weak var topScrollConstraint: NSLayoutConstraint!
+    
+    
+    @IBAction func searchAction(_ sender: UIBarButtonItem) {
+        isInSearch = !isInSearch
+        if isInSearch {
+            search.isHidden = false
+            search.text = nil
+            search.becomeFirstResponder()
+        } else {
+            search.isHidden = true
+            search.text = nil
+            view.endEditing(true)
+        }
+    }
+    
+    @IBAction func searchDidEnd(_ sender: SearchTextField) {
+        if let text = sender.text {
+            parseSearch(text: text)
+        }
+        sender.text = nil
+        sender.isHidden = true
+        isInSearch = false
+        view.endEditing(true)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let titles = verseManager?.getBooksTitles() {
+            search.filterStrings(titles)
+        }
+        search.theme.font = UIFont.systemFont(ofSize: 12)
+        search.theme.bgColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.9)
+    }
     
     override var coreManager: Manager? {
         get {
@@ -63,6 +105,26 @@ class CenterVersesViewController: CenterViewController {
         }
         textManager?.fontSize = fontSize
         customTextView.setNeedsLayout()
+    }
+    
+    private func parseSearch(text: String) {
+        var index = 0
+        while (!("0"..."9" ~= text[text.index(text.startIndex, offsetBy: index)]) ||
+            index == 0) &&
+            index < text.count - 1 {
+            index += 1
+        }
+        let s1 = String(text[..<text.index(text.startIndex, offsetBy: index)]).trimmingCharacters(in: .whitespacesAndNewlines)
+        let s2 = String(text[text.index(text.startIndex, offsetBy: index)...]).trimmingCharacters(in: .whitespacesAndNewlines)
+//        print(s1)
+//        print("--")
+//        print(s2, Int(s2))
+        
+        verseManager?.setBook(byTitle: s1)
+        if let number = Int(s2) {
+            verseManager?.setChapter(number: number)
+        }
+        loadTextManager()
     }
 
 }

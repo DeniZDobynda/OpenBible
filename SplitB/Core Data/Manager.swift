@@ -13,7 +13,7 @@ class Manager {
     
     var context: NSManagedObjectContext!
     
-    private var module1: Module! {
+    var module1: Module! {
         didSet {
             assertModuleConsistency()
         }

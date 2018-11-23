@@ -115,12 +115,24 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ox3-Gi-gnJ">
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                             </scrollView>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sn1-2d-jgR" customClass="SearchTextField" customModule="SearchTextField">
+                                <rect key="frame" x="0.0" y="88" width="375" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchDidEnd:" destination="JnF-gd-Bwh" eventType="editingDidEnd" id="OXd-xp-yZ0"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Ox3-Gi-gnJ" firstAttribute="top" secondItem="qdl-D1-zBv" secondAttribute="top" id="AN6-rH-PmL"/>
                             <constraint firstItem="Ox3-Gi-gnJ" firstAttribute="bottom" secondItem="qdl-D1-zBv" secondAttribute="bottom" id="FKL-JT-fYZ"/>
+                            <constraint firstItem="Ox3-Gi-gnJ" firstAttribute="top" secondItem="qdl-D1-zBv" secondAttribute="top" id="JeI-1h-eBG"/>
+                            <constraint firstItem="qdl-D1-zBv" firstAttribute="top" secondItem="Sn1-2d-jgR" secondAttribute="top" id="QVx-Bv-7Kw"/>
+                            <constraint firstItem="qdl-D1-zBv" firstAttribute="trailing" secondItem="Sn1-2d-jgR" secondAttribute="trailing" id="SCx-XP-J9K"/>
                             <constraint firstItem="qdl-D1-zBv" firstAttribute="trailing" secondItem="Ox3-Gi-gnJ" secondAttribute="trailing" id="cb4-aI-3ta"/>
+                            <constraint firstItem="Sn1-2d-jgR" firstAttribute="leading" secondItem="qdl-D1-zBv" secondAttribute="leading" id="jVk-m2-JnQ"/>
                             <constraint firstItem="Ox3-Gi-gnJ" firstAttribute="leading" secondItem="qdl-D1-zBv" secondAttribute="leading" id="rtt-yC-vgM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qdl-D1-zBv"/>
@@ -132,11 +144,18 @@
                                 <action selector="menuAction:" destination="JnF-gd-Bwh" id="D3W-bn-0tY"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="search" image="search" id="V1B-ej-jim">
+                            <connections>
+                                <action selector="searchAction:" destination="JnF-gd-Bwh" id="1rU-BF-1Lg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="scrollView" destination="Ox3-Gi-gnJ" id="Vgw-Ws-eFr"/>
+                        <outlet property="search" destination="Sn1-2d-jgR" id="oOM-fO-bCA"/>
+                        <outlet property="topScrollConstraint" destination="JeI-1h-eBG" id="Bjj-18-aic"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbZ-Ge-ybu" sceneMemberID="firstResponder"/>
@@ -348,5 +367,6 @@
         <image name="book" width="75" height="75"/>
         <image name="load" width="75" height="75"/>
         <image name="menu" width="75" height="75"/>
+        <image name="search" width="75" height="75"/>
     </resources>
 </document>
