@@ -14,6 +14,12 @@ class CenterVersesViewController: CenterViewController {
     var verseTextManager: VerseTextManager?
     var verseManager: VerseManager?
     
+    var verseTextView: VerseTextView! { didSet{ verseTextView?.delegate = self }}
+    override var customTextView: CustomTextView! {
+        get {return verseTextView}
+        set {print("Error: set customTextView")}
+    }
+    
     @IBOutlet weak var search: SearchTextField!
     private var isInSearch = false {
         didSet {
@@ -53,6 +59,11 @@ class CenterVersesViewController: CenterViewController {
         }
         search.theme.font = UIFont.systemFont(ofSize: 12)
         search.theme.bgColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.9)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(touch(sender:)))
+        tap.numberOfTapsRequired = 2
+        tap.numberOfTouchesRequired = 1
+        scrollView.addGestureRecognizer(tap)
     }
     
     override var coreManager: Manager? {
@@ -92,19 +103,35 @@ class CenterVersesViewController: CenterViewController {
                 navigationItem.title = "\(m.get1BookName()) \(m.chapterNumber)"
             }
             
-            switch customTextView {
+            switch verseTextView {
             case .some:
-                customTextView.removeFromSuperview()
+                verseTextView.removeFromSuperview()
             default: break
             }
             
-            customTextView = CustomTextView(frame: scrollView.bounds)
-            customTextView.textManager = textManager
-            scrollView.addSubview(customTextView)
+            verseTextView = VerseTextView(frame: scrollView.bounds)
+            verseTextView.verseTextManager = verseTextManager
+            scrollView.addSubview(verseTextView)
             scrollView.scrollRectToVisible(CGRect(0,0,1,1), animated: false)
         }
         textManager?.fontSize = fontSize
         customTextView.setNeedsLayout()
+    }
+    
+    @objc private func touch(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            if let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
+                if let s = customTextView.getSelection() {
+                    textToCopy = s
+                    becomeFirstResponder()
+                    let copyItem = UIMenuItem(title: "Copy", action: #selector(copySelector))
+                    let defineItem = UIMenuItem(title: "Define", action: #selector(defineSelector))
+                    UIMenuController.shared.menuItems = [copyItem, defineItem]
+                    UIMenuController.shared.setTargetRect(rect, in: scrollView)
+                    UIMenuController.shared.setMenuVisible(true, animated: true)
+                }
+            }
+        }
     }
     
     private func parseSearch(text: String) {

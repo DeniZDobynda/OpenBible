@@ -52,10 +52,18 @@ extension String {
         
         return indices
     }
+    
+    func ranging(from range: Range<Int>) -> Range<String.Index> {
+        return self.index(startIndex, offsetBy: range.lowerBound)..<self.index(startIndex, offsetBy: range.upperBound)
+    }
 }
 
 extension UIEdgeInsets {
     init(size: CGFloat) {
         self.init(top: size, left: size, bottom: size, right: size)
     }
+}
+
+extension Range where Bound: FixedWidthInteger {
+    var nsRange: NSRange { return NSRange(self) }
 }

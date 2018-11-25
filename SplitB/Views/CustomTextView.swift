@@ -13,10 +13,10 @@ class CustomTextView: UIView {
     var textManager: TextManager!
     var delegate: TextViewDelegate?
     
-    private var layoutManager: CustomDebugLayoutManager { return textManager.layoutManager as! CustomDebugLayoutManager }
-    private var textContainer: NSTextContainer! { return textManager!.textContainer }
-    private var separators: [Character] = [" ", ".", ",", "?", ":", ";", "\n", "!", "(", ")"]
-    private var previousRange: NSRange?
+    internal var layoutManager: CustomDebugLayoutManager { return textManager.layoutManager as! CustomDebugLayoutManager }
+    internal var textContainer: NSTextContainer! { return textManager!.textContainer }
+    internal var separators: [Character] = [" ", ".", ",", "?", ":", ";", "\n", "!", "(", ")"]
+    internal var previousRange: NSRange?
     
     override func layoutSubviews() {
         super.layoutSubviews()

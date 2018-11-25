@@ -17,7 +17,7 @@ class CenterViewController: UIViewController {
     
     // MARK: Selection
     private var firstPointOfSelection: CGPoint?
-    private var textToCopy: String?
+    internal var textToCopy: String?
     
     // MARK: Animation
     private var isBarsHidden = false
@@ -223,7 +223,7 @@ class CenterViewController: UIViewController {
         }
     }
     
-    @objc private func copySelector() {
+    @objc internal func copySelector() {
         if let text = textToCopy {
             UIPasteboard.general.string = text
             textToCopy = nil
@@ -231,7 +231,7 @@ class CenterViewController: UIViewController {
         customTextView.clearSelection()
     }
     
-    @objc private func defineSelector() {
+    @objc internal func defineSelector() {
         if let text = textToCopy {
             let txt = UITextView(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
             txt.isHidden = true
