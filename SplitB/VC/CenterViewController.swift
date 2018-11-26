@@ -197,7 +197,7 @@ class CenterViewController: UIViewController {
         loadTextManager(false)
     }
     
-    @objc private func longTap(sender: UILongPressGestureRecognizer) {
+    @objc func longTap(sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began, .changed, .possible:
             let current = sender.location(in: customTextView)
@@ -252,7 +252,7 @@ class CenterViewController: UIViewController {
         customTextView.clearSelection()
     }
     
-    @objc private func UIMenuControllerWillHide() {
+    @objc func UIMenuControllerWillHide() {
         customTextView.clearSelection()
     }
     

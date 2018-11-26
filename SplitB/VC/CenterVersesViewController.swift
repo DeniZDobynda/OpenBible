@@ -13,34 +13,54 @@ class CenterVersesViewController: CenterViewController {
 
     var verseTextManager: VerseTextManager?
     var verseManager: VerseManager?
-    
     var verseTextView: VerseTextView! { didSet{ verseTextView?.delegate = self }}
+    
     override var customTextView: CustomTextView! {
         get {return verseTextView}
         set {print("Error: set customTextView")}
+    }
+    override var coreManager: Manager? {
+        get {
+            return verseManager
+        }
+        set {
+            print("Error!! didSet coreManager")
+        }
+    }
+    override var textManager: TextManager? {
+        get {
+            return verseTextManager
+        }
+        set {
+            print("Error!! didSet textManager")
+        }
     }
     
     @IBOutlet weak var search: SearchTextField!
     private var isInSearch = false {
         didSet {
             topScrollConstraint.constant = isInSearch ? search.frame.height : 0.0
+            if isInSearch {
+                search.isHidden = false
+                search.text = nil
+                search.becomeFirstResponder()
+            } else {
+                search.isHidden = true
+                search.text = nil
+                view.endEditing(true)
+            }
         }
     }
     @IBOutlet weak var topScrollConstraint: NSLayoutConstraint!
     
-    
     @IBAction func searchAction(_ sender: UIBarButtonItem) {
         isInSearch = !isInSearch
-        if isInSearch {
-            search.isHidden = false
-            search.text = nil
-            search.becomeFirstResponder()
-        } else {
-            search.isHidden = true
-            search.text = nil
-            view.endEditing(true)
-        }
     }
+    
+    private var tapInProgress = false
+    private var panInProgress = false
+    private var menuRect: CGRect?
+    private var timerScrollingMenu: Timer?
     
     @IBAction func searchDidEnd(_ sender: SearchTextField) {
         if let text = sender.text {
@@ -61,26 +81,9 @@ class CenterVersesViewController: CenterViewController {
         search.theme.bgColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.9)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(touch(sender:)))
-        tap.numberOfTapsRequired = 2
+        tap.numberOfTapsRequired = 1
         tap.numberOfTouchesRequired = 1
         scrollView.addGestureRecognizer(tap)
-    }
-    
-    override var coreManager: Manager? {
-        get {
-            return verseManager
-        }
-        set {
-            print("Error!! didSet coreManager")
-        }
-    }
-    override var textManager: TextManager? {
-        get {
-            return verseTextManager
-        }
-        set {
-            print("Error!! didSet textManager")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,18 +122,29 @@ class CenterVersesViewController: CenterViewController {
     }
     
     @objc private func touch(sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
+        if sender.state == .ended && !panInProgress {
             if let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
-                if let s = customTextView.getSelection() {
-                    textToCopy = s
-                    becomeFirstResponder()
-                    let copyItem = UIMenuItem(title: "Copy", action: #selector(copySelector))
-                    let defineItem = UIMenuItem(title: "Define", action: #selector(defineSelector))
-                    UIMenuController.shared.menuItems = [copyItem, defineItem]
-                    UIMenuController.shared.setTargetRect(rect, in: scrollView)
-                    UIMenuController.shared.setMenuVisible(true, animated: true)
-                }
+                tapInProgress = true
+                menuRect = rect
+                showMenuConcerning(rect)
             }
+        }
+        panInProgress = false
+    }
+    
+    private func showMenuConcerning(_ rect: CGRect) {
+        if let s = customTextView.getSelection() {
+            textToCopy = s
+            becomeFirstResponder()
+            let copyItem = UIMenuItem(title: "Copy", action: #selector(copySelector))
+            let defineItem = UIMenuItem(title: "Define", action: #selector(defineSelector))
+            UIMenuController.shared.menuItems = [copyItem, defineItem]
+            UIMenuController.shared.setTargetRect(rect, in: scrollView)
+            UIMenuController.shared.setMenuVisible(true, animated: true)
+        } else {
+            tapInProgress = false
+            panInProgress = false
+            menuRect = nil
         }
     }
     
@@ -154,4 +168,28 @@ class CenterVersesViewController: CenterViewController {
         loadTextManager()
     }
 
+    override func UIMenuControllerWillHide() {
+        if !tapInProgress {
+            verseTextView.clearSelection()
+        }
+    }
+    
+    override func longTap(sender: UILongPressGestureRecognizer) {
+        super.longTap(sender: sender)
+        panInProgress = true
+        tapInProgress = false
+        menuRect = nil
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        timerScrollingMenu?.invalidate()
+        timerScrollingMenu = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] (t) in
+            if let rect = self?.menuRect {
+                self?.showMenuConcerning(rect)
+            }
+            self?.timerScrollingMenu = nil
+            t.invalidate()
+        }
+    }
 }

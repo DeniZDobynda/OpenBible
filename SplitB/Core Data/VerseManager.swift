@@ -17,11 +17,17 @@ class VerseManager: Manager {
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
             v1 = verses.map { return $0.text ?? ""}
+//            for i in 0..<v1.count {
+//                v1[i].remove(at: v1[i].index(v1[i].endIndex, offsetBy: -1))
+//            }
         }
         if var verses = chapter2?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
             v2 = verses.map { return $0.text ?? ""}
+//            for i in 0..<v2!.count {
+//                v2![i].remove(at: v2![i].index(v2![i].endIndex, offsetBy: -1))
+//            }
         }
         return (v1, v2)
     }
