@@ -18,12 +18,13 @@ class Manager {
             assertModuleConsistency()
         }
     }
-    private var module2: Module?
+    internal var module2: Module?
     
-    var bookNumber: Int { didSet { plistManager.set(book: bookNumber, chapter: chapterNumber) } }
-    var chapterNumber: Int { didSet { plistManager.set(book: bookNumber, chapter: chapterNumber) } }
+    var bookNumber: Int { didSet { write() } }
+    var chapterNumber: Int { didSet { write() } }
     
     private var plistManager = PlistManager()
+    private var timerToWrite: Timer?
     
     var book1: Book? {
         if let books = module1?.books?.array as? [Book] {
@@ -64,7 +65,7 @@ class Manager {
         assertModuleConsistency()
     }
     
-    private func initMainModule() {
+    internal func initMainModule() {
         let m1 = plistManager.getPrimaryModule()
         if m1.count > 0 {
             if let modules = try? Module.getAll(from: context) {
@@ -76,10 +77,12 @@ class Manager {
         }
         if module1 == nil, let modules = try? Module.getAll(from: context), modules.count > 0 {
             module1 = modules[0]
+            bookNumber = 1
+            chapterNumber = 1
         }
     }
     
-    private func initSecondModule() {
+    internal func initSecondModule() {
         let m2 = plistManager.getSecondaryModule()
         if m2.count > 0 {
             if let modules = try? Module.getAll(from: context) {
@@ -225,4 +228,15 @@ class Manager {
         return (s1, s2)
     }
     
+    private func write() {
+        timerToWrite?.invalidate()
+        timerToWrite = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] (t) in
+            self?.plistManager.set(book: self!.bookNumber, chapter: self!.chapterNumber)
+            if let ch = self?.chapter1 {
+                History.add(to: self!.context, chapter: ch)
+            }
+            t.invalidate()
+            self?.timerToWrite = nil
+        }
+    }
 }

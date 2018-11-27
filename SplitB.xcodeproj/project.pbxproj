@@ -24,6 +24,8 @@
 		22071C822181E75700A184E3 /* CustomDebugLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C7E2181E75600A184E3 /* CustomDebugLayoutManager.swift */; };
 		22071C832181E75700A184E3 /* TwoColumnContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C7F2181E75600A184E3 /* TwoColumnContainer.swift */; };
 		22071C8521822E8F00A184E3 /* TwoColumnPositioningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22071C8421822E8F00A184E3 /* TwoColumnPositioningManager.swift */; };
+		221A276021AD330D0098D31A /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A275F21AD330D0098D31A /* HistoryViewController.swift */; };
+		221A276221AD344C0098D31A /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A276121AD344C0098D31A /* History.swift */; };
 		22370BDF21A71EBA00C43E72 /* VerseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BDE21A71EBA00C43E72 /* VerseManager.swift */; };
 		22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE021A7235B00C43E72 /* VerseTextManager.swift */; };
 		22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE221A731C800C43E72 /* CenterVersesViewController.swift */; };
@@ -88,6 +90,8 @@
 		22071C7E2181E75600A184E3 /* CustomDebugLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDebugLayoutManager.swift; sourceTree = "<group>"; };
 		22071C7F2181E75600A184E3 /* TwoColumnContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoColumnContainer.swift; sourceTree = "<group>"; };
 		22071C8421822E8F00A184E3 /* TwoColumnPositioningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoColumnPositioningManager.swift; sourceTree = "<group>"; };
+		221A275F21AD330D0098D31A /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		221A276121AD344C0098D31A /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		22370BDE21A71EBA00C43E72 /* VerseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseManager.swift; sourceTree = "<group>"; };
 		22370BE021A7235B00C43E72 /* VerseTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseTextManager.swift; sourceTree = "<group>"; };
 		22370BE221A731C800C43E72 /* CenterVersesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVersesViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				22071C582181A71A00A184E3 /* Book.swift */,
 				22071C5A2181A72400A184E3 /* Chapter.swift */,
 				22071C5C2181A72D00A184E3 /* Verse.swift */,
+				221A276121AD344C0098D31A /* History.swift */,
 				22071C5E2181AF2100A184E3 /* Manager.swift */,
 				22370BDE21A71EBA00C43E72 /* VerseManager.swift */,
 				22071C602181B8D900A184E3 /* DownloadManager.swift */,
@@ -261,6 +266,7 @@
 				22071C732181E4CE00A184E3 /* SidePanelViewController.swift */,
 				22CE459C2180A27000183ED3 /* DownloadViewController.swift */,
 				22D568E4218738D900F36B23 /* ModalViewController.swift */,
+				221A275F21AD330D0098D31A /* HistoryViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -569,9 +575,11 @@
 				2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */,
 				22071C5F2181AF2100A184E3 /* Manager.swift in Sources */,
 				226259232182FCAE0032ECE8 /* TextViewDelegate.swift in Sources */,
+				221A276221AD344C0098D31A /* History.swift in Sources */,
 				22071C802181E75700A184E3 /* LeftSelectionViewController.swift in Sources */,
 				22071C822181E75700A184E3 /* CustomDebugLayoutManager.swift in Sources */,
 				22D568E5218738D900F36B23 /* ModalViewController.swift in Sources */,
+				221A276021AD330D0098D31A /* HistoryViewController.swift in Sources */,
 				22071C5B2181A72400A184E3 /* Chapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

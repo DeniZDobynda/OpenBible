@@ -15,7 +15,6 @@ class LeftSelectionViewController: SidePanelViewController {
     var rightSpace: CGFloat = 0.0 {
         didSet {
             rightConstraint.constant = rightSpace
-            rightButtonConstraint.constant = rightSpace
         }
     }
     
@@ -24,7 +23,6 @@ class LeftSelectionViewController: SidePanelViewController {
     
     @IBOutlet private weak var rightConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var rightButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var bookTable: UITableView!
     
     private var books: [Book]? {
@@ -54,7 +52,6 @@ class LeftSelectionViewController: SidePanelViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         rightConstraint.constant = rightSpace
-        rightButtonConstraint.constant = rightSpace
         bookTable.dataSource = self
         bookTable.delegate = self
         bookTable.rowHeight = UITableView.automaticDimension
@@ -70,6 +67,8 @@ class LeftSelectionViewController: SidePanelViewController {
         if segue.identifier == "Show Modal Picker", let dest = segue.destination as? ModalViewController {
             dest.manager = manager
             dest.delegate = self
+        } else if segue.identifier == "Show history", let dest = segue.destination as? HistoryViewController {
+            dest.delegate = delegate
         }
     }
     

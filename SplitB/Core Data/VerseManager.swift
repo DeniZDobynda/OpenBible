@@ -11,6 +11,12 @@ import UIKit
 class VerseManager: Manager {
 
     func getVerses() -> ([String], [String]?) {
+        if module1 == nil {
+            initMainModule()
+        }
+        if module2 == nil {
+            initSecondModule()
+        }
         var v1: [String] = []
         var v2: [String]?
         if var verses = chapter1?.verses?.array as? [Verse],
