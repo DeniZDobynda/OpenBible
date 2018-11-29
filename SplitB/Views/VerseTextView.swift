@@ -71,7 +71,7 @@ class VerseTextView: CustomTextView {
             }
             var lower: Int
             var upper: Int
-            if selectedFirstVerse!.0 <= number {
+            if selectedFirstVerse!.0 < number || ( selectedFirstVerse!.0 == number && selectedFirstVerse!.1 == true) {
                 lower = selectedFirstVerse!.1 ? versesRanges!.0[selectedFirstVerse!.0].lowerBound : versesRanges!.1![selectedFirstVerse!.0].lowerBound
                 upper = first ? versesRanges!.0[number].upperBound : versesRanges!.1![number].upperBound
             } else {

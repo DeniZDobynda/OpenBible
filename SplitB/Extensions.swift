@@ -22,6 +22,23 @@ extension CGRect {
     init(_ fir: CGPoint, _ sec: CGPoint) {
         self.init(origin: CGPoint(x: min(fir.x, sec.x), y: min(fir.y, sec.y)), size: CGSize(width: abs(fir.x - sec.x), height: abs(fir.y - sec.y)))
     }
+    init(bounding first: CGRect, with second: CGRect) {
+        let fX = first.origin.x
+        let fY = first.origin.y
+        let sX = second.origin.x
+        let sY = second.origin.y
+        let minX = min(fX, sX)
+        let minY = min(fY, sY)
+        
+        let lfX = fX + first.width
+        let lfY = fY + first.height
+        let lsX = sX + second.width
+        let lsY = sY + second.height
+        
+        let w = max(lfX, lsX)
+        let h = max(lfY, lsY)
+        self.init(minX, minY, w, h)
+    }
     
     static func +(lhs: CGRect, rhs: CGRect ) -> CGRect {
         var rect = lhs

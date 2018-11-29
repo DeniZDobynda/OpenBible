@@ -259,8 +259,8 @@
 		22CE459E2180A27600183ED3 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				22071C742181E4CE00A184E3 /* CenterViewController.swift */,
 				22370BE221A731C800C43E72 /* CenterVersesViewController.swift */,
+				22071C742181E4CE00A184E3 /* CenterViewController.swift */,
 				22071C722181E4CE00A184E3 /* ContainerViewController.swift */,
 				22071C7C2181E75500A184E3 /* LeftSelectionViewController.swift */,
 				22071C732181E4CE00A184E3 /* SidePanelViewController.swift */,

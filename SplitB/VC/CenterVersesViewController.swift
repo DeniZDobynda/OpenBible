@@ -60,16 +60,14 @@ class CenterVersesViewController: CenterViewController {
     private var tapInProgress = false
     private var panInProgress = false
     private var menuRect: CGRect?
+    private var firstMenuRect: CGRect?
     private var timerScrollingMenu: Timer?
     
     @IBAction func searchDidEnd(_ sender: SearchTextField) {
         if let text = sender.text {
             parseSearch(text: text)
         }
-        sender.text = nil
-        sender.isHidden = true
         isInSearch = false
-        view.endEditing(true)
     }
     
     override func viewDidLoad() {
@@ -125,15 +123,22 @@ class CenterVersesViewController: CenterViewController {
         if sender.state == .ended && !panInProgress {
             if let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
                 tapInProgress = true
-                menuRect = rect
-                showMenuConcerning(rect)
+                
+                switch firstMenuRect {
+                case .none:
+                    menuRect = rect
+                    firstMenuRect = rect
+                case .some(let r):
+                    menuRect = CGRect(bounding: r, with: rect)
+                }
+                showMenu()
             }
         }
         panInProgress = false
     }
     
-    private func showMenuConcerning(_ rect: CGRect) {
-        if let s = customTextView.getSelection() {
+    private func showMenu() {
+        if let s = customTextView.getSelection(), let rect = menuRect {
             textToCopy = s
             becomeFirstResponder()
             let copyItem = UIMenuItem(title: "Copy", action: #selector(copySelector))
@@ -145,10 +150,12 @@ class CenterVersesViewController: CenterViewController {
             tapInProgress = false
             panInProgress = false
             menuRect = nil
+            firstMenuRect = nil
         }
     }
     
     private func parseSearch(text: String) {
+        guard text.count > 0 else {return}
         var index = 0
         while (!("0"..."9" ~= text[text.index(text.startIndex, offsetBy: index)]) ||
             index == 0) &&
@@ -185,9 +192,7 @@ class CenterVersesViewController: CenterViewController {
         super.scrollViewDidScroll(scrollView)
         timerScrollingMenu?.invalidate()
         timerScrollingMenu = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] (t) in
-            if let rect = self?.menuRect {
-                self?.showMenuConcerning(rect)
-            }
+            self?.showMenu()
             self?.timerScrollingMenu = nil
             t.invalidate()
         }
