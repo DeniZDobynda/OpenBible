@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SearchTextField
 
 class CenterVersesViewController: CenterViewController {
 
