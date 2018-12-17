@@ -37,7 +37,7 @@ class LeftSelectionViewController: SidePanelViewController {
             if count == 27 {
                 selected -= 39
             }
-            bookTable?.scrollToRow(at: IndexPath(row: selected, section: section), at: UITableView.ScrollPosition.middle, animated: false)
+            bookTable?.scrollToRow(at: IndexPath(row:selected, section:section), at:UITableView.ScrollPosition.middle, animated:false)
             
         }
     }
@@ -84,28 +84,28 @@ class LeftSelectionViewController: SidePanelViewController {
                 if let t2 = modules.1 {
                     title.append(" | \(t2)")
                 }
-                moduleButton?.setTitle(title, for: .normal)
+                moduleButton?.setTitle(title, for:.normal)
             }
         }
     }
 
 }
 
-extension LeftSelectionViewController: BookTableViewCellDelegate {
+extension LeftSelectionViewController:BookTableViewCellDelegate {
     func bookTableViewCellDidSelect(chapter: Int, in book: Int) {
-        delegate?.didSelect(chapter: chapter, in: book)
+        delegate?.didSelect(chapter: chapter, in:book)
         print("selected \(chapter) in \(book)")
     }
 }
 
-extension LeftSelectionViewController: ModalDelegate {
+extension LeftSelectionViewController:ModalDelegate {
     func modalViewWillResign() {
         bookTable?.reloadData()
         delegate?.setNeedsReload()
     }
 }
 
-extension LeftSelectionViewController: UITableViewDataSource {
+extension LeftSelectionViewController:UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionCount
     }
@@ -121,7 +121,7 @@ extension LeftSelectionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Book Table Cell", for: indexPath)
         if let c = cell as? BookTableViewCell, let b = books {
-            c.book = b[sectionCount == 1 ? indexPath.row : indexPath.section == 0 ? indexPath.row : 39 + indexPath.row]
+            c.book = b[sectionCount == 1 ? indexPath.row:indexPath.section == 0 ? indexPath.row:39 + indexPath.row]
             c.delegate = self
         }
         let v = UIView()
@@ -132,7 +132,7 @@ extension LeftSelectionViewController: UITableViewDataSource {
     }
 }
 
-extension LeftSelectionViewController: UITableViewDelegate {
+extension LeftSelectionViewController:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? BookTableViewCell else { return }
         cell.isExpanded = !cell.isExpanded

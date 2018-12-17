@@ -11,16 +11,16 @@ import UIKit
 class VerseTextManager: TextManager {
 
     var verses: ([String], [String]?)?
-    var versesRanges: ([Range<Int>], [Range<Int>]?)?
+    var versesRanges: ([Range <Int>], [Range<Int>]?)?
     
-    init(verses: ([String], [String]?)) {
+    init(verses:([String], [String]?)) {
         self.verses = verses
         super.init()
     }
     
     override func placeText(into textStorage: inout NSTextStorage) -> ([Range<Int>], [Int]) {
-        var r1: [Range<Int>] = []
-        var r2: [Range<Int>] = []
+        var r1: [Range <Int>] = []
+        var r2: [Range <Int>] = []
 
 
         var currentStartPoint = 0

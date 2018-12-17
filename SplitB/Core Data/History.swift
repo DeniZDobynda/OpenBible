@@ -16,7 +16,7 @@ class History: NSManagedObject {
     }
     
     class func get(from context: NSManagedObjectContext) throws -> [History] {
-        let request: NSFetchRequest<History> = History.fetchRequest()
+        let request: NSFetchRequest <History> = History.fetchRequest()
         let sort = NSSortDescriptor(key: "added", ascending: false)
         request.sortDescriptors = [sort]
         
@@ -35,7 +35,7 @@ class History: NSManagedObject {
     }
     
     class func add(to context: NSManagedObjectContext, chapter: Chapter) {
-        let request: NSFetchRequest<History> = History.fetchRequest()
+        let request: NSFetchRequest <History> = History.fetchRequest()
         let predicate = NSPredicate(format: "chapter = %@", argumentArray: [chapter])
         request.predicate = predicate
         
@@ -57,7 +57,7 @@ class History: NSManagedObject {
     }
     
     class func clear(in context: NSManagedObjectContext) {
-        let req: NSFetchRequest<History> = History.fetchRequest()
+        let req: NSFetchRequest <History> = History.fetchRequest()
         if let all = try? context.fetch(req) {
             for obj in all {
                 context.delete(obj)

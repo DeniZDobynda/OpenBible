@@ -44,7 +44,7 @@ class ModalViewController: UIViewController {
     
 }
 
-extension ModalViewController: UITableViewDelegate {
+extension ModalViewController:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let m = manager, let modules = modules {
@@ -75,7 +75,7 @@ extension ModalViewController: UITableViewDelegate {
     }
 }
 
-extension ModalViewController: UITableViewDataSource {
+extension ModalViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return modules?.count ?? 0

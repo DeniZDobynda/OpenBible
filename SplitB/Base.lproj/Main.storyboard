@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="3dg-YH-dLC">
             <objects>
-                <tabBarController id="63U-Qa-Cy5" sceneMemberID="viewController">
+                <tabBarController id="63U-Qa-Cy5" customClass="MainTabBarController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ktC-Wo-Lla">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -336,7 +336,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQ3-ez-Jbm">
                                                 <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="30"/>
-                                                <state key="normal" title="Button"/>
+                                                <state key="normal" title="Module"/>
                                                 <connections>
                                                     <segue destination="qOz-bG-0gx" kind="popoverPresentation" identifier="Show Modal Picker" popoverAnchorView="AQ3-ez-Jbm" id="3c2-WN-H9s">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>

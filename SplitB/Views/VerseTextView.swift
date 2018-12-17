@@ -13,17 +13,24 @@ class VerseTextView: CustomTextView {
     var verseTextManager: VerseTextManager!
     override var textManager: TextManager! {
         get { return verseTextManager }
-        set { print("Error: Set of textManager in VerseTextView") }
+        set { print ( "Error: Set of textManager in VerseTextView") }
     }
     
     internal var boundingRectsForVerses: ([CGRect], [CGRect]?)?
     
     var selectedFirstVerse: (Int, Bool)?
     var selectedSecondVerse: (Int, Bool)?
-    private var versesRanges: ([Range<Int>], [Range<Int>]?)? {
+    private var versesRanges: ([Range <Int>], [Range<Int>]?)? {
         return verseTextManager.versesRanges
     }
     
+    func getRectOf(_ number: Int) -> CGRect? {
+        if boundingRectsForVerses != nil,
+            boundingRectsForVerses!.0.count > number {
+            return boundingRectsForVerses!.0[number]
+        }
+        return nil
+    }
     
     func selectVerse(at point: CGPoint) -> CGRect? {
         if let rects = boundingRectsForVerses {
@@ -46,7 +53,7 @@ class VerseTextView: CustomTextView {
     }
     
     private func selectVerse(number: Int, first: Bool = true) {
-        var rangeCh: Range<Int>
+        var rangeCh: Range <Int>
         if selectedFirstVerse == nil {
             rangeCh = first ? versesRanges!.0[number] : versesRanges!.1![number]
             selectedFirstVerse = (number, first)
@@ -89,7 +96,7 @@ class VerseTextView: CustomTextView {
         }
         
         let s = layoutManager.textStorage!.string
-        var sub = String(s[..<s.index(s.startIndex, offsetBy: ixStart)])
+        var sub = String(s[..<s.index(s.startIndex, offsetBy:ixStart)])
         var count = sub.indicesOf(string: "\r").count
         if boundingRectsForVerses?.1 != nil {
             count /= 2

@@ -34,7 +34,7 @@ class CustomTextView: UIView {
             swap(&ixStart, &ixEnd)
         }
         let s = layoutManager.textStorage!.string
-        var sub = String(s[..<s.index(s.startIndex, offsetBy: ixStart)])
+        var sub = String(s[..<s.index(s.startIndex, offsetBy:ixStart)])
         var count = sub.indicesOf(string: "\r\n").count
         var charRange = layoutManager.characterRange(forGlyphRange: NSRange(ixStart - count..<ixEnd - count), actualGlyphRange: nil)
         while(charRange.lowerBound > 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.lowerBound - 1)])) {
@@ -60,7 +60,7 @@ class CustomTextView: UIView {
         if let glyphRange = previousRange {
             
             if let str = layoutManager.textStorage?.string {
-                let sub = String(str[..<str.index(str.startIndex, offsetBy: glyphRange.lowerBound)])
+                let sub = String(str[..<str.index(str.startIndex, offsetBy:glyphRange.lowerBound)])
                 var count = sub.indicesOf(string: "\r\n").count
                 var charRange = glyphRange
                 charRange.location -= count
@@ -91,8 +91,8 @@ class CustomTextView: UIView {
             layoutManager.fillBackgroundRectArray(p, count: 1, forCharacterRange: r, color: UIColor.white)
             return true
         }
-        layoutManager.drawBackground(forGlyphRange: r, at: CGPoint(x: 0, y: 0))
-        layoutManager.drawGlyphs(forGlyphRange: r, at:CGPoint(x: 0, y: 0))
+        layoutManager.drawBackground(forGlyphRange:r, at:CGPoint(x: 0, y: 0))
+        layoutManager.drawGlyphs(forGlyphRange:r, at:CGPoint(x: 0, y: 0))
         let usedRect = layoutManager.usedRect(for: textContainer)
         frame = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: usedRect.height))
         delegate?.textViewDidResize(to: usedRect.size)

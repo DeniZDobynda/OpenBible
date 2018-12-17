@@ -17,7 +17,7 @@ class CenterVersesViewController: CenterViewController {
     
     override var customTextView: CustomTextView! {
         get {return verseTextView}
-        set {print("Error: set customTextView")}
+        set {print ( "Error: set customTextView")}
     }
     override var coreManager: Manager? {
         get {
@@ -78,7 +78,7 @@ class CenterVersesViewController: CenterViewController {
         search.theme.font = UIFont.systemFont(ofSize: 12)
         search.theme.bgColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.9)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(touch(sender:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(touch(sender: )))
         tap.numberOfTapsRequired = 1
         tap.numberOfTouchesRequired = 1
         scrollView.addGestureRecognizer(tap)
@@ -107,13 +107,13 @@ class CenterVersesViewController: CenterViewController {
             switch verseTextView {
             case .some:
                 verseTextView.removeFromSuperview()
-            default: break
+            default:break
             }
             
             verseTextView = VerseTextView(frame: scrollView.bounds)
             verseTextView.verseTextManager = verseTextManager
             scrollView.addSubview(verseTextView)
-            scrollView.scrollRectToVisible(CGRect(0,0,1,1), animated: false)
+            scrollView.scrollRectToVisible(CGRect(0, 0, 1, 1), animated:false)
         }
         textManager?.fontSize = fontSize
         customTextView.setNeedsLayout()
@@ -121,7 +121,7 @@ class CenterVersesViewController: CenterViewController {
     
     @objc private func touch(sender: UITapGestureRecognizer) {
         if sender.state == .ended && !panInProgress {
-            if let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
+            if !overlapped, let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
                 tapInProgress = true
                 
                 switch firstMenuRect {
@@ -134,6 +134,8 @@ class CenterVersesViewController: CenterViewController {
                 showMenu()
             }
         }
+        delegate?.collapseSidePanels?()
+        overlapped = false
         panInProgress = false
     }
     
@@ -156,23 +158,51 @@ class CenterVersesViewController: CenterViewController {
     
     private func parseSearch(text: String) {
         guard text.count > 0 else {return}
-        var index = 0
-        while (!("0"..."9" ~= text[text.index(text.startIndex, offsetBy: index)]) ||
-            index == 0) &&
-            index < text.count - 1 {
-            index += 1
+        var indexOfChapterStart = 0
+        while (!("0"..."9" ~= text[indexOfChapterStart]) ||
+            indexOfChapterStart == 0) &&
+            indexOfChapterStart < text.count - 1 {
+            indexOfChapterStart += 1
         }
-        let s1 = String(text[..<text.index(text.startIndex, offsetBy: index)]).trimmingCharacters(in: .whitespacesAndNewlines)
-        let s2 = String(text[text.index(text.startIndex, offsetBy: index)...]).trimmingCharacters(in: .whitespacesAndNewlines)
+        var indexOfChapterEnd = indexOfChapterStart
+        while "0"..."9" ~= text[indexOfChapterEnd] &&
+            indexOfChapterEnd < text.count - 1 {
+            indexOfChapterEnd += 1
+        }
+        var indexOfVerseStart = indexOfChapterEnd
+        while !("0"..."9" ~= text[indexOfVerseStart]) &&
+            indexOfVerseStart < text.count - 1 {
+            indexOfVerseStart += 1
+        }
+        var indexOfVerseEnd = indexOfVerseStart
+        while "0"..."9" ~= text[indexOfVerseEnd] &&
+            indexOfVerseEnd < text.count - 1 {
+            indexOfVerseEnd += 1
+        }
+        if indexOfVerseStart != indexOfChapterEnd,
+            indexOfVerseEnd == text.count - 1 {
+            indexOfVerseEnd += 1
+        }
+        let book = String(text[..<text.index(indexOfChapterStart)]).trimmingCharacters(in: .whitespacesAndNewlines)
+        let chapter = String(text[indexOfChapterStart..<indexOfChapterEnd])
+        let verse = String(text[indexOfVerseStart..<indexOfVerseEnd])
 //        print(s1)
 //        print("--")
 //        print(s2, Int(s2))
         
-        verseManager?.setBook(byTitle: s1)
-        if let number = Int(s2) {
+        verseManager?.setBook(byTitle: book)
+        if let number = Int(chapter) {
             verseManager?.setChapter(number: number)
         }
         loadTextManager()
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] (t) in
+            if let v = Int(verse), var rect = self?.verseTextView.getRectOf(v) {
+                rect.size.height = self!.scrollView.bounds.height - 88
+                self!.scrollView.scrollRectToVisible(rect, animated: false)
+            }
+            t.invalidate()
+        }
+
     }
 
     override func UIMenuControllerWillHide() {

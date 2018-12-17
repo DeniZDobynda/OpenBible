@@ -29,6 +29,7 @@
 		22370BDF21A71EBA00C43E72 /* VerseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BDE21A71EBA00C43E72 /* VerseManager.swift */; };
 		22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE021A7235B00C43E72 /* VerseTextManager.swift */; };
 		22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE221A731C800C43E72 /* CenterVersesViewController.swift */; };
+		2239F70F21C7D0AC008715B5 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2239F70E21C7D0AC008715B5 /* MainTabBar.swift */; };
 		2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248324421787C4C00DF5C95 /* AppDelegate.swift */; };
 		2248324A21787C4C00DF5C95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2248324821787C4C00DF5C95 /* Main.storyboard */; };
 		2248324D21787C4C00DF5C95 /* SplitB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */; };
@@ -95,6 +96,12 @@
 		22370BDE21A71EBA00C43E72 /* VerseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseManager.swift; sourceTree = "<group>"; };
 		22370BE021A7235B00C43E72 /* VerseTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseTextManager.swift; sourceTree = "<group>"; };
 		22370BE221A731C800C43E72 /* CenterVersesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVersesViewController.swift; sourceTree = "<group>"; };
+		2239F70821C7BEB9008715B5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		2239F70921C7BEB9008715B5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2239F70A21C7BEC1008715B5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		2239F70B21C7BEC1008715B5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2239F70D21C7BF37008715B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		2239F70E21C7D0AC008715B5 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		2248324121787C4C00DF5C95 /* SplitB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SplitB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2248324421787C4C00DF5C95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2248324921787C4C00DF5C95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -267,6 +274,7 @@
 				22CE459C2180A27000183ED3 /* DownloadViewController.swift */,
 				22D568E4218738D900F36B23 /* ModalViewController.swift */,
 				221A275F21AD330D0098D31A /* HistoryViewController.swift */,
+				2239F70E21C7D0AC008715B5 /* MainTabBar.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -287,8 +295,8 @@
 		22D568DB21861AE900F36B23 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2262591F2182E8F60032ECE8 /* CustomTextView.swift */,
 				22BBED9121AAA8360096A258 /* VerseTextView.swift */,
+				2262591F2182E8F60032ECE8 /* CustomTextView.swift */,
 				22D568DE2186EB2300F36B23 /* BookTableViewCell.swift */,
 				22D568E02186EC6A00F36B23 /* NumberCollectionViewCell.swift */,
 			);
@@ -564,6 +572,7 @@
 				22071C592181A71A00A184E3 /* Book.swift in Sources */,
 				22071C8521822E8F00A184E3 /* TwoColumnPositioningManager.swift in Sources */,
 				226259202182E8F60032ECE8 /* CustomTextView.swift in Sources */,
+				2239F70F21C7D0AC008715B5 /* MainTabBar.swift in Sources */,
 				22071C5D2181A72D00A184E3 /* Verse.swift in Sources */,
 				22370BDF21A71EBA00C43E72 /* VerseManager.swift in Sources */,
 				22071C812181E75700A184E3 /* TextManager.swift in Sources */,
@@ -620,6 +629,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				2248324921787C4C00DF5C95 /* Base */,
+				2239F70821C7BEB9008715B5 /* de */,
+				2239F70A21C7BEC1008715B5 /* ru */,
+				2239F70D21C7BF37008715B5 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -628,6 +640,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2248325121787C4C00DF5C95 /* Base */,
+				2239F70921C7BEB9008715B5 /* de */,
+				2239F70B21C7BEC1008715B5 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -639,6 +653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -700,6 +715,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

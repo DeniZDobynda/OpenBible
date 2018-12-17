@@ -26,7 +26,7 @@ class TwoColumnContainer: NSTextContainer {
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         
-        let result = super.lineFragmentRect(forProposedRect:proposedRect, at:characterIndex, writingDirection:baseWritingDirection, remaining:remainingRect)
+        let result = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
         
         if let m = manager {
             return m.getRect(for: characterIndex, prefferedHeight: result.height)

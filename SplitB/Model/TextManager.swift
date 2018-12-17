@@ -29,7 +29,7 @@ class TextManager: NSObject {
     }
     
     func placeText(into textStorage: inout NSTextStorage) -> ([Range<Int>], [Int]) {
-        var ranges: [Range<Int>] = []
+        var ranges: [Range <Int>] = []
         var dividers: [Int] = []
         
         var m = min(textToDisplayInFirst.count, textToDisplayInSecond.count)
@@ -40,8 +40,8 @@ class TextManager: NSObject {
         
         var effectiveRange = NSRange(1..<3)
         
-        let attr: [NSAttributedString.Key: Any] = [.font : UIFont.systemFont(ofSize: fontSize)]
-        let nl = NSAttributedString(string: "\n", attributes: [.font : UIFont.systemFont(ofSize: fontSize / 5)])
+        let attr: [NSAttributedString.Key:Any] = [.font:UIFont.systemFont(ofSize:fontSize)]
+        let nl = NSAttributedString(string: "\n", attributes: [.font:UIFont.systemFont(ofSize:fontSize / 5)])
         var startRange = 0
         for i in 0..<m {
             if i >= 99 {
@@ -49,14 +49,14 @@ class TextManager: NSObject {
             }
             let t1 = NSMutableAttributedString(string: " \(i + 1) " + textToDisplayInFirst[i], attributes: attr)
             let t2 = NSMutableAttributedString(string: " \(i + 1) " + textToDisplayInSecond[i], attributes: attr)
-            t1.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: fontSize * 0.6), range: effectiveRange)
+            t1.addAttribute(.font, value:UIFont.italicSystemFont(ofSize: fontSize * 0.6), range:effectiveRange)
             t1.addAttribute(.baselineOffset, value: fontSize * 0.3, range: effectiveRange)
-            t1.addAttribute(.foregroundColor, value: UIColor.gray.withAlphaComponent(0.7), range: effectiveRange)
+            t1.addAttribute(.foregroundColor, value:UIColor.gray.withAlphaComponent(0.7), range:effectiveRange)
             textStorage.append(t1)
             //            textStorage.append(nl)
-            t2.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: fontSize * 0.6), range: effectiveRange)
+            t2.addAttribute(.font, value:UIFont.italicSystemFont(ofSize: fontSize * 0.6), range:effectiveRange)
             t2.addAttribute(.baselineOffset, value: fontSize * 0.3, range: effectiveRange)
-            t2.addAttribute(.foregroundColor, value: UIColor.gray.withAlphaComponent(0.7), range: effectiveRange)
+            t2.addAttribute(.foregroundColor, value:UIColor.gray.withAlphaComponent(0.7), range:effectiveRange)
             textStorage.append(t2)
             
             startRange += t1.length// + 1
@@ -83,9 +83,9 @@ class TextManager: NSObject {
                     effectiveRange = NSRange(1..<4)
                 }
                 let t1 = NSMutableAttributedString(string: " \(m + 1) " + textToDisplayInFirst[m], attributes: attr)
-                t1.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: fontSize * 0.6), range: effectiveRange)
+                t1.addAttribute(.font, value:UIFont.italicSystemFont(ofSize: fontSize * 0.6), range:effectiveRange)
                 t1.addAttribute(.baselineOffset, value: fontSize * 0.3, range: effectiveRange)
-                t1.addAttribute(.foregroundColor, value: UIColor.gray.withAlphaComponent(0.7), range: effectiveRange)
+                t1.addAttribute(.foregroundColor, value:UIColor.gray.withAlphaComponent(0.7), range:effectiveRange)
                 textStorage.append(t1)
                 startRange += t1.length
                 if (m != c ) {
@@ -111,9 +111,9 @@ class TextManager: NSObject {
                     effectiveRange = NSRange(1..<4)
                 }
                 let t1 = NSMutableAttributedString(string: " \(m + 1) " + textToDisplayInSecond[m], attributes: attr)
-                t1.addAttribute(.font, value: UIFont.italicSystemFont(ofSize: fontSize * 0.6), range: effectiveRange)
+                t1.addAttribute(.font, value:UIFont.italicSystemFont(ofSize: fontSize * 0.6), range:effectiveRange)
                 t1.addAttribute(.baselineOffset, value: fontSize * 0.3, range: effectiveRange)
-                t1.addAttribute(.foregroundColor, value: UIColor.gray.withAlphaComponent(0.7), range: effectiveRange)
+                t1.addAttribute(.foregroundColor, value:UIColor.gray.withAlphaComponent(0.7), range:effectiveRange)
                 textStorage.append(t1)
                 ranges.append(startRange..<startRange + t1.length)
                 startRange += t1.length

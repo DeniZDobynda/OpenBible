@@ -65,7 +65,7 @@ class DownloadViewController: UIViewController {
 }
 
 
-extension DownloadViewController: UITableViewDataSource {
+extension DownloadViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return modules.count
@@ -83,7 +83,7 @@ extension DownloadViewController: UITableViewDataSource {
     }
 }
 
-extension DownloadViewController: UITableViewDelegate {
+extension DownloadViewController:UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
@@ -106,7 +106,7 @@ extension DownloadViewController: UITableViewDelegate {
                             DispatchQueue.main.async { [weak self] in
                                 let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                                self?.present(alert, animated: true, completion: nil)
+                                self?.present(alert, animated:true, completion:nil)
                             }
                         }
                         DispatchQueue.main.async {
@@ -122,7 +122,7 @@ extension DownloadViewController: UITableViewDelegate {
             let module = modules[indexPath.row]
             let alert = UIAlertController(title: "Alert", message: "Delete \(module.name) Module?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+            alert.addAction(UIAlertAction(title:"Yes", style:.default, handler:{ [weak self] _ in
                 self?.downloadManager.removeAsync(module) { [weak self] (success, error) in
                     if success {
                         self?.modulesDownloaded.removeAll(where: { (key) -> Bool in
@@ -137,7 +137,7 @@ extension DownloadViewController: UITableViewDelegate {
                         DispatchQueue.main.async { [weak self] in
                             let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                            self?.present(alert, animated: true, completion: nil)
+                            self?.present(alert, animated:true, completion:nil)
                         }
                     }
                 }

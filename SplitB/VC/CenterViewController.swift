@@ -23,7 +23,7 @@ class CenterViewController: UIViewController {
     private var isBarsHidden = false
     private var statusBarHidden: Bool {
         get { return (UIApplication.shared.value(forKey: "statusBarWindow") as? UIWindow)?.isHidden ?? false }
-        set { (UIApplication.shared.value(forKey: "statusBarWindow") as? UIWindow)?.isHidden = newValue }
+        set { ( UIApplication.shared.value(forKey: "statusBarWindow") as? UIWindow)?.isHidden = newValue }
     }
     private var lastContentOffset: CGFloat = 0
     private var originalNavBarRect: CGRect?
@@ -64,10 +64,10 @@ class CenterViewController: UIViewController {
         
         loadTextManager()
         
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(scaled(sender:)))
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(scaled(sender: )))
         scrollView.addGestureRecognizer(pinch)
         
-        let longTap = UILongPressGestureRecognizer(target: self, action: #selector(longTap(sender:)))
+        let longTap = UILongPressGestureRecognizer(target: self, action: #selector(longTap(sender: )))
         longTap.minimumPressDuration = 0.2
         scrollView.panGestureRecognizer.require(toFail: longTap)
         scrollView.addGestureRecognizer(longTap)
@@ -80,13 +80,13 @@ class CenterViewController: UIViewController {
         swipeRight.direction = .right
         scrollView.addGestureRecognizer(swipeRight)
         
-        let edge = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(edgeHandle(sender:)))
+        let edge = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(edgeHandle(sender: )))
         edge.edges = .left
         scrollView.addGestureRecognizer(edge)
         
         originalNavBarRect = navigationController?.navigationBar.frame
         originalTabBarRect = tabBarController?.tabBar.frame
-        NotificationCenter.default.addObserver(self, selector: #selector(UIMenuControllerWillHide), name: UIMenuController.willHideMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(UIMenuControllerWillHide), name:UIMenuController.willHideMenuNotification, object:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,13 +149,13 @@ class CenterViewController: UIViewController {
             switch customTextView {
             case .some:
                 customTextView.removeFromSuperview()
-            default: break
+            default:break
             }
             
             customTextView = CustomTextView(frame: scrollView.bounds)
             customTextView.textManager = textManager
             scrollView.addSubview(customTextView)
-            scrollView.scrollRectToVisible(CGRect(0,0,1,1), animated: false)
+            scrollView.scrollRectToVisible(CGRect(0, 0, 1, 1), animated:false)
         }
         textManager?.fontSize = fontSize
         customTextView.setNeedsLayout()
@@ -187,7 +187,7 @@ class CenterViewController: UIViewController {
             if !overlapped {
                 delegate?.toggleLeftPanel!()
             }
-        default: break
+        default:break
         }
     }
     
@@ -213,13 +213,13 @@ class CenterViewController: UIViewController {
                 let copyItem = UIMenuItem(title: "Copy", action: #selector(copySelector))
                 let defineItem = UIMenuItem(title: "Define", action: #selector(defineSelector))
                 UIMenuController.shared.menuItems = [copyItem, defineItem]
-                UIMenuController.shared.setTargetRect(CGRect(first, sender.location(in: customTextView)), in: scrollView)
+                UIMenuController.shared.setTargetRect(CGRect(first, sender.location(in: customTextView)), in:scrollView)
                 UIMenuController.shared.setMenuVisible(true, animated: true)
             }
             firstPointOfSelection = nil
         case .cancelled, .failed:
             firstPointOfSelection = nil
-        default: break
+        default:break
         }
     }
     
@@ -262,7 +262,7 @@ class CenterViewController: UIViewController {
         if hidden { statusBarHidden = true }
 
         if !instant {
-            UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: { [weak self] in
+            UIView.animate(withDuration:1, delay:0, options:[.curveEaseInOut, .beginFromCurrentState], animations:{ [weak self] in
                 if self?.currentNavBarRect != nil, self?.view != nil {
                     self!.currentNavBarRect = hidden ? self!.currentNavBarRect! - self!.view.frame : nil
                 }
@@ -335,7 +335,7 @@ class CenterViewController: UIViewController {
 
 // MARK: - Extensions
 
-extension CenterViewController: SidePanelViewControllerDelegate {
+extension CenterViewController:SidePanelViewControllerDelegate {
     func didSelect(chapter: Int, in book: Int) {
         delegate?.collapseSidePanels?()
         coreManager?.chapterNumber = chapter
@@ -348,13 +348,13 @@ extension CenterViewController: SidePanelViewControllerDelegate {
     }
 }
 
-extension CenterViewController: TextViewDelegate {
+extension CenterViewController:TextViewDelegate {
     func textViewDidResize(to size: CGSize) {
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: size.height)
     }
 }
 
-extension CenterViewController: UIScrollViewDelegate {
+extension CenterViewController:UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if overlapped {
             delegate?.collapseSidePanels!()

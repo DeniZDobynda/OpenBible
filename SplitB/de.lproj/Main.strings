@@ -1,0 +1,60 @@
+
+/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "14Q-Ct-VLW"; */
+"14Q-Ct-VLW.title" = "Schließen";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "1Ox-w3-US4"; */
+"1Ox-w3-US4.text" = "0";
+
+/* Class = "UINavigationItem"; title = "Center"; ObjectID = "3VO-XY-H6e"; */
+"3VO-XY-H6e.title" = "Center";
+
+/* Class = "UITabBarItem"; title = "Download"; ObjectID = "4Tl-IM-9Qg"; */
+"4Tl-IM-9Qg.title" = "Herunterladen";
+
+/* Class = "UIButton"; normalTitle = "History"; ObjectID = "5VW-6H-Lmp"; */
+"5VW-6H-Lmp.normalTitle" = "Geschichte";
+
+/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "7Y3-cp-Tuw"; */
+"7Y3-cp-Tuw.title" = "Schließen";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "AQ3-ez-Jbm"; */
+"AQ3-ez-Jbm.normalTitle" = "Button";
+
+/* Class = "UIViewController"; title = "Center View Controller"; ObjectID = "JnF-gd-Bwh"; */
+"JnF-gd-Bwh.title" = "Center View Controller";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Kg4-VY-X5F"; */
+"Kg4-VY-X5F.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "MD8-Vp-YYi"; */
+"MD8-Vp-YYi.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "UCf-Jq-ptm"; */
+"UCf-Jq-ptm.title" = "Geschichte";
+
+/* Class = "UIBarButtonItem"; title = "search"; ObjectID = "V1B-ej-jim"; */
+"V1B-ej-jim.title" = "search";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "XXg-Eh-p3u"; */
+"XXg-Eh-p3u.text" = "Title";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "ZiJ-C0-tFw"; */
+"ZiJ-C0-tFw.text" = "Detail";
+
+/* Class = "UITabBarItem"; title = "Read"; ObjectID = "fSW-hV-fd5"; */
+"fSW-hV-fd5.title" = "Lesen";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "hsM-2r-3iz"; */
+"hsM-2r-3iz.normalTitle" = "Löschen";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "lTJ-eu-ous"; */
+"lTJ-eu-ous.text" = "Title";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mKO-SS-yVR"; */
+"mKO-SS-yVR.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "mwn-83-W29"; */
+"mwn-83-W29.title" = "Menü";
+
+/* Class = "UIViewController"; title = "Left View Controller"; ObjectID = "xeb-JB-MFX"; */
+"xeb-JB-MFX.title" = "Left View Controller";

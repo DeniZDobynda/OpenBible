@@ -14,7 +14,7 @@ class DownloadManager {
     var context: NSManagedObjectContext!
     private var serverUrl = "http://getbible.net/json?v="
     
-    init (in context: NSManagedObjectContext) {
+    init(in context: NSManagedObjectContext) {
         self.context = context
     }
     

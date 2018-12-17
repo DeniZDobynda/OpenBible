@@ -67,7 +67,7 @@ class BookTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollecti
     // MARK: - Collection View Delegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.bookTableViewCellDidSelect(chapter: indexPath.row + 1, in: bookNumber)
+        delegate?.bookTableViewCellDidSelect(chapter: indexPath.row + 1, in:bookNumber)
     }
     
     // MARK: - Collection View Data Source

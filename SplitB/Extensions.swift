@@ -20,7 +20,7 @@ extension CGRect {
     }
     
     init(_ fir: CGPoint, _ sec: CGPoint) {
-        self.init(origin: CGPoint(x: min(fir.x, sec.x), y: min(fir.y, sec.y)), size: CGSize(width: abs(fir.x - sec.x), height: abs(fir.y - sec.y)))
+        self.init(origin:CGPoint(x:min(fir.x, sec.x), y:min(fir.y, sec.y)), size:CGSize(width:abs(fir.x - sec.x), height:abs(fir.y - sec.y)))
     }
     init(bounding first: CGRect, with second: CGRect) {
         let fX = first.origin.x
@@ -70,8 +70,28 @@ extension String {
         return indices
     }
     
-    func ranging(from range: Range<Int>) -> Range<String.Index> {
+    func ranging(from range: Range<Int> ) -> Range<String.Index> {
         return self.index(startIndex, offsetBy: range.lowerBound)..<self.index(startIndex, offsetBy: range.upperBound)
+    }
+    
+    func index(_ number: String.IndexDistance) -> String.Index {
+        return index(startIndex, offsetBy: number)
+    }
+    
+    subscript(n: Int) -> Character {
+        return self[index(n)]
+    }
+    
+    subscript (bounds: CountableClosedRange<Int>) -> String {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return String(self[start...end])
+    }
+    
+    subscript (bounds: CountableRange<Int>) -> String {
+        let start = index(startIndex, offsetBy: bounds.lowerBound)
+        let end = index(startIndex, offsetBy: bounds.upperBound)
+        return String(self[start..<end])
     }
 }
 

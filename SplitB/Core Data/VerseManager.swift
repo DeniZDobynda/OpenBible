@@ -54,11 +54,13 @@ class VerseManager: Manager {
                     name.starts(with: t) {
                     bookNumber = Int(book.number)
                     chapterNumber = 1
+                    
                     return
                 }
             }
         }
     }
+    
     
     func setChapter(number: Int) {
         if let book = book1, let ch = book.chapters?.array, ch.count > number {
@@ -67,3 +69,4 @@ class VerseManager: Manager {
     }
 
 }
+

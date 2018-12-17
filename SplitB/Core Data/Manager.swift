@@ -55,7 +55,7 @@ class Manager {
         return nil
     }
     
-    init (in context: NSManagedObjectContext) {
+    init(in context: NSManagedObjectContext) {
         self.context = context
         let last = plistManager.getCurrentBookAndChapterIndexes()
         bookNumber = last.0 > 0 ? last.0 : 1
@@ -95,7 +95,7 @@ class Manager {
     private func assertModuleConsistency() {
         if let module = module1,
             let books = module.books?.array as? [Book],
-            books.count <= bookNumber,
+            books.count < bookNumber,
             books.count > 0 {
             bookNumber = Int(books[0].number)
             chapterNumber = 1
@@ -231,7 +231,7 @@ class Manager {
     private func write() {
         timerToWrite?.invalidate()
         timerToWrite = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] (t) in
-            self?.plistManager.set(book: self!.bookNumber, chapter: self!.chapterNumber)
+            self?.plistManager.set(book: self!.bookNumber, chapter:self!.chapterNumber)
             if let ch = self?.chapter1 {
                 History.add(to: self!.context, chapter: ch)
             }

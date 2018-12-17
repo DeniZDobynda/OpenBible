@@ -25,11 +25,11 @@ class PlistManager {
     init() {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
         let documentDirectory = paths[0] as! String
-        let path = documentDirectory.appending("/"+plistName+".plist")
+        let path = documentDirectory.appending("/" + plistName + ".plist")
         plistPath = path
         let fileManager = FileManager.default
-        if(!fileManager.fileExists(atPath: path)){
-            if let bundlePath = Bundle.main.path(forResource: plistName, ofType: "plist"){
+        if(!fileManager.fileExists(atPath: path)) {
+            if let bundlePath = Bundle.main.path(forResource: plistName, ofType: "plist") {
                 do{
                     try fileManager.copyItem(atPath: bundlePath, toPath: path)
                 }catch{

@@ -14,7 +14,7 @@ class CustomDebugLayoutManager: NSLayoutManager {
     var selectionColor: UIColor?
     
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
-        self.enumerateLineFragments(forGlyphRange: NSMakeRange(0, self.numberOfGlyphs)) {
+        self.enumerateLineFragments(forGlyphRange:NSMakeRange(0, self.numberOfGlyphs)) {
             (rect, usedRect, textContainer, glyphRange, Bool) in
             
             let lineBoundingRect = self.boundingRect(forGlyphRange: glyphRange, in: textContainer)
@@ -32,7 +32,7 @@ class CustomDebugLayoutManager: NSLayoutManager {
         }
     }
     
-    override func fillBackgroundRectArray(_ rectArray: UnsafePointer<CGRect>, count rectCount: Int, forCharacterRange charRange: NSRange, color: UIColor) {
+    override func fillBackgroundRectArray(_ rectArray: UnsafePointer<CGRect> , count rectCount: Int, forCharacterRange charRange: NSRange, color: UIColor) {
         for i in 0..<rectCount {
             let path = UIBezierPath(roundedRect: rectArray[i], cornerRadius: 0)
             color.set()

@@ -19,7 +19,7 @@ class Module: NSManagedObject {
     }
     
     class func get(by key: String, from context: NSManagedObjectContext) throws -> Module? {
-        let request: NSFetchRequest<Module> = Module.fetchRequest()
+        let request: NSFetchRequest <Module> = Module.fetchRequest()
         request.predicate = NSPredicate(format: "key = %@", argumentArray: [key.lowercased()])
         
         do {
@@ -55,5 +55,9 @@ class Module: NSManagedObject {
         }
         m.books = NSOrderedSet(array: books)
         return m
+    }
+    
+    class func count(in context: NSManagedObjectContext) -> Int {
+        return (try? context.fetch(Module.fetchRequest()).count) ?? 0
     }
 }

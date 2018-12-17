@@ -11,7 +11,7 @@ import UIKit
 class TwoColumnPositioningManager {
 
     var size: CGSize
-    var ranges: [Range<Int>]
+    var ranges: [Range <Int>]
     var dividers: [Int]
     var height: CGFloat
     
@@ -96,14 +96,14 @@ class TwoColumnPositioningManager {
 }
 
 
-extension CGRect: Comparable {
-    public static func < (lhs: CGRect, rhs: CGRect) -> Bool {
+extension CGRect:Comparable {
+    public static func <(lhs: CGRect, rhs: CGRect) -> Bool {
         return lhs.origin.y < rhs.origin.y
     }
 }
 
 extension CGPoint {
-    static func + (lhs: CGPoint, num: CGFloat) -> CGPoint {
+    static func +(lhs: CGPoint, num: CGFloat) -> CGPoint {
         var p = lhs
         p.y += num
         return p

@@ -25,7 +25,7 @@ class PlistHandler {
         }
     }
     
-    func get<T>(to variable: inout T, of key: String) {
+    func get<T> (to variable: inout T, of key: String) {
         if let path = plistPath, let dict = NSDictionary(contentsOfFile: path), let opt = dict[key] {
             if let _ = variable as? String, let str = opt as? String {
                 variable = str as! T

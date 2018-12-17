@@ -39,7 +39,7 @@ class HistoryViewController: UIViewController {
     
 }
 
-extension HistoryViewController: UITableViewDataSource {
+extension HistoryViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return history.count
@@ -57,9 +57,9 @@ extension HistoryViewController: UITableViewDataSource {
     
 }
 
-extension HistoryViewController: UITableViewDelegate {
+extension HistoryViewController:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelect(chapter: Int(history[indexPath.row].chapter!.number), in: Int(history[indexPath.row].chapter!.book!.number))
+        delegate?.didSelect(chapter: Int(history[indexPath.row].chapter!.number), in:Int(history[indexPath.row].chapter!.book!.number))
         dismiss(animated: true, completion: nil)
     }
 }
