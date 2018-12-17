@@ -20,10 +20,12 @@ class DownloadViewController: UIViewController {
     private var downloadManager: DownloadManager = DownloadManager(in: AppDelegate.context)
     private var manager: Manager = Manager(in: AppDelegate.context)
     
-    private let backSelectionView = UIView()
+//    private let backSelectionView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        backSelectionView.backgroundColor = UIColor.green
+//        backSelectionView.backgroundColor = UIColor.green
+//        table.allowsMultipleSelection = true
+//        table.allowsSelectionDuringEditing = true
         modules = [
             ModuleOffline("King James Version", "kjv"),
             ModuleOffline("Schlachter 1951", "schlachter"),
@@ -73,25 +75,28 @@ extension DownloadViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "Module Cell", for: indexPath)
-        if let modules = modules {
+        if let modules = modules, let c = cell as? DownloadCell {
             let m = modules[indexPath.row]
-            cell.textLabel?.text = m.key
-            cell.detailTextLabel?.text = m.name
-            cell.accessoryType = modulesDownloaded.contains(m.key) ? .checkmark : .none
+            c.accessoryType = modulesDownloaded.contains(m.key) ? .checkmark : .none
+            c.left = m.key
+            c.right = m.name
+            c.columnWidth = view.bounds.width * 0.27
         }
         return cell
     }
 }
 
-extension DownloadViewController:UITableViewDelegate {
+extension DownloadViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? DownloadCell else { return }
+        cell.setSelected(false, animated: true)
         if cell.accessoryType == .none {
-            if cell.selectedBackgroundView == backSelectionView {
-                print("deselected")
+            if cell.isLoading {
+                print("terminating? not now, sorry")
             } else {
-                cell.selectedBackgroundView = backSelectionView
+                // download
+                cell.isLoading = true
                 let module = modules[indexPath.row]
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                     self?.downloadManager.downloadAsync(module) { [weak self] (success, error) in
@@ -99,6 +104,7 @@ extension DownloadViewController:UITableViewDelegate {
                             self?.modulesDownloaded.append(module.key)
                             DispatchQueue.main.async {
                                 cell.accessoryType = .checkmark
+                                cell.isLoading = false
                                 tableView.beginUpdates()
                                 tableView.endUpdates()
                             }
@@ -107,18 +113,20 @@ extension DownloadViewController:UITableViewDelegate {
                                 let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                                 self?.present(alert, animated:true, completion:nil)
+                                cell.isLoading = false
                             }
                         }
-                        DispatchQueue.main.async {
-                            cell.selectedBackgroundView = UIView()
-                            cell.setSelected(false, animated: false)
-                            tableView.beginUpdates()
-                            tableView.endUpdates()
-                        }
+//                        DispatchQueue.main.async {
+//                            cell.selectedBackgroundView = nil
+//                            cell.setSelected(false, animated: false)
+//                            tableView.beginUpdates()
+//                            tableView.endUpdates()
+//                        }
                     }
                 }
             }
-        } else  {
+        } else {
+            // delete
             let module = modules[indexPath.row]
             let alert = UIAlertController(title: "Alert", message: "Delete \(module.name) Module?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -144,7 +152,7 @@ extension DownloadViewController:UITableViewDelegate {
                 
             }))
             self.present(alert, animated: true) {
-                cell.setSelected(false, animated: false)
+                
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
@@ -153,11 +161,12 @@ extension DownloadViewController:UITableViewDelegate {
         tableView.endUpdates()
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else {return}
-        if cell.selectedBackgroundView == backSelectionView {
-            cell.setSelected(true, animated: false)
-        }
-    }
-    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        guard let cell = tableView.cellForRow(at: indexPath) else {return}
+//        if cell.selectedBackgroundView == backSelectionView {
+//            cell.setSelected(true, animated: false)
+//        }
+//        print("deselected")
+//    }
+
 }

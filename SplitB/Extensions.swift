@@ -93,6 +93,10 @@ extension String {
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return String(self[start..<end])
     }
+    
+    func localized(withComment comment: String? = nil) -> String {
+        return NSLocalizedString(self, comment: comment ?? "")
+    }
 }
 
 extension UIEdgeInsets {
