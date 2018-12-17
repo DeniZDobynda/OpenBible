@@ -94,8 +94,8 @@ extension String {
         return String(self[start..<end])
     }
     
-    func localized(withComment comment: String? = nil) -> String {
-        return NSLocalizedString(self, comment: comment ?? "")
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
     }
 }
 

@@ -210,8 +210,8 @@ class CenterViewController: UIViewController {
             if let s = customTextView.getSelection(), let first = firstPointOfSelection {
                 textToCopy = s
                 becomeFirstResponder()
-                let copyItem = UIMenuItem(title: "Copy".localized(), action: #selector(copySelector))
-                let defineItem = UIMenuItem(title: "Define".localized(), action: #selector(defineSelector))
+                let copyItem = UIMenuItem(title: "Copy".localized, action: #selector(copySelector))
+                let defineItem = UIMenuItem(title: "Define".localized, action: #selector(defineSelector))
                 UIMenuController.shared.menuItems = [copyItem, defineItem]
                 UIMenuController.shared.setTargetRect(CGRect(first, sender.location(in: customTextView)), in:scrollView)
                 UIMenuController.shared.setMenuVisible(true, animated: true)

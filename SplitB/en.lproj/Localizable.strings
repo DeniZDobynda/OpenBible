@@ -1,9 +1,10 @@
 /* 
-  Localization.strings
+  Localizable.strings
   SplitB
 
   Created by Denis Dobanda on 17.12.18.
   Copyright © 2018 Denis Dobanda. All rights reserved.
 */
-"Copy" = "Скопирровать";
-"Define" = "Определить";
+
+"Copy" = "Copy";
+"Define" = "Define";

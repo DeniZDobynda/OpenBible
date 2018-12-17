@@ -1,7 +1,4 @@
 
-/* Class = "UILabel"; text = "detail"; ObjectID = "0sm-Sf-41m"; */
-"0sm-Sf-41m.text" = "detail";
-
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "14Q-Ct-VLW"; */
 "14Q-Ct-VLW.title" = "Close";
 
@@ -26,6 +23,9 @@
 /* Class = "UIViewController"; title = "Center View Controller"; ObjectID = "JnF-gd-Bwh"; */
 "JnF-gd-Bwh.title" = "Center View Controller";
 
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Kg4-VY-X5F"; */
+"Kg4-VY-X5F.text" = "Subtitle";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "MD8-Vp-YYi"; */
 "MD8-Vp-YYi.text" = "Title";
 
@@ -35,11 +35,11 @@
 /* Class = "UIBarButtonItem"; title = "search"; ObjectID = "V1B-ej-jim"; */
 "V1B-ej-jim.title" = "search";
 
+/* Class = "UILabel"; text = "Title"; ObjectID = "XXg-Eh-p3u"; */
+"XXg-Eh-p3u.text" = "Title";
+
 /* Class = "UILabel"; text = "Detail"; ObjectID = "ZiJ-C0-tFw"; */
 "ZiJ-C0-tFw.text" = "Detail";
-
-/* Class = "UILabel"; text = "text"; ObjectID = "dBL-f4-13G"; */
-"dBL-f4-13G.text" = "text";
 
 /* Class = "UITabBarItem"; title = "Read"; ObjectID = "fSW-hV-fd5"; */
 "fSW-hV-fd5.title" = "Read";
