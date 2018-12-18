@@ -23,7 +23,7 @@ class VerseTextManager: TextManager {
         var r2: [Range <Int>] = []
 
 
-        var currentStartPoint = 0
+        var currentStartPoint = 1
         if let verses = verses {
             for i in 0..<verses.0.count {
                 let endpoint = 2 + String(i).count + verses.0[i].count + currentStartPoint

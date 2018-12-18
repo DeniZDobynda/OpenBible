@@ -35,8 +35,8 @@ extension CGRect {
         let lsX = sX + second.width
         let lsY = sY + second.height
         
-        let w = max(lfX, lsX)
-        let h = max(lfY, lsY)
+        let w = max(lfX - minX, lsX - minX)
+        let h = max(lfY - minY, lsY - minY)
         self.init(minX, minY, w, h)
     }
     

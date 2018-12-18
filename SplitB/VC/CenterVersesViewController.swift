@@ -129,6 +129,7 @@ class CenterVersesViewController: CenterViewController {
                     firstMenuRect = rect
                 case .some(let r):
                     menuRect = CGRect(bounding: r, with: rect)
+                    menuRect!.size.width = scrollView.bounds.width
                 }
                 showMenu()
             }
@@ -157,6 +158,7 @@ class CenterVersesViewController: CenterViewController {
     
     private func parseSearch(text: String) {
         guard text.count > 0 else {return}
+        
         var indexOfChapterStart = 0
         while (!("0"..."9" ~= text[indexOfChapterStart]) ||
             indexOfChapterStart == 0) &&
@@ -178,6 +180,10 @@ class CenterVersesViewController: CenterViewController {
             indexOfVerseEnd < text.count - 1 {
             indexOfVerseEnd += 1
         }
+        if "0"..."9" ~= text[indexOfChapterStart],
+            indexOfChapterEnd == text.count - 1 {
+            indexOfChapterEnd += 1
+        }
         if indexOfVerseStart != indexOfChapterEnd,
             indexOfVerseEnd == text.count - 1 {
             indexOfVerseEnd += 1
@@ -194,14 +200,28 @@ class CenterVersesViewController: CenterViewController {
             verseManager?.setChapter(number: number)
         }
         loadTextManager()
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] (t) in
-            if let v = Int(verse), var rect = self?.verseTextView.getRectOf(v) {
-                rect.size.height = self!.scrollView.bounds.height - 88
-                self!.scrollView.scrollRectToVisible(rect, animated: false)
+        verseTextView.executeRightAfterDrawingOnce = {
+            if let v = Int(verse), let rect = self.verseTextView.getRectOf(v) {
+                var r = rect
+                r.size.height = self.scrollView.bounds.height
+                self.scrollView.scrollRectToVisible(r, animated: false)
+                self.highlight(rect)
             }
-            t.invalidate()
         }
-
+    }
+    
+    private func highlight(_ rect: CGRect) {
+        var r = rect
+        r.size.width = scrollView.bounds.width
+        let newView = UIView(frame: r)
+        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+        scrollView.addSubview(newView)
+        UIView.animate(withDuration: 1.0, delay: 1, animations: {
+            newView.layer.opacity = 0
+        }) { (_) in
+            newView.removeFromSuperview()
+        }
+        
     }
 
     override func UIMenuControllerWillHide() {

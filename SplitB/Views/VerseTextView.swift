@@ -10,6 +10,8 @@ import UIKit
 
 class VerseTextView: CustomTextView {
 
+    var executeRightAfterDrawingOnce: (() -> ())?
+    
     var verseTextManager: VerseTextManager!
     override var textManager: TextManager! {
         get { return verseTextManager }
@@ -26,8 +28,12 @@ class VerseTextView: CustomTextView {
     
     func getRectOf(_ number: Int) -> CGRect? {
         if boundingRectsForVerses != nil,
-            boundingRectsForVerses!.0.count > number {
-            return boundingRectsForVerses!.0[number]
+            boundingRectsForVerses!.0.count >= number {
+            if boundingRectsForVerses!.1 != nil {
+                return CGRect(bounding: boundingRectsForVerses!.0[number - 1],
+                              with: boundingRectsForVerses!.1![number - 1])
+            }
+            return boundingRectsForVerses!.0[number - 1]
         }
         return nil
     }
@@ -108,7 +114,7 @@ class VerseTextView: CustomTextView {
 //            charRange.length += 1
 //            ixStart -= 1
 //        }
-        sub = String(s[s.index(s.startIndex, offsetBy: rangeCh.lowerBound)..<s.index(s.startIndex, offsetBy: rangeCh.upperBound)])
+        sub = s[rangeCh.lowerBound - count..<rangeCh.upperBound - count]
         if boundingRectsForVerses?.1 != nil {
             count += (sub.indicesOf(string: "\r").count - 1 ) / 2
         } else {
@@ -140,7 +146,9 @@ class VerseTextView: CustomTextView {
             var rects1: [CGRect] = []
             var rects2: [CGRect] = []
             for i in 0..<first.count {
-                let range = first[i]
+                var range = first[i]
+                /* next line is becouse of invisible glyphs */
+                range = range.lowerBound + i ..< range.upperBound + i
                 let glyphRange = layoutManager.glyphRange(forCharacterRange: range.nsRange, actualCharacterRange: nil
                 )
                 var rect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
@@ -148,7 +156,10 @@ class VerseTextView: CustomTextView {
                 rects1.append(rect)
                 
                 if let second = versesRanges.1?[i] {
-                    let glyphRange2 = layoutManager.glyphRange(forCharacterRange: second.nsRange, actualCharacterRange: nil
+                    var range = second
+                    /* next line is becouse of invisible glyphs */
+                    range = range.lowerBound + i ..< range.upperBound + i
+                    let glyphRange2 = layoutManager.glyphRange(forCharacterRange: range.nsRange, actualCharacterRange: nil
                     )
                     var rect2 = layoutManager.boundingRect(forGlyphRange: glyphRange2, in: textContainer)
                     rect2.size.width = wid
@@ -160,7 +171,10 @@ class VerseTextView: CustomTextView {
             if let second = versesRanges.1,
                 second.count > first.count {
                 for i in first.count..<second.count {
-                    let glyphRange2 = layoutManager.glyphRange(forCharacterRange: second[i].nsRange, actualCharacterRange: nil
+                    var range = second[i]
+                    /* next line is becouse of invisible glyphs */
+                    range = range.lowerBound + i ..< range.upperBound + i
+                    let glyphRange2 = layoutManager.glyphRange(forCharacterRange: range.nsRange, actualCharacterRange: nil
                     )
                     var rect2 = layoutManager.boundingRect(forGlyphRange: glyphRange2, in: textContainer)
                     rect2.size.width = wid
@@ -172,6 +186,8 @@ class VerseTextView: CustomTextView {
             boundingRectsForVerses = rects2.count > 0 ? (rects1, rects2) : (rects1, nil)
         }
 //        print(boundingRectsForVerses)
+        executeRightAfterDrawingOnce?()
+        executeRightAfterDrawingOnce = nil
     }
 
 }

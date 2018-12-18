@@ -56,7 +56,7 @@ class CustomTextView: UIView {
     }
     
     func getSelection() -> String? {
-        var s: String?
+//        var s: String?
         if let glyphRange = previousRange {
             
             if let str = layoutManager.textStorage?.string {
@@ -64,13 +64,19 @@ class CustomTextView: UIView {
                 var count = sub.indicesOf(string: "\r\n").count
                 var charRange = glyphRange
                 charRange.location -= count
-                let prev = layoutManager.characterRange(forGlyphRange: charRange, actualGlyphRange: nil)
-                s = String(str[str.index(str.startIndex, offsetBy: prev.lowerBound)..<str.index(str.startIndex, offsetBy: prev.upperBound)])
-                count = s!.indicesOf(string: "\r\n").count
-                s = String(s![..<s!.index(s!.endIndex, offsetBy: -count)])
+                var s = str[charRange.lowerBound..<charRange.upperBound]
+                count = s.indicesOf(string: "\r\n").count
+                if count > 0 {
+                    s = String(s[s.index(s.startIndex, offsetBy: count - 1)..<s.index(s.endIndex, offsetBy: -count + 1)])
+                }
+                return s
+//                let prev = layoutManager.characterRange(forGlyphRange: charRange, actualGlyphRange: nil)
+//                s = String(str[str.index(str.startIndex, offsetBy: prev.lowerBound)..<str.index(str.startIndex, offsetBy: prev.upperBound)])
+//
+//                s = String(s![..<s!.index(s!.endIndex, offsetBy: -count)])
             }
         }
-        return s
+        return nil
     }
     
     func clearSelection() {
