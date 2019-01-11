@@ -12,7 +12,7 @@ class CenterViewController: UIViewController {
     // MARK: Text
     var customTextView: CustomTextView! { didSet { customTextView.delegate = self }}
     var textManager: TextManager?
-    private var plistManager = PlistManager()
+    private var plistManager = AppDelegate.plistManager
     var fontSize: CGFloat = 30.0 { didSet { plistManager.setFont(size: fontSize) }}
     
     // MARK: Selection

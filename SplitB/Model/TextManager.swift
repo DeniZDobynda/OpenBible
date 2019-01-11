@@ -38,29 +38,30 @@ class TextManager: NSObject {
             swap(&textToDisplayInFirst, &textToDisplayInSecond)
         }
         
-        let font: [NSAttributedString.Key:Any] =
-            [.font:UIFont.systemFont(ofSize:fontSize),
-             .baselineOffset : 0]
-        let small: [NSAttributedString.Key: Any] =
-            [.font : UIFont.italicSystemFont(ofSize: fontSize * 0.6),
-             .baselineOffset : fontSize * 0.3,
-             .foregroundColor : UIColor.gray.withAlphaComponent(0.7)]
-        
+//        let font: [NSAttributedString.Key:Any] =
+//            [.font:UIFont.systemFont(ofSize:fontSize),
+//             .baselineOffset : 0]
+//        let small: [NSAttributedString.Key: Any] =
+//            [.font : UIFont.italicSystemFont(ofSize: fontSize * 0.6),
+//             .baselineOffset : fontSize * 0.3,
+//             .foregroundColor : UIColor.gray.withAlphaComponent(0.7)]
+//
         let nl = NSAttributedString(string: "\n", attributes: [.font:UIFont.systemFont(ofSize:fontSize / 5)])
         var startRange = 0
-        var lenghtOfStartingLine = 0
+//        var lenghtOfStartingLine = 0
         for i in 0..<m {
-            let t1 = NSMutableAttributedString(string: " ", attributes: font)
+            let t1 = textToDisplayInFirst[i]
+                /*NSMutableAttributedString(string: " ", attributes: font)
             t1.append(NSAttributedString(string: "\(i + 1) ", attributes: small))
             lenghtOfStartingLine = t1.length
             t1.append(textToDisplayInFirst[i])
-            t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))
+            t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))*/
             textStorage.append(t1)
             
-            let t2 = NSMutableAttributedString(string: " ", attributes: font)
+            let t2 = textToDisplayInSecond[i]/*NSMutableAttributedString(string: " ", attributes: font)
             t2.append(NSAttributedString(string: "\(i + 1) ", attributes: small))
             t2.append(textToDisplayInSecond[i])
-            t2.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t2.length))
+            t2.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t2.length))*/
             textStorage.append(t2)
             
             startRange += t1.length// + 1
@@ -83,11 +84,11 @@ class TextManager: NSObject {
                 startRange += 1
             }
             while m < c {
-                let t1 = NSMutableAttributedString(string: " ", attributes: font)
+                let t1 = textToDisplayInFirst[m]/*NSMutableAttributedString(string: " ", attributes: font)
                 t1.append(NSAttributedString(string: "\(m + 1) ", attributes: small))
                 lenghtOfStartingLine = t1.length
                 t1.append(textToDisplayInFirst[m])
-                t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))
+                t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))*/
                 textStorage.append(t1)
                 startRange += t1.length
                 if (m != c ) {
@@ -109,11 +110,11 @@ class TextManager: NSObject {
                 startRange += 1
             }
             while m < c {
-                let t1 = NSMutableAttributedString(string: " ", attributes: font)
+                let t1 = textToDisplayInSecond[m]/*NSMutableAttributedString(string: " ", attributes: font)
                 t1.append(NSAttributedString(string: "\(m + 1) ", attributes: small))
                 lenghtOfStartingLine = t1.length
-                t1.append(textToDisplayInFirst[m])
-                t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))
+                t1.append(textToDisplayInSecond[m])
+                t1.addAttributes(font, range: NSRange(lenghtOfStartingLine..<t1.length))*/
                 textStorage.append(t1)
                 ranges.append(startRange..<startRange + t1.length)
                 startRange += t1.length

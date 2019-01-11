@@ -71,6 +71,8 @@ class CenterVersesViewController: CenterViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppDelegate.shared.urlDelegate = self
+        
         if let titles = verseManager?.getBooksTitles() {
             search.filterStrings(titles)
         }
@@ -157,71 +159,52 @@ class CenterVersesViewController: CenterViewController {
     }
     
     private func parseSearch(text: String) {
-        guard text.count > 0,
-            let matched = text.capturedGroups(withRegex: String.regexForBookRefference)
-            else {return}
-        /*
-        var indexOfChapterStart = 0
-        while (!("0"..."9" ~= text[indexOfChapterStart]) ||
-            indexOfChapterStart == 0) &&
-            indexOfChapterStart < text.count - 1 {
-            indexOfChapterStart += 1
-        }
-        var indexOfChapterEnd = indexOfChapterStart
-        while "0"..."9" ~= text[indexOfChapterEnd] &&
-            indexOfChapterEnd < text.count - 1 {
-            indexOfChapterEnd += 1
-        }
-        var indexOfVerseStart = indexOfChapterEnd
-        while !("0"..."9" ~= text[indexOfVerseStart]) &&
-            indexOfVerseStart < text.count - 1 {
-            indexOfVerseStart += 1
-        }
-        var indexOfVerseEnd = indexOfVerseStart
-        while "0"..."9" ~= text[indexOfVerseEnd] &&
-            indexOfVerseEnd < text.count - 1 {
-            indexOfVerseEnd += 1
-        }
-        if "0"..."9" ~= text[indexOfChapterStart],
-            indexOfChapterEnd == text.count - 1 {
-            indexOfChapterEnd += 1
-        }
-        if indexOfVerseStart != indexOfChapterEnd,
-            indexOfVerseEnd == text.count - 1 {
-            indexOfVerseEnd += 1
-        }
-        let book = String(text[..<text.index(indexOfChapterStart)]).trimmingCharacters(in: .whitespacesAndNewlines)
-        let chapter = String(text[indexOfChapterStart..<indexOfChapterEnd])
-        let verse = String(text[indexOfVerseStart..<indexOfVerseEnd])
-//        print(s1)
-//        print("--")
-//        print(s2, Int(s2))
-        */
-        let book = matched[0]
-        verseManager?.setBook(byTitle: book)
-        
-        if matched.count > 1, let number = Int(matched[1]) {
-            verseManager?.setChapter(number: number)
-        }
-        loadTextManager()
-        if matched.count > 2 {
-            verseTextView.executeRightAfterDrawingOnce = {
-                if let v = Int(matched[2]), let rect = self.verseTextView.getRectOf(v) {
-                    var r = rect
-                    r.size.height = self.scrollView.bounds.height
-                    let o = self.scrollView.convert(r.origin, from: self.verseTextView)
-                    self.scrollView.setContentOffset(o, animated: true)
-                    if matched.count > 3,
-                        let last = matched.last,
-                        let lastVerse = Int(last) {
-                        self.verseTextView.highlight(v, throught: lastVerse)
-                    }else {
-                        self.verseTextView.highlight(v)
-                    }
+        if let match = text.capturedGroups(withRegex: String.regexForBookRefference),
+            match.count > 0 {
+            if let b = verseManager?.setBook(by: match[0]), b,
+                match.count > 1,
+                let n = Int(match[1]) {
+                verseManager?.setChapter(number: n)
+                if match.count > 2,
+                    let verseMatch = text.replacingOccurrences(of: " ", with: "").matches(withRegex: String.regexForVerses),
+                    verseMatch[0][0] == match[1] {
+                    let v = verseMatch[1...]
+                    verseManager?.setVerses(from: v.map {$0[0]})
                 }
             }
         }
+        loadTextManager()
     }
+    
+//    private func parseSearch(text: String) {
+//        guard text.count > 0,
+//            let matched = text.capturedGroups(withRegex: String.regexForBookRefference)
+//            else {return}
+//        let book = matched[0]
+//        _ = verseManager?.setBook(byTitle: book)
+//
+//        if matched.count > 1, let number = Int(matched[1]) {
+//            verseManager?.setChapter(number: number)
+//        }
+//        loadTextManager()
+//        if matched.count > 2 {
+//            verseTextView.executeRightAfterDrawingOnce = {
+//                if let v = Int(matched[2]), let rect = self.verseTextView.getRectOf(v) {
+//                    var r = rect
+//                    r.size.height = self.scrollView.bounds.height
+//                    let o = self.scrollView.convert(r.origin, from: self.verseTextView)
+//                    self.scrollView.setContentOffset(o, animated: true)
+//                    if matched.count > 3,
+//                        let last = matched.last,
+//                        let lastVerse = Int(last) {
+//                        self.verseTextView.highlight(v, throught: lastVerse)
+//                    }else {
+//                        self.verseTextView.highlight(v)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
 //    private func highlight(_ rect: CGRect) {
 //        var r = rect
@@ -257,6 +240,17 @@ class CenterVersesViewController: CenterViewController {
             self?.showMenu()
             self?.timerScrollingMenu = nil
             t.invalidate()
+        }
+    }
+}
+
+
+extension CenterVersesViewController: URLDelegate {
+    func openedURL(with parameters: [String]) {
+        if parameters.count > 1 {
+            
+        } else {
+            parseSearch(text: parameters[0])
         }
     }
 }

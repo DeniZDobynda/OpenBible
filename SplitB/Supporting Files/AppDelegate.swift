@@ -13,9 +13,20 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var urlDelegate: URLDelegate? {didSet{openUrlIfNeeded()}}
+    private var urlToOpen: [String]? {didSet{openUrlIfNeeded()}}
     
     static var URLServerRoot = "x-com-thedeniz-bible://"
     
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    static var plistManager: PlistManager {
+        return AppDelegate.shared.plistManager
+    }
+    
+    private var plistManager = PlistManager()
     
 //    @objc func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
 //        // Get the URL
@@ -82,16 +93,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             return true;
         }
-        
         let urlString = url.absoluteString
         let queryArray = urlString.components(separatedBy: "/")
         let query = queryArray[2]
         
-        print(query)
+        urlToOpen = query.split(separator: "/").map{String($0)}
         
         return true
     }
 
+    private func openUrlIfNeeded() {
+        if urlToOpen != nil {
+            urlDelegate?.openedURL(with: urlToOpen!)
+            urlToOpen = nil
+        }
+    }
+    
+    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {

@@ -26,6 +26,7 @@ class VerseTextManager: TextManager {
         var currentStartPoint = 1
         if let verses = verses {
             for i in 0..<verses.0.count {
+                
                 let endpoint = 2 + String(i).count + verses.0[i].length + currentStartPoint
                 r1.append(currentStartPoint..<endpoint)
 //                textToDisplayInFirst.append(verses.0[i])

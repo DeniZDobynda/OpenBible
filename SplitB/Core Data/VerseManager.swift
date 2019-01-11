@@ -10,9 +10,11 @@ import UIKit
 
 class VerseManager: Manager {
 
-    var verses: [Range<Int>]?
+    private var versesRanges: [Range<Int>]?
+    var fontSize: CGFloat = AppDelegate.plistManager.getFontSize()
     
     func getVerses() -> ([NSAttributedString], [NSAttributedString]?) {
+        fontSize = AppDelegate.plistManager.getFontSize()
         if module1 == nil {
             initMainModule()
         }
@@ -24,19 +26,38 @@ class VerseManager: Manager {
         if var verses = chapter1?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            v1 = verses.map { return $0.attributedCompound }
-//            for i in 0..<v1.count {
-//                v1[i].remove(at: v1[i].index(v1[i].endIndex, offsetBy: -1))
-//            }
+            let attributed = verses.map { return $0.attributedCompound(size: fontSize) }
+            if let ranges = versesRanges {
+                v1 = []
+                for range in ranges {
+                    for i in 0..<attributed.count {
+                        if range.contains(i + 1) {
+                            v1.append(attributed[i])
+                        }
+                    }
+                }
+            } else {
+                v1 = attributed
+            }
         }
         if var verses = chapter2?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            v2 = verses.map { return $0.attributedCompound }
-//            for i in 0..<v2!.count {
-//                v2![i].remove(at: v2![i].index(v2![i].endIndex, offsetBy: -1))
-//            }
+            let attributed = verses.map { return $0.attributedCompound(size: fontSize) }
+            if let ranges = versesRanges {
+                v2 = []
+                for range in ranges {
+                    for i in 0..<attributed.count {
+                        if range.contains(i + 1) {
+                        v2!.append(attributed[i])
+                        }
+                    }
+                }
+            } else {
+                v2 = attributed
+            }
         }
+    
         return (v1, v2)
     }
     
@@ -48,7 +69,7 @@ class VerseManager: Manager {
         return nil
     }
     
-    func setBook(byTitle title: String) {
+    func setBook(by title: String) -> Bool {
         let t = title.lowercased()
         if let books = module1.books?.array as? [Book] {
             for book in books {
@@ -57,10 +78,11 @@ class VerseManager: Manager {
                     bookNumber = Int(book.number)
                     chapterNumber = 1
                     
-                    return
+                    return true
                 }
             }
         }
+        return false
     }
     
     
@@ -72,3 +94,39 @@ class VerseManager: Manager {
 
 }
 
+extension VerseManager {
+    func setVerses(from strArray: [String]) {
+        var verseRanges = [Range<Int>]()
+        var pendingRange: Range<Int>? = nil
+        for verse in strArray {
+            if !("0"..."9" ~= verse[0]) {
+                if let v = Int(verse[verse.index(after: verse.startIndex)...]) {
+                    switch verse[0] {
+                    case "-":
+                        if pendingRange != nil {
+                            pendingRange = Range(uncheckedBounds: (pendingRange!.lowerBound, v + 1))
+                        } else {
+                            pendingRange = Range(uncheckedBounds: (v, v + 1))
+                        }
+                    case ",",".":
+                        if pendingRange != nil {
+                            verseRanges.append(pendingRange!)
+                        }
+                        pendingRange = Range(uncheckedBounds: (v, v + 1))
+                    default:break
+                    }
+                }
+            } else {
+                let v = Int(verse)!
+                if pendingRange != nil {
+                    verseRanges.append(pendingRange!)
+                }
+                pendingRange = Range(uncheckedBounds: (v,v + 1))
+            }
+        }
+        if pendingRange != nil {
+            verseRanges.append(pendingRange!)
+        }
+        versesRanges = verseRanges
+    }
+}
