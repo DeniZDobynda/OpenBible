@@ -157,8 +157,10 @@ class CenterVersesViewController: CenterViewController {
     }
     
     private func parseSearch(text: String) {
-        guard text.count > 0 else {return}
-        
+        guard text.count > 0,
+            let matched = text.capturedGroups(withRegex: String.regexForBookRefference)
+            else {return}
+        /*
         var indexOfChapterStart = 0
         while (!("0"..."9" ~= text[indexOfChapterStart]) ||
             indexOfChapterStart == 0) &&
@@ -194,35 +196,46 @@ class CenterVersesViewController: CenterViewController {
 //        print(s1)
 //        print("--")
 //        print(s2, Int(s2))
-        
+        */
+        let book = matched[0]
         verseManager?.setBook(byTitle: book)
-        if let number = Int(chapter) {
+        
+        if matched.count > 1, let number = Int(matched[1]) {
             verseManager?.setChapter(number: number)
         }
         loadTextManager()
-        verseTextView.executeRightAfterDrawingOnce = {
-            if let v = Int(verse), let rect = self.verseTextView.getRectOf(v) {
-                var r = rect
-                r.size.height = self.scrollView.bounds.height
-                self.scrollView.scrollRectToVisible(r, animated: false)
-                self.highlight(rect)
+        if matched.count > 2 {
+            verseTextView.executeRightAfterDrawingOnce = {
+                if let v = Int(matched[2]), let rect = self.verseTextView.getRectOf(v) {
+                    var r = rect
+                    r.size.height = self.scrollView.bounds.height
+                    let o = self.scrollView.convert(r.origin, from: self.verseTextView)
+                    self.scrollView.setContentOffset(o, animated: true)
+                    if matched.count > 3,
+                        let last = matched.last,
+                        let lastVerse = Int(last) {
+                        self.verseTextView.highlight(v, throught: lastVerse)
+                    }else {
+                        self.verseTextView.highlight(v)
+                    }
+                }
             }
         }
     }
     
-    private func highlight(_ rect: CGRect) {
-        var r = rect
-        r.size.width = scrollView.bounds.width
-        let newView = UIView(frame: r)
-        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
-        scrollView.addSubview(newView)
-        UIView.animate(withDuration: 1.0, delay: 1, animations: {
-            newView.layer.opacity = 0
-        }) { (_) in
-            newView.removeFromSuperview()
-        }
-        
-    }
+//    private func highlight(_ rect: CGRect) {
+//        var r = rect
+//        r.size.width = scrollView.bounds.width
+//        let newView = UIView(frame: r)
+//        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+//        scrollView.addSubview(newView)
+//        UIView.animate(withDuration: 1.0, delay: 1, animations: {
+//            newView.layer.opacity = 0
+//        }) { (_) in
+//            newView.removeFromSuperview()
+//        }
+//
+//    }
 
     override func UIMenuControllerWillHide() {
         if !tapInProgress {

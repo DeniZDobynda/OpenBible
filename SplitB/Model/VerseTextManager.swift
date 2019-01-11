@@ -10,10 +10,10 @@ import UIKit
 
 class VerseTextManager: TextManager {
 
-    var verses: ([String], [String]?)?
+    var verses: ([NSAttributedString], [NSAttributedString]?)?
     var versesRanges: ([Range <Int>], [Range<Int>]?)?
     
-    init(verses:([String], [String]?)) {
+    init(verses:([NSAttributedString], [NSAttributedString]?)) {
         self.verses = verses
         super.init()
     }
@@ -26,12 +26,12 @@ class VerseTextManager: TextManager {
         var currentStartPoint = 1
         if let verses = verses {
             for i in 0..<verses.0.count {
-                let endpoint = 2 + String(i).count + verses.0[i].count + currentStartPoint
+                let endpoint = 2 + String(i).count + verses.0[i].length + currentStartPoint
                 r1.append(currentStartPoint..<endpoint)
 //                textToDisplayInFirst.append(verses.0[i])
                 currentStartPoint = endpoint + 1
                 if let secondVerse = verses.1?[i] {
-                    let endpoint = 2 + String(i).count + secondVerse.count + currentStartPoint
+                    let endpoint = 2 + String(i).count + secondVerse.length + currentStartPoint
                     r2.append(currentStartPoint..<endpoint)
 //                    textToDisplayInSecond.append(secondVerse)
                     currentStartPoint = endpoint + 1
@@ -40,10 +40,11 @@ class VerseTextManager: TextManager {
             if let secondVerses = verses.1,
                 secondVerses.count > verses.0.count {
                 for i in verses.0.count..<secondVerses.count {
-                    let endpoint = 2 + String(i).count + secondVerses[i].count + currentStartPoint
+                    let endpoint = 2 + String(i).count + secondVerses[i].length + currentStartPoint
                     r2.append(currentStartPoint..<endpoint)
 //                    textToDisplayInSecond.append(secondVerses[i])
                     currentStartPoint = endpoint + 1
+                    
                 }
             }
             textToDisplayInFirst = verses.0

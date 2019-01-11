@@ -22,4 +22,9 @@ class Verse: NSManagedObject {
         v.text = t
         return v
     }
+    
+    var attributedCompound: NSAttributedString {
+        let att = NSMutableAttributedString(string: text ?? "")
+        return att
+    }
 }

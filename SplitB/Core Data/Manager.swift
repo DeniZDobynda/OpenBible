@@ -198,32 +198,26 @@ class Manager {
         return book1?.name ?? ""
     }
     
-    func getTwoStrings() -> ([String]?, [String]?) {
+    func getTwoStrings() -> ([NSAttributedString]?, [NSAttributedString]?) {
         if module1 == nil {
             initMainModule()
         }
         if module2 == nil {
             initSecondModule()
         }
-        var s1: [String]? = ["Please, download available modules"]
-        var s2: [String]? = nil
+        var s1: [NSAttributedString]? = [NSAttributedString(string:"Please, download available modules")]
+        var s2: [NSAttributedString]? = nil
         if let chapter = chapter1, let verses = chapter.verses?.array as? [Verse] {
-            var s = [String]()
+            s1 = []
             for verse in verses {
-                if let t = verse.text {
-                    s.append(t)
-                }
+                s1!.append(verse.attributedCompound)
             }
-            s1 = s
         }
         if let chapter = chapter2, let verses = chapter.verses?.array as? [Verse] {
-            var s = [String]()
+            s2 = []
             for verse in verses {
-                if let t = verse.text {
-                    s.append(t)
-                }
+                s2!.append(verse.attributedCompound)
             }
-            s2 = s
         }
         return (s1, s2)
     }

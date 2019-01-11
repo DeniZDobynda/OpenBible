@@ -67,7 +67,7 @@ class DownloadViewController: UIViewController {
 }
 
 
-extension DownloadViewController:UITableViewDataSource {
+extension DownloadViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return modules.count
@@ -84,6 +84,7 @@ extension DownloadViewController:UITableViewDataSource {
         }
         return cell
     }
+
 }
 
 extension DownloadViewController: UITableViewDelegate {

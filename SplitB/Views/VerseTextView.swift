@@ -58,6 +58,25 @@ class VerseTextView: CustomTextView {
         return nil
     }
     
+    func highlight(_ verse: Int, throught: Int) {
+        guard verse <= throught else {return}
+        guard let r1 = getRectOf(verse), let r2 = getRectOf(throught) else {return}
+        var r = CGRect(bounding: r1, with: r2)
+        r.size.width = bounds.width
+        let newView = UIView(frame: r)
+        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+        addSubview(newView)
+        UIView.animate(withDuration: 1.0, delay: 1, animations: {
+            newView.layer.opacity = 0
+        }) { (_) in
+            newView.removeFromSuperview()
+        }
+    }
+    
+    func highlight(_ verse: Int) {
+        highlight(verse, throught: verse)
+    }
+    
     private func selectVerse(number: Int, first: Bool = true) {
         var rangeCh: Range <Int>
         if selectedFirstVerse == nil {
@@ -94,8 +113,8 @@ class VerseTextView: CustomTextView {
             rangeCh = lower..<upper
             selectedSecondVerse = (number, first)
         }
-        var ixStart = layoutManager.glyphIndexForCharacter(at: rangeCh.lowerBound)
-        var ixEnd = layoutManager.glyphIndexForCharacter(at: rangeCh.upperBound)
+        var ixStart = rangeCh.lowerBound//layoutManager.glyphIndexForCharacter(at: rangeCh.lowerBound)
+        var ixEnd = rangeCh.upperBound//layoutManager.glyphIndexForCharacter(at: rangeCh.upperBound)
         var range: NSRange
         if ixStart > ixEnd {
             swap(&ixStart, &ixEnd)
@@ -103,29 +122,31 @@ class VerseTextView: CustomTextView {
         
         let s = layoutManager.textStorage!.string
         var sub = String(s[..<s.index(s.startIndex, offsetBy:ixStart)])
-        var count = sub.indicesOf(string: "\r").count
-        if boundingRectsForVerses?.1 != nil {
-            count /= 2
-        }
-        ixStart += count
+        var count = sub.indicesOf(string: "\n").count
+//        if boundingRectsForVerses?.1 != nil {
+//            count /= 2
+//        }
+        ixStart -= count
 //        var charRange = layoutManager.characterRange(forGlyphRange: NSRange(ixStart - count..<ixEnd - count), actualGlyphRange: nil)
 //        while(charRange.lowerBound > 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.lowerBound - 1)])) {
 //            charRange.location -= 1
 //            charRange.length += 1
 //            ixStart -= 1
 //        }
+        
         sub = s[rangeCh.lowerBound - count..<rangeCh.upperBound - count]
         if boundingRectsForVerses?.1 != nil {
-            count += (sub.indicesOf(string: "\r").count - 1 ) / 2
+            count += (sub.indicesOf(string: "\n").count - 1 ) / 2
         } else {
-            count += sub.indicesOf(string: "\r").count - 1
+            count += sub.indicesOf(string: "\n").count - 1
         }
+        
 //        charRange.length -= count
 //        while(charRange.upperBound < s.count - 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.upperBound + 1)])) {
 //            charRange.length += 1
 //            ixEnd += 1
 //        }
-        ixEnd += count
+        ixEnd -= count
         range = NSRange(ixStart...ixEnd)
         previousRange = range
         layoutManager.selectedRange = range

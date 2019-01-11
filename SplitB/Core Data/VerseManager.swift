@@ -10,19 +10,21 @@ import UIKit
 
 class VerseManager: Manager {
 
-    func getVerses() -> ([String], [String]?) {
+    var verses: [Range<Int>]?
+    
+    func getVerses() -> ([NSAttributedString], [NSAttributedString]?) {
         if module1 == nil {
             initMainModule()
         }
         if module2 == nil {
             initSecondModule()
         }
-        var v1: [String] = []
-        var v2: [String]?
+        var v1: [NSAttributedString] = []
+        var v2: [NSAttributedString]?
         if var verses = chapter1?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            v1 = verses.map { return $0.text ?? ""}
+            v1 = verses.map { return $0.attributedCompound }
 //            for i in 0..<v1.count {
 //                v1[i].remove(at: v1[i].index(v1[i].endIndex, offsetBy: -1))
 //            }
@@ -30,7 +32,7 @@ class VerseManager: Manager {
         if var verses = chapter2?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            v2 = verses.map { return $0.text ?? ""}
+            v2 = verses.map { return $0.attributedCompound }
 //            for i in 0..<v2!.count {
 //                v2![i].remove(at: v2![i].index(v2![i].endIndex, offsetBy: -1))
 //            }
@@ -63,7 +65,7 @@ class VerseManager: Manager {
     
     
     func setChapter(number: Int) {
-        if let book = book1, let ch = book.chapters?.array, ch.count > number {
+        if let book = book1, let ch = book.chapters?.array, ch.count >= number {
             chapterNumber = number
         }
     }

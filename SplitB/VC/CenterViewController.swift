@@ -131,8 +131,8 @@ class CenterViewController: UIViewController {
     // MARK: - Private implementation
     
     func loadTextManager(_ forced: Bool = true) {
-        var first: [String] = []
-        var second: [String] = []
+        var first: [NSAttributedString] = []
+        var second: [NSAttributedString] = []
         let texts = coreManager?.getTwoStrings()
         if let f = texts?.0 {
             first = f
