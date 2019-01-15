@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func openUrlIfNeeded() {
-        if urlToOpen != nil {
+        if urlToOpen != nil, urlDelegate != nil {
             urlDelegate?.openedURL(with: urlToOpen!)
             urlToOpen = nil
         }
