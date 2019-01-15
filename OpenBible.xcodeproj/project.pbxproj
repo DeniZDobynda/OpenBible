@@ -28,14 +28,15 @@
 		22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22370BE221A731C800C43E72 /* CenterVersesViewController.swift */; };
 		2239F70F21C7D0AC008715B5 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2239F70E21C7D0AC008715B5 /* MainTabBarController.swift */; };
 		2239F71121C7E271008715B5 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2239F71021C7E271008715B5 /* DownloadCell.swift */; };
-		2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248324421787C4C00DF5C95 /* AppDelegate.swift */; };
 		2248324A21787C4C00DF5C95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2248324821787C4C00DF5C95 /* Main.storyboard */; };
-		2248324D21787C4C00DF5C95 /* SplitB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */; };
 		2248324F21787C4C00DF5C95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2248324E21787C4C00DF5C95 /* Assets.xcassets */; };
 		2248325221787C4C00DF5C95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2248325021787C4C00DF5C95 /* LaunchScreen.storyboard */; };
 		2248325D21787C4D00DF5C95 /* SplitBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248325C21787C4D00DF5C95 /* SplitBTests.swift */; };
 		2248326821787C4D00DF5C95 /* SplitBUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2248326721787C4D00DF5C95 /* SplitBUITests.swift */; };
 		224A181E21EDD539009CC904 /* Bonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A181D21EDD539009CC904 /* Bonjour.swift */; };
+		224A182321EDF906009CC904 /* Strong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182221EDF906009CC904 /* Strong.swift */; };
+		224A182621EDF9AF009CC904 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182521EDF9AF009CC904 /* AppDelegate.swift */; };
+		224A182721EDFA60009CC904 /* OpenBible.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 224A181F21EDF67F009CC904 /* OpenBible.xcdatamodeld */; };
 		226259202182E8F60032ECE8 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262591F2182E8F60032ECE8 /* CustomTextView.swift */; };
 		22BBED9221AAA8360096A258 /* VerseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BBED9121AAA8360096A258 /* VerseTextView.swift */; };
 		22CD76C621C8039900D2E6FA /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CD76C521C8039900D2E6FA /* SearchTextField.swift */; };
@@ -95,20 +96,21 @@
 		2239F71721C7F23A008715B5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		2239F72321C7F4EC008715B5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2239F72421C7F4EC008715B5 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2248324121787C4C00DF5C95 /* SplitB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SplitB.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2248324421787C4C00DF5C95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2248324121787C4C00DF5C95 /* OpenBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2248324921787C4C00DF5C95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2248324C21787C4C00DF5C95 /* SplitB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SplitB.xcdatamodel; sourceTree = "<group>"; };
 		2248324E21787C4C00DF5C95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2248325121787C4C00DF5C95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2248325321787C4C00DF5C95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2248325821787C4D00DF5C95 /* SplitBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SplitBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2248325821787C4D00DF5C95 /* OpenBibleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBibleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2248325C21787C4D00DF5C95 /* SplitBTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBTests.swift; sourceTree = "<group>"; };
 		2248325E21787C4D00DF5C95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2248326321787C4D00DF5C95 /* SplitBUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SplitBUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2248326321787C4D00DF5C95 /* OpenBibleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBibleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2248326721787C4D00DF5C95 /* SplitBUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBUITests.swift; sourceTree = "<group>"; };
 		2248326921787C4D00DF5C95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224A181D21EDD539009CC904 /* Bonjour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bonjour.swift; sourceTree = "<group>"; };
+		224A182021EDF67F009CC904 /* OpenBible.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenBible.xcdatamodel; sourceTree = "<group>"; };
+		224A182221EDF906009CC904 /* Strong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strong.swift; sourceTree = "<group>"; };
+		224A182521EDF9AF009CC904 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2262591F2182E8F60032ECE8 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		22BBED9121AAA8360096A258 /* VerseTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseTextView.swift; sourceTree = "<group>"; };
 		22CD76C521C8039900D2E6FA /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -163,11 +165,7 @@
 				22071C5A2181A72400A184E3 /* Chapter.swift */,
 				22071C5C2181A72D00A184E3 /* Verse.swift */,
 				221A276121AD344C0098D31A /* History.swift */,
-				22071C5E2181AF2100A184E3 /* Manager.swift */,
-				22370BDE21A71EBA00C43E72 /* VerseManager.swift */,
-				22071C602181B8D900A184E3 /* DownloadManager.swift */,
-				22D568E8218850E800F36B23 /* PlistManager.swift */,
-				22D568EA218853A400F36B23 /* plistHandler.swift */,
+				224A182221EDF906009CC904 /* Strong.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -175,9 +173,9 @@
 		2248323821787C4C00DF5C95 = {
 			isa = PBXGroup;
 			children = (
-				2248324321787C4C00DF5C95 /* SplitB */,
-				2248325B21787C4D00DF5C95 /* SplitBTests */,
-				2248326621787C4D00DF5C95 /* SplitBUITests */,
+				2248324321787C4C00DF5C95 /* OpenBible */,
+				2248325B21787C4D00DF5C95 /* OpenBibleTests */,
+				2248326621787C4D00DF5C95 /* OpenBibleUITests */,
 				2248324221787C4C00DF5C95 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -185,47 +183,61 @@
 		2248324221787C4C00DF5C95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2248324121787C4C00DF5C95 /* SplitB.app */,
-				2248325821787C4D00DF5C95 /* SplitBTests.xctest */,
-				2248326321787C4D00DF5C95 /* SplitBUITests.xctest */,
+				2248324121787C4C00DF5C95 /* OpenBible.app */,
+				2248325821787C4D00DF5C95 /* OpenBibleTests.xctest */,
+				2248326321787C4D00DF5C95 /* OpenBibleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2248324321787C4C00DF5C95 /* SplitB */ = {
+		2248324321787C4C00DF5C95 /* OpenBible */ = {
 			isa = PBXGroup;
 			children = (
+				224A182521EDF9AF009CC904 /* AppDelegate.swift */,
 				22D568DB21861AE900F36B23 /* Views */,
 				2248324821787C4C00DF5C95 /* Main.storyboard */,
 				22CE459E2180A27600183ED3 /* VC */,
 				22CE459F2180A46900183ED3 /* Model */,
+				224A182821EE04B9009CC904 /* Managing */,
 				22071C552181A6E800A184E3 /* Core Data */,
 				226259212182FC910032ECE8 /* Supplement */,
 				22CE459B2180A21A00183ED3 /* Supporting Files */,
 				2248325321787C4C00DF5C95 /* Info.plist */,
-				2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */,
 				22D568EC2188578600F36B23 /* UserSettings.plist */,
 				22CD76E521C821FF00D2E6FA /* Localizable.strings */,
+				224A181F21EDF67F009CC904 /* OpenBible.xcdatamodeld */,
 			);
-			path = SplitB;
+			path = OpenBible;
 			sourceTree = "<group>";
 		};
-		2248325B21787C4D00DF5C95 /* SplitBTests */ = {
+		2248325B21787C4D00DF5C95 /* OpenBibleTests */ = {
 			isa = PBXGroup;
 			children = (
 				2248325C21787C4D00DF5C95 /* SplitBTests.swift */,
 				2248325E21787C4D00DF5C95 /* Info.plist */,
 			);
-			path = SplitBTests;
+			path = OpenBibleTests;
 			sourceTree = "<group>";
 		};
-		2248326621787C4D00DF5C95 /* SplitBUITests */ = {
+		2248326621787C4D00DF5C95 /* OpenBibleUITests */ = {
 			isa = PBXGroup;
 			children = (
 				2248326721787C4D00DF5C95 /* SplitBUITests.swift */,
 				2248326921787C4D00DF5C95 /* Info.plist */,
 			);
-			path = SplitBUITests;
+			path = OpenBibleUITests;
+			sourceTree = "<group>";
+		};
+		224A182821EE04B9009CC904 /* Managing */ = {
+			isa = PBXGroup;
+			children = (
+				22071C5E2181AF2100A184E3 /* Manager.swift */,
+				22370BDE21A71EBA00C43E72 /* VerseManager.swift */,
+				22071C602181B8D900A184E3 /* DownloadManager.swift */,
+				22D568E8218850E800F36B23 /* PlistManager.swift */,
+				22D568EA218853A400F36B23 /* plistHandler.swift */,
+			);
+			path = Managing;
 			sourceTree = "<group>";
 		};
 		226259212182FC910032ECE8 /* Supplement */ = {
@@ -241,7 +253,6 @@
 		22CE459B2180A21A00183ED3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2248324421787C4C00DF5C95 /* AppDelegate.swift */,
 				2248324E21787C4C00DF5C95 /* Assets.xcassets */,
 				2248325021787C4C00DF5C95 /* LaunchScreen.storyboard */,
 			);
@@ -293,9 +304,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2248324021787C4C00DF5C95 /* SplitB */ = {
+		2248324021787C4C00DF5C95 /* OpenBible */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2248326C21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitB" */;
+			buildConfigurationList = 2248326C21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBible" */;
 			buildPhases = (
 				2248323D21787C4C00DF5C95 /* Sources */,
 				2248323E21787C4C00DF5C95 /* Frameworks */,
@@ -305,14 +316,14 @@
 			);
 			dependencies = (
 			);
-			name = SplitB;
+			name = OpenBible;
 			productName = SplitB;
-			productReference = 2248324121787C4C00DF5C95 /* SplitB.app */;
+			productReference = 2248324121787C4C00DF5C95 /* OpenBible.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2248325721787C4D00DF5C95 /* SplitBTests */ = {
+		2248325721787C4D00DF5C95 /* OpenBibleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2248326F21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitBTests" */;
+			buildConfigurationList = 2248326F21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBibleTests" */;
 			buildPhases = (
 				2248325421787C4D00DF5C95 /* Sources */,
 				2248325521787C4D00DF5C95 /* Frameworks */,
@@ -323,14 +334,14 @@
 			dependencies = (
 				2248325A21787C4D00DF5C95 /* PBXTargetDependency */,
 			);
-			name = SplitBTests;
+			name = OpenBibleTests;
 			productName = SplitBTests;
-			productReference = 2248325821787C4D00DF5C95 /* SplitBTests.xctest */;
+			productReference = 2248325821787C4D00DF5C95 /* OpenBibleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2248326221787C4D00DF5C95 /* SplitBUITests */ = {
+		2248326221787C4D00DF5C95 /* OpenBibleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2248327221787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitBUITests" */;
+			buildConfigurationList = 2248327221787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBibleUITests" */;
 			buildPhases = (
 				2248325F21787C4D00DF5C95 /* Sources */,
 				2248326021787C4D00DF5C95 /* Frameworks */,
@@ -341,9 +352,9 @@
 			dependencies = (
 				2248326521787C4D00DF5C95 /* PBXTargetDependency */,
 			);
-			name = SplitBUITests;
+			name = OpenBibleUITests;
 			productName = SplitBUITests;
-			productReference = 2248326321787C4D00DF5C95 /* SplitBUITests.xctest */;
+			productReference = 2248326321787C4D00DF5C95 /* OpenBibleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -369,7 +380,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2248323C21787C4C00DF5C95 /* Build configuration list for PBXProject "SplitB" */;
+			buildConfigurationList = 2248323C21787C4C00DF5C95 /* Build configuration list for PBXProject "OpenBible" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -384,9 +395,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2248324021787C4C00DF5C95 /* SplitB */,
-				2248325721787C4D00DF5C95 /* SplitBTests */,
-				2248326221787C4D00DF5C95 /* SplitBUITests */,
+				2248324021787C4C00DF5C95 /* OpenBible */,
+				2248325721787C4D00DF5C95 /* OpenBibleTests */,
+				2248326221787C4D00DF5C95 /* OpenBibleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -433,11 +444,11 @@
 				22071C782181E4CE00A184E3 /* SidePanelViewController.swift in Sources */,
 				22D568E721873B4000F36B23 /* Protocols.swift in Sources */,
 				22071C832181E75700A184E3 /* TwoColumnContainer.swift in Sources */,
-				2248324D21787C4C00DF5C95 /* SplitB.xcdatamodeld in Sources */,
 				22370BE321A731C800C43E72 /* CenterVersesViewController.swift in Sources */,
 				22071C612181B8D900A184E3 /* DownloadManager.swift in Sources */,
 				224A181E21EDD539009CC904 /* Bonjour.swift in Sources */,
 				22D568E9218850E800F36B23 /* PlistManager.swift in Sources */,
+				224A182621EDF9AF009CC904 /* AppDelegate.swift in Sources */,
 				22CE45A12180A48C00183ED3 /* ModuleOffline.swift in Sources */,
 				22071C772181E4CE00A184E3 /* ContainerViewController.swift in Sources */,
 				22071C592181A71A00A184E3 /* Book.swift in Sources */,
@@ -450,11 +461,12 @@
 				22D568EB218853A400F36B23 /* plistHandler.swift in Sources */,
 				22CE459D2180A27000183ED3 /* DownloadViewController.swift in Sources */,
 				22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */,
+				224A182321EDF906009CC904 /* Strong.swift in Sources */,
 				22D568DF2186EB2300F36B23 /* BookTableViewCell.swift in Sources */,
 				2239F71121C7E271008715B5 /* DownloadCell.swift in Sources */,
 				22071C572181A70D00A184E3 /* Module.swift in Sources */,
-				2248324521787C4C00DF5C95 /* AppDelegate.swift in Sources */,
 				22071C5F2181AF2100A184E3 /* Manager.swift in Sources */,
+				224A182721EDFA60009CC904 /* OpenBible.xcdatamodeld in Sources */,
 				221A276221AD344C0098D31A /* History.swift in Sources */,
 				22071C802181E75700A184E3 /* LeftSelectionViewController.swift in Sources */,
 				22071C822181E75700A184E3 /* CustomDebugLayoutManager.swift in Sources */,
@@ -485,12 +497,12 @@
 /* Begin PBXTargetDependency section */
 		2248325A21787C4D00DF5C95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2248324021787C4C00DF5C95 /* SplitB */;
+			target = 2248324021787C4C00DF5C95 /* OpenBible */;
 			targetProxy = 2248325921787C4D00DF5C95 /* PBXContainerItemProxy */;
 		};
 		2248326521787C4D00DF5C95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2248324021787C4C00DF5C95 /* SplitB */;
+			target = 2248324021787C4C00DF5C95 /* OpenBible */;
 			targetProxy = 2248326421787C4D00DF5C95 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -656,12 +668,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6V7ANKZCL9;
-				INFOPLIST_FILE = SplitB/Info.plist;
+				INFOPLIST_FILE = OpenBible/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.theDeniZ.SplitB;
+				PRODUCT_BUNDLE_IDENTIFIER = com.theDeniZ.OpenBible;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -674,12 +686,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6V7ANKZCL9;
-				INFOPLIST_FILE = SplitB/Info.plist;
+				INFOPLIST_FILE = OpenBible/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.theDeniZ.SplitB;
+				PRODUCT_BUNDLE_IDENTIFIER = com.theDeniZ.OpenBible;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -703,7 +715,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SplitB.app/SplitB";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBible.app/OpenBible";
 			};
 			name = Debug;
 		};
@@ -724,7 +736,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SplitB.app/SplitB";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBible.app/OpenBible";
 			};
 			name = Release;
 		};
@@ -771,7 +783,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2248323C21787C4C00DF5C95 /* Build configuration list for PBXProject "SplitB" */ = {
+		2248323C21787C4C00DF5C95 /* Build configuration list for PBXProject "OpenBible" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2248326A21787C4D00DF5C95 /* Debug */,
@@ -780,7 +792,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2248326C21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitB" */ = {
+		2248326C21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBible" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2248326D21787C4D00DF5C95 /* Debug */,
@@ -789,7 +801,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2248326F21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitBTests" */ = {
+		2248326F21787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBibleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2248327021787C4D00DF5C95 /* Debug */,
@@ -798,7 +810,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2248327221787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "SplitBUITests" */ = {
+		2248327221787C4D00DF5C95 /* Build configuration list for PBXNativeTarget "OpenBibleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2248327321787C4D00DF5C95 /* Debug */,
@@ -810,13 +822,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		2248324B21787C4C00DF5C95 /* SplitB.xcdatamodeld */ = {
+		224A181F21EDF67F009CC904 /* OpenBible.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				2248324C21787C4C00DF5C95 /* SplitB.xcdatamodel */,
+				224A182021EDF67F009CC904 /* OpenBible.xcdatamodel */,
 			);
-			currentVersion = 2248324C21787C4C00DF5C95 /* SplitB.xcdatamodel */;
-			path = SplitB.xcdatamodeld;
+			currentVersion = 224A182021EDF67F009CC904 /* OpenBible.xcdatamodel */;
+			path = OpenBible.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

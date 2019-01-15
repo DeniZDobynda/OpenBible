@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct StrongIdentifier {
+    static let oldTestament = "Hebrew"
+    static let newTestament = "Greek"
+    static let plistIdentifier = "strong_keys"
+}
+
 extension CGRect {
     init(_ x: Double, _ y: Double, _ width: Double, _ height: Double) {
         self.init(x: x, y: y, width: width, height: height)

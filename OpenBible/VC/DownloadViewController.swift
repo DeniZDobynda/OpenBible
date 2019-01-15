@@ -12,6 +12,7 @@ import CoreData
 class DownloadViewController: UIViewController {
     
     @IBOutlet weak var table: UITableView! { didSet { table.delegate = self; table.dataSource = self } }
+    @IBOutlet weak var containerView: UIView!
     
     private var modules: [ModuleOffline]! //{ didSet{ update() }}
     private var modulesDownloaded: [String] = []
@@ -54,7 +55,24 @@ class DownloadViewController: UIViewController {
         if let downloaded = manager.getAvailableModules() {
             modulesDownloaded = downloaded.map() {$0.key?.lowercased() ?? ""}
         }
+        
+        table.isHidden = false
+        containerView.isHidden = true
     }
+    
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            table.isHidden = false
+            containerView.isHidden = true
+        case 1:
+            table.isHidden = true
+            containerView.isHidden = false
+        default:
+            break
+        }
+    }
+    
     
 //    private func update() {
 //        performSelector(onMainThread: #selector(updateUI), with: nil, waitUntilDone: false)
