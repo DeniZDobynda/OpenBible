@@ -39,3 +39,11 @@ protocol StrongsLinkEmbeddable {
 protocol URLDelegate {
     func openedURL(with parameters: [String])
 }
+
+protocol SharingObjectTableCellDelegate {
+    func sharingTableCellWasSelected(_ state: Bool, at index: Int)
+}
+
+protocol SyncManagerDelegate {
+    func syncManagerDidGetUpdate()
+}

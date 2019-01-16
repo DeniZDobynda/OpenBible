@@ -37,6 +37,9 @@
 		224A182321EDF906009CC904 /* Strong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182221EDF906009CC904 /* Strong.swift */; };
 		224A182621EDF9AF009CC904 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182521EDF9AF009CC904 /* AppDelegate.swift */; };
 		224A182721EDFA60009CC904 /* OpenBible.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 224A181F21EDF67F009CC904 /* OpenBible.xcdatamodeld */; };
+		224A182A21EE05EF009CC904 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182921EE05EF009CC904 /* SyncViewController.swift */; };
+		224A182C21EE0741009CC904 /* ServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182B21EE0741009CC904 /* ServiceTableViewCell.swift */; };
+		224A182E21EE225F009CC904 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A182D21EE225F009CC904 /* SyncManager.swift */; };
 		226259202182E8F60032ECE8 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262591F2182E8F60032ECE8 /* CustomTextView.swift */; };
 		22BBED9221AAA8360096A258 /* VerseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BBED9121AAA8360096A258 /* VerseTextView.swift */; };
 		22CD76C621C8039900D2E6FA /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CD76C521C8039900D2E6FA /* SearchTextField.swift */; };
@@ -111,6 +114,9 @@
 		224A182021EDF67F009CC904 /* OpenBible.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenBible.xcdatamodel; sourceTree = "<group>"; };
 		224A182221EDF906009CC904 /* Strong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strong.swift; sourceTree = "<group>"; };
 		224A182521EDF9AF009CC904 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		224A182921EE05EF009CC904 /* SyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
+		224A182B21EE0741009CC904 /* ServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTableViewCell.swift; sourceTree = "<group>"; };
+		224A182D21EE225F009CC904 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		2262591F2182E8F60032ECE8 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		22BBED9121AAA8360096A258 /* VerseTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseTextView.swift; sourceTree = "<group>"; };
 		22CD76C521C8039900D2E6FA /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				22071C602181B8D900A184E3 /* DownloadManager.swift */,
 				22D568E8218850E800F36B23 /* PlistManager.swift */,
 				22D568EA218853A400F36B23 /* plistHandler.swift */,
+				224A182D21EE225F009CC904 /* SyncManager.swift */,
 			);
 			path = Managing;
 			sourceTree = "<group>";
@@ -271,6 +278,7 @@
 				22D568E4218738D900F36B23 /* ModalViewController.swift */,
 				221A275F21AD330D0098D31A /* HistoryViewController.swift */,
 				2239F70E21C7D0AC008715B5 /* MainTabBarController.swift */,
+				224A182921EE05EF009CC904 /* SyncViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -297,6 +305,7 @@
 				22D568E02186EC6A00F36B23 /* NumberCollectionViewCell.swift */,
 				2239F71021C7E271008715B5 /* DownloadCell.swift */,
 				22CD76C521C8039900D2E6FA /* SearchTextField.swift */,
+				224A182B21EE0741009CC904 /* ServiceTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +472,7 @@
 				22370BE121A7235B00C43E72 /* VerseTextManager.swift in Sources */,
 				224A182321EDF906009CC904 /* Strong.swift in Sources */,
 				22D568DF2186EB2300F36B23 /* BookTableViewCell.swift in Sources */,
+				224A182A21EE05EF009CC904 /* SyncViewController.swift in Sources */,
 				2239F71121C7E271008715B5 /* DownloadCell.swift in Sources */,
 				22071C572181A70D00A184E3 /* Module.swift in Sources */,
 				22071C5F2181AF2100A184E3 /* Manager.swift in Sources */,
@@ -471,7 +481,9 @@
 				22071C802181E75700A184E3 /* LeftSelectionViewController.swift in Sources */,
 				22071C822181E75700A184E3 /* CustomDebugLayoutManager.swift in Sources */,
 				22D568E5218738D900F36B23 /* ModalViewController.swift in Sources */,
+				224A182E21EE225F009CC904 /* SyncManager.swift in Sources */,
 				221A276021AD330D0098D31A /* HistoryViewController.swift in Sources */,
+				224A182C21EE0741009CC904 /* ServiceTableViewCell.swift in Sources */,
 				22071C5B2181A72400A184E3 /* Chapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

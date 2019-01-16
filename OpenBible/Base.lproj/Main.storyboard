@@ -12,7 +12,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="3dg-YH-dLC">
             <objects>
-                <tabBarController id="63U-Qa-Cy5" customClass="MainTabBarController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="63U-Qa-Cy5" customClass="MainTabBarController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ktC-Wo-Lla">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -30,7 +30,7 @@
         <!--Read-->
         <scene sceneID="dKQ-e3-XIG">
             <objects>
-                <viewController id="gxE-eX-D2Y" customClass="ContainerViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gxE-eX-D2Y" customClass="ContainerViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nta-Wi-x2j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,7 +46,7 @@
         <!--Download-->
         <scene sceneID="LfN-uT-Ocv">
             <objects>
-                <viewController id="uyW-6v-FBA" customClass="DownloadViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uyW-6v-FBA" customClass="DownloadViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jws-3J-Txb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +71,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Module Cell" id="Agh-UN-RoC" customClass="DownloadCell" customModule="SplitB" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Module Cell" id="Agh-UN-RoC" customClass="DownloadCell" customModule="OpenBible" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Agh-UN-RoC" id="tuF-wZ-wnr">
@@ -79,7 +79,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UjM-nw-JtY">
-                                                                    <rect key="frame" x="20" y="10" width="335" height="23.666666666666671"/>
+                                                                    <rect key="frame" x="20" y="10.000000000000002" width="335" height="23.666666666666671"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YVr-vC-cZW">
                                                                             <rect key="frame" x="0.0" y="0.0" width="305" height="23.666666666666668"/>
@@ -123,7 +123,7 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Gp-6j-XHi">
+                                            <containerView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6Gp-6j-XHi">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                                 <connections>
                                                     <segue destination="YWT-lV-igg" kind="embed" id="5jd-R0-iHt"/>
@@ -138,7 +138,7 @@
                         <constraints>
                             <constraint firstItem="Z2Z-Zv-dqI" firstAttribute="leading" secondItem="s0K-cX-VVE" secondAttribute="leading" id="8SC-CQ-aYt"/>
                             <constraint firstItem="Z2Z-Zv-dqI" firstAttribute="trailing" secondItem="s0K-cX-VVE" secondAttribute="trailing" id="DyO-cI-yPd"/>
-                            <constraint firstItem="Z2Z-Zv-dqI" firstAttribute="top" secondItem="s0K-cX-VVE" secondAttribute="top" id="vWl-Da-v5p"/>
+                            <constraint firstItem="Z2Z-Zv-dqI" firstAttribute="top" secondItem="s0K-cX-VVE" secondAttribute="top" priority="750" id="vWl-Da-v5p"/>
                             <constraint firstItem="Z2Z-Zv-dqI" firstAttribute="bottom" secondItem="s0K-cX-VVE" secondAttribute="bottom" id="w6k-Qm-nRC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="s0K-cX-VVE"/>
@@ -156,7 +156,7 @@
         <!--Center View Controller-->
         <scene sceneID="21z-9C-VlR">
             <objects>
-                <viewController storyboardIdentifier="CenterViewController" title="Center View Controller" id="JnF-gd-Bwh" customClass="CenterVersesViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CenterViewController" title="Center View Controller" id="JnF-gd-Bwh" customClass="CenterVersesViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YML-uV-Exn"/>
                         <viewControllerLayoutGuide type="bottom" id="snW-Nn-kps"/>
@@ -168,7 +168,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ox3-Gi-gnJ">
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                             </scrollView>
-                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="rev7:15" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sn1-2d-jgR" customClass="SearchTextField" customModule="SplitB" customModuleProvider="target">
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="rev7:15" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sn1-2d-jgR" customClass="SearchTextField" customModule="OpenBible" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="375" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -218,7 +218,7 @@
         <!--History View Controller-->
         <scene sceneID="W02-eU-bMz">
             <objects>
-                <viewController id="56W-Cz-Ui8" customClass="HistoryViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="56W-Cz-Ui8" customClass="HistoryViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hj5-dO-gj2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -300,7 +300,7 @@
         <!--Modal View Controller-->
         <scene sceneID="XPh-nK-CP6">
             <objects>
-                <viewController id="qOz-bG-0gx" customClass="ModalViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qOz-bG-0gx" customClass="ModalViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wIj-DJ-Adf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -372,7 +372,7 @@
         <!--Left View Controller-->
         <scene sceneID="O8h-TT-Kld">
             <objects>
-                <viewController storyboardIdentifier="LeftViewController" title="Left View Controller" id="xeb-JB-MFX" customClass="LeftSelectionViewController" customModule="SplitB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeftViewController" title="Left View Controller" id="xeb-JB-MFX" customClass="LeftSelectionViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6aU-tZ-mgH"/>
                         <viewControllerLayoutGuide type="bottom" id="2J1-bf-kAj"/>
@@ -409,7 +409,7 @@
                                         <rect key="frame" x="0.0" y="40" width="375" height="694"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Book Table Cell" focusStyle="custom" rowHeight="110" id="Kw4-Id-C2I" customClass="BookTableViewCell" customModule="SplitB" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Book Table Cell" focusStyle="custom" rowHeight="110" id="Kw4-Id-C2I" customClass="BookTableViewCell" customModule="OpenBible" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="110"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kw4-Id-C2I" id="5FB-gq-qso">
@@ -438,7 +438,7 @@
                                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     </collectionViewFlowLayout>
                                                                     <cells>
-                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Number Collection Cell" id="GBv-qP-Cfk" customClass="NumberCollectionViewCell" customModule="SplitB" customModuleProvider="target">
+                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Number Collection Cell" id="GBv-qP-Cfk" customClass="NumberCollectionViewCell" customModule="OpenBible" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -505,19 +505,133 @@
             </objects>
             <point key="canvasLocation" x="-42" y="-763"/>
         </scene>
-        <!--View Controller-->
+        <!--Sync View Controller-->
         <scene sceneID="Ye2-QK-eQR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8hd-YE-4vT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="YWT-lV-igg" sceneMemberID="viewController">
+                <viewController id="YWT-lV-igg" customClass="SyncViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hL6-gG-X5W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="UcW-y1-j2T">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="613"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n8O-fi-cWV">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="541"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gCc-18-wcS">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="260.66666666666669"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Services Table Cell" textLabel="Tcz-Qm-KK3" style="IBUITableViewCellStyleDefault" id="6pB-mN-CTu">
+                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6pB-mN-CTu" id="zqy-V7-Q4g">
+                                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.666666666666664"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tcz-Qm-KK3">
+                                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.666666666666664"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cse-72-2MY">
+                                                <rect key="frame" x="0.0" y="280.66666666666674" width="375" height="260.33333333333326"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Info Table Cell" id="PjN-ir-1ks" customClass="ServiceTableViewCell" customModule="OpenBible" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PjN-ir-1ks" id="Mrh-6u-lIW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wTd-O9-Qqq">
+                                                                    <rect key="frame" x="20" y="5" width="335" height="33.666666666666664"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vI-mc-MeA">
+                                                                            <rect key="frame" x="0.0" y="8" width="266" height="18"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Sg-Y9g">
+                                                                            <rect key="frame" x="286" y="1.3333333333333321" width="51" height="30.999999999999996"/>
+                                                                            <connections>
+                                                                                <action selector="switched:" destination="PjN-ir-1ks" eventType="valueChanged" id="N0O-5Y-CGP"/>
+                                                                            </connections>
+                                                                        </switch>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="wTd-O9-Qqq" secondAttribute="bottom" constant="5" id="FFf-sg-kVB"/>
+                                                                <constraint firstItem="wTd-O9-Qqq" firstAttribute="top" secondItem="Mrh-6u-lIW" secondAttribute="top" constant="5" id="ISm-je-1vy"/>
+                                                                <constraint firstItem="wTd-O9-Qqq" firstAttribute="leading" secondItem="Mrh-6u-lIW" secondAttribute="leading" constant="20" id="eBX-i9-xB2"/>
+                                                                <constraint firstAttribute="trailing" secondItem="wTd-O9-Qqq" secondAttribute="trailing" constant="20" id="s3z-Bv-yn4"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="nameLabel" destination="0vI-mc-MeA" id="Rl3-X1-NrL"/>
+                                                            <outlet property="switcher" destination="Xmz-Sg-Y9g" id="ddu-dS-F2V"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
+                                        </subviews>
+                                    </stackView>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jvL-Mz-tHB">
+                                        <rect key="frame" x="0.0" y="561" width="375" height="2"/>
+                                    </progressView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="tUX-lg-Jq2">
+                                        <rect key="frame" x="0.0" y="583" width="375" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HO3-I5-voJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="30"/>
+                                                <state key="normal" title="Back"/>
+                                                <connections>
+                                                    <action selector="backAction:" destination="YWT-lV-igg" eventType="touchUpInside" id="KFi-xT-Eso"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJG-Li-36Y">
+                                                <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="30"/>
+                                                <state key="normal" title="Sync"/>
+                                                <connections>
+                                                    <action selector="syncAction:" destination="YWT-lV-igg" eventType="touchUpInside" id="1Q3-Cn-Sym"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UcW-y1-j2T" firstAttribute="leading" secondItem="hL6-gG-X5W" secondAttribute="leading" id="5Dw-Vc-Wak"/>
+                            <constraint firstItem="UcW-y1-j2T" firstAttribute="top" secondItem="hL6-gG-X5W" secondAttribute="top" priority="750" id="Bfy-nt-dfv"/>
+                            <constraint firstItem="0Yq-de-Eu6" firstAttribute="trailing" secondItem="UcW-y1-j2T" secondAttribute="trailing" id="DRN-1H-KcQ"/>
+                            <constraint firstItem="0Yq-de-Eu6" firstAttribute="bottom" secondItem="UcW-y1-j2T" secondAttribute="bottom" priority="750" id="UKk-dC-wHm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0Yq-de-Eu6"/>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="HO3-I5-voJ" id="um9-bm-zof"/>
+                        <outlet property="infoTable" destination="Cse-72-2MY" id="eag-Mw-PtQ"/>
+                        <outlet property="progressBar" destination="jvL-Mz-tHB" id="1bq-Ri-wh8"/>
+                        <outlet property="servicesTable" destination="gCc-18-wcS" id="FL7-Yx-GuT"/>
+                        <outlet property="syncButton" destination="nJG-Li-36Y" id="zBa-Ic-dUE"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8hd-YE-4vT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-44" y="744"/>
+            <point key="canvasLocation" x="-44" y="743.7192118226601"/>
         </scene>
     </scenes>
     <resources>
