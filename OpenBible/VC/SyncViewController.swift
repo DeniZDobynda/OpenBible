@@ -19,6 +19,7 @@ class SyncViewController: UIViewController {
     private var browser = Bonjour()
     private let refreshControl = UIRefreshControl()
     
+    
     @IBOutlet private weak var servicesTable: UITableView!
     @IBOutlet private weak var infoTable: UITableView!
     @IBOutlet private weak var progressBar: UIProgressView!
@@ -69,14 +70,13 @@ class SyncViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        manager?.closeNetworkCommunication()
+        closeConnectionAndRestoreView()
     }
     
-    @IBAction func backAction(_ sender: UIButton) {
-        manager!.closeNetworkCommunication()
+    private func closeConnectionAndRestoreView() {
+        manager?.closeNetworkCommunication()
         manager = nil
         services = []
-        scan()
         infoTable.isHidden = true
         servicesTable.isHidden = false
         backButton.isHidden = true
@@ -85,8 +85,13 @@ class SyncViewController: UIViewController {
         sharedValues = nil
     }
     
+    @IBAction func backAction(_ sender: UIButton) {
+        closeConnectionAndRestoreView()
+        scan()
+    }
+    
     @IBAction func syncAction(_ sender: UIButton) {
-        
+        manager?.sync()
     }
     
     private func setSelected(service: NetService) {
@@ -147,6 +152,31 @@ extension SyncViewController: UITableViewDelegate {
 }
 
 extension SyncViewController: SyncManagerDelegate {
+    func syncManagerDidStartSync() {
+        DispatchQueue.main.async { [weak self] in
+            self?.progressBar.isHidden = false
+            self?.progressBar.progress = 0.0
+        }
+    }
+    
+    func syncManagerDidSync(_ progress: Float) {
+        DispatchQueue.main.async { [weak self] in
+            self?.progressBar.progress = progress
+        }
+    }
+    
+    func syncManagerDidEndSync() {
+        DispatchQueue.main.async { [weak self] in
+            self?.progressBar.progress = 1.0
+        }
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (t) in
+            DispatchQueue.main.async { [weak self] in
+                self?.progressBar.isHidden = true
+                t.invalidate()
+            }
+        }
+    }
+    
     func syncManagerDidGetUpdate() {
         if let dict = manager?.sharedObjects {
             sharedKeys = []
@@ -161,6 +191,12 @@ extension SyncViewController: SyncManagerDelegate {
         }
         DispatchQueue.main.async {
             self.infoTable.reloadData()
+        }
+    }
+    
+    func syncManagerDidTerminate() {
+        DispatchQueue.main.async { [weak self] in
+            self?.closeConnectionAndRestoreView()
         }
     }
 }

@@ -46,4 +46,9 @@ protocol SharingObjectTableCellDelegate {
 
 protocol SyncManagerDelegate {
     func syncManagerDidGetUpdate()
+    func syncManagerDidTerminate()
+    
+    func syncManagerDidStartSync()
+    func syncManagerDidSync(_ progress: Float)
+    func syncManagerDidEndSync()
 }

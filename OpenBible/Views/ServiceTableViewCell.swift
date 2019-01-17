@@ -26,6 +26,7 @@ class ServiceTableViewCell: UITableViewCell {
     private func updateUI() {
         nameLabel?.text = name
         switcher?.isOn = select
+        nameLabel?.sizeToFit()
     }
     
     @IBAction func switched(_ sender: UISwitch) {

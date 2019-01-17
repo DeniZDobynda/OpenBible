@@ -3,14 +3,14 @@
     <entity name="Book" representedClassName=".Book" syncable="YES" codeGenerationType="category">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="number" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="chapters" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Chapter" inverseName="book" inverseEntity="Chapter" syncable="YES"/>
+        <relationship name="chapters" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Chapter" inverseName="book" inverseEntity="Chapter" syncable="YES"/>
         <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="books" inverseEntity="Module" syncable="YES"/>
     </entity>
     <entity name="Chapter" representedClassName=".Chapter" syncable="YES" codeGenerationType="category">
         <attribute name="number" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="chapters" inverseEntity="Book" syncable="YES"/>
-        <relationship name="inHistory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="History" inverseName="chapter" inverseEntity="History" syncable="YES"/>
-        <relationship name="verses" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Verse" inverseName="chapter" inverseEntity="Verse" syncable="YES"/>
+        <relationship name="inHistory" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="History" inverseName="chapter" inverseEntity="History" syncable="YES"/>
+        <relationship name="verses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Verse" inverseName="chapter" inverseEntity="Verse" syncable="YES"/>
     </entity>
     <entity name="History" representedClassName=".History" syncable="YES" codeGenerationType="category">
         <attribute name="added" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -20,7 +20,7 @@
     <entity name="Module" representedClassName=".Module" syncable="YES" codeGenerationType="category">
         <attribute name="key" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="module" inverseEntity="Book" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Book" inverseName="module" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Strong" representedClassName=".Strong" syncable="YES" codeGenerationType="category">
         <attribute name="meaning" attributeType="String" syncable="YES"/>
@@ -34,7 +34,7 @@
         <attribute name="selectionRange" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="chapter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chapter" inverseName="verses" inverseEntity="Chapter" syncable="YES"/>
-        <relationship name="inHistory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="History" inverseName="verses" inverseEntity="History" syncable="YES"/>
+        <relationship name="inHistory" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="History" inverseName="verses" inverseEntity="History" syncable="YES"/>
     </entity>
     <elements>
         <element name="Book" positionX="-54" positionY="18" width="128" height="105"/>

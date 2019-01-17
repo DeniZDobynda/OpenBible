@@ -12,12 +12,15 @@ enum BonjourServerState {
     case greeting
     case teaching
     case waiting
+    case inSync
+    
 }
 
 enum BonjourClientGreetingOption: String {
     case firstMeet = "hi, ready to get to know me?"
     case confirm = "yes"
     case ready = "ready to receive"
+    case finished = "are you ok?"
     case bye = "bye"
     //    case
 }
@@ -34,13 +37,11 @@ class SyncManager: NSObject {
     private var output: OutputStream?
     private var state: BonjourServerState?
     
-    private var occupiedRunLoop: RunLoop?
     
     func initialize() {
         service!.getInputStream(&input, outputStream: &output)
         input?.delegate = self
         output?.delegate = self
-        occupiedRunLoop = RunLoop.current
         input?.schedule(in: RunLoop.current, forMode: .default)
         output?.schedule(in: RunLoop.current, forMode: .default)
         state = .greeting
@@ -48,18 +49,16 @@ class SyncManager: NSObject {
         output?.open()
     }
 
-    func closeNetworkCommunication() {
+    func closeNetworkCommunication(_ sendingByeMessage: Bool = true) {
+        guard input != nil, output != nil else {return}
         print("closing")
-        send(greeting: .bye)
+        if sendingByeMessage {send(greeting: .bye)} else {delegate?.syncManagerDidTerminate()}
+        input?.delegate = nil
+        output?.delegate = nil
         input?.close()
         output?.close()
-        if let loop = occupiedRunLoop {
-            input?.remove(from: loop, forMode: .default)
-            output?.remove(from: loop, forMode: .default)
-            input = nil
-            output = nil
-            occupiedRunLoop = nil
-        }
+        input = nil
+        output = nil
     }
 
     private func parse(data: Data) {
@@ -82,9 +81,9 @@ class SyncManager: NSObject {
             }
         case .teaching:
             print("teaching")
-            // remake
             if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String:String] {
                 sharedObjects = dict
+                selectedObjects = [Bool](repeating: true, count: dict?.count ?? 0)
                 delegate?.syncManagerDidGetUpdate()
                 send(greeting: .confirm)
                 self.state = .waiting
@@ -92,17 +91,34 @@ class SyncManager: NSObject {
                 print("cannot interptret")
                 send(greeting: .bye)
             }
+        case .inSync:
+            parseSync(data: data)
         default: break
         }
     }
     
-    private func send(message: String) {
-        let p = ([UInt8])(message.utf8)
-        output?.write(p, maxLength: p.count)
+    func sync() {
+        guard let dict = sharedObjects, let select = selectedObjects, dict.count == select.count else {return}
+        send(greeting: .ready)
+        state = .inSync
+        delegate?.syncManagerDidStartSync()
+        let keys = Array(dict.keys)
+        var selectedKeys = [String]()
+        for i in 0..<keys.count {
+            if select[i] {
+                selectedKeys.append(keys[i])
+            }
+        }
+        send(keys: selectedKeys)
     }
     
-    private func send(greeting: BonjourClientGreetingOption) {
-        send(message: greeting.rawValue)
+    private func parseSync(data: Data) {
+        if let message = String(data: data, encoding: .utf8),
+            message == BonjourClientGreetingOption.finished.rawValue {
+            delegate?.syncManagerDidEndSync()
+            send(greeting: .confirm)
+            state = .waiting
+        }
     }
 }
 
@@ -128,6 +144,7 @@ extension SyncManager: StreamDelegate {
             } else {
                 print("Input = endEncountered\n")
             }
+            closeNetworkCommunication(false)
         case Stream.Event.hasSpaceAvailable:
             if(aStream === output) {
 //                print("output:hasSpaceAvailable\n")
@@ -156,20 +173,39 @@ extension SyncManager: StreamDelegate {
                     }
                     if(len > 0) {
                         parse(data: Data(bytes: buffer[0..<len]))
-                        //here it will check it out for the data sending from the server if it is greater than 0 means if there is a data means it will write
-//                        let messageFromServer = NSString(bytes: &buffer, length: buffer.count, encoding: String.Encoding.utf8.rawValue)
-//                        if messageFromServer == nil {
-//                            print("Network has been closed")
-//                            // v1.closeNetworkCommunication()
-//                        } else {
-//                            print("MessageFromServer = \(messageFromServer!)")
-//                        }
                     }
                 }
             }
             
         default:
             print("default block")
+        }
+    }
+}
+
+extension SyncManager {
+    private func send(message: String) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let p = ([UInt8])(message.utf8)
+            self.output?.write(p, maxLength: p.count)
+        }
+    }
+    
+    private func send(greeting: BonjourClientGreetingOption) {
+        send(message: greeting.rawValue)
+    }
+    
+    private func send(data: Data) {
+        let p = [UInt8](data)
+        output?.write(p, maxLength: p.count)
+    }
+    
+    private func send(keys: [String]) {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: keys, requiringSecureCoding: true)
+            send(data: data)
+        } catch  {
+            print("Sending shared data error: " + error.localizedDescription)
         }
     }
 }
