@@ -77,7 +77,7 @@ class VerseManager: Manager {
                     name.starts(with: t) {
                     bookNumber = Int(book.number)
                     chapterNumber = 1
-                    
+                    versesRanges = nil
                     return true
                 }
             }
@@ -90,8 +90,18 @@ class VerseManager: Manager {
         if let book = book1, let ch = book.chapters?.array, ch.count >= number {
             chapterNumber = number
         }
+        versesRanges = nil
     }
 
+    override func next() {
+        super.next()
+        versesRanges = nil
+    }
+    
+    override func previous() {
+        super.previous()
+        versesRanges = nil
+    }
 }
 
 extension VerseManager {
