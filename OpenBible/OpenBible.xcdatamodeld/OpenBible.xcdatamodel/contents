@@ -63,10 +63,10 @@
         <element name="Chapter" positionX="16.56640625" positionY="100.68359375" width="128" height="105"/>
         <element name="History" positionX="205.46484375" positionY="284.7421875" width="128" height="88"/>
         <element name="Module" positionX="143.546875" positionY="-154.07421875" width="128" height="90"/>
+        <element name="Page" positionX="-412.84765625" positionY="118.78125" width="128" height="105"/>
+        <element name="SpiritBook" positionX="-180.6640625" positionY="-236.25" width="128" height="135"/>
+        <element name="SpiritChapter" positionX="-344.4140625" positionY="-98.8359375" width="128" height="135"/>
         <element name="Strong" positionX="191.421875" positionY="46.375" width="128" height="105"/>
         <element name="Verse" positionX="-197.13671875" positionY="129.59765625" width="128" height="135"/>
-        <element name="Page" positionX="0" positionY="99" width="128" height="105"/>
-        <element name="SpiritBook" positionX="9" positionY="108" width="128" height="135"/>
-        <element name="SpiritChapter" positionX="18" positionY="117" width="128" height="135"/>
     </elements>
 </model>

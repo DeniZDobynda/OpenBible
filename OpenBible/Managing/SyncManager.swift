@@ -8,23 +8,6 @@
 
 import Foundation
 
-enum BonjourServerState {
-    case greeting
-    case teaching
-    case waiting
-    case inSync
-    
-}
-
-enum BonjourClientGreetingOption: String {
-    case firstMeet = "hi, ready to get to know me?"
-    case confirm = "yes"
-    case ready = "ready to receive"
-    case finished = "are you ok?"
-    case bye = "bye"
-    //    case
-}
-
 class SyncManager: NSObject {
     
     var service: NetService?
@@ -36,7 +19,12 @@ class SyncManager: NSObject {
     private var input: InputStream?
     private var output: OutputStream?
     private var state: BonjourServerState?
+    private var syncState: SyncingState = .none
     
+    private var coreSyncManager = CoreSyncManager()
+    
+    private var overallCount = 0
+    private var processedCount = 0
     
     func initialize() {
         service!.getInputStream(&input, outputStream: &output)
@@ -60,7 +48,7 @@ class SyncManager: NSObject {
         input = nil
         output = nil
     }
-
+    
     private func parse(data: Data) {
         guard var state = state else {return}
         if let message = String(data: data, encoding: .utf8),
@@ -118,7 +106,46 @@ class SyncManager: NSObject {
             delegate?.syncManagerDidEndSync()
             send(greeting: .confirm)
             state = .waiting
+            syncState = .none
+            resetProgress()
+            coreSyncManager.save()
         }
+        switch syncState {
+        case .none:
+            if let message = String(data: data, encoding: .utf8) {
+                if message == BonjourClientGreetingOption.finished.rawValue {
+                    delegate?.syncManagerDidEndSync()
+                    send(greeting: .confirm)
+                    state = .waiting
+                } else if message.matches(BonjourClientGreetingOption.regexForSync.rawValue) {
+                    let match = message.capturedGroups(withRegex: BonjourClientGreetingOption.regexForSync.rawValue)!
+                    let syncType = match[0]
+                    overallCount += Int(match[1])!
+                    if syncType == StrongIdentifier.oldTestament ||
+                        syncType == StrongIdentifier.newTestament {
+                        syncState = .strongs(syncType)
+                    }
+                }
+                //else some other identifier
+            }
+        case .strongs(let strongType):
+            if let message = String(data: data, encoding: .utf8) {
+                if message == BonjourClientGreetingOption.done.rawValue {
+                    syncState = .none
+                    if coreSyncManager.parseStrongs(strongType, from: data) {
+                        
+                    } else {
+                        print("Problem parsing strongs data..")
+                    }
+                    resetProgress()
+                }
+            } else {
+                delegate?.syncManagerDidSync(getNextProgress())
+            }
+        default:
+            break
+        }
+        
     }
 }
 
@@ -207,5 +234,20 @@ extension SyncManager {
         } catch  {
             print("Sending shared data error: " + error.localizedDescription)
         }
+    }
+}
+
+extension SyncManager {
+    private func getNextProgress() -> Float {
+        if overallCount != 0 {
+            processedCount += 1
+            return Float(processedCount) / Float(overallCount)
+        }
+        return 0.0
+    }
+    
+    private func resetProgress() {
+        overallCount = 0
+        processedCount = 0
     }
 }

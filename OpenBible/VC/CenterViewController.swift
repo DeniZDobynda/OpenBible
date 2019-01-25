@@ -125,7 +125,7 @@ class CenterViewController: UIViewController {
     // MARK: - Button actions
     
     @IBAction private func menuAction(_ sender: UIBarButtonItem) {
-        delegate?.toggleLeftPanel!()
+        toggleLeftMenu()
     }
     
     // MARK: - Private implementation
@@ -163,6 +163,10 @@ class CenterViewController: UIViewController {
     
     // MARK: - Selector functions
     
+    func toggleLeftMenu() {
+        delegate?.toggleLeftPanel!()
+    }
+    
     @objc private func previousChapter() {
         if !overlapped {
             coreManager?.previous()
@@ -185,13 +189,13 @@ class CenterViewController: UIViewController {
         switch sender.state {
         case .began:
             if !overlapped {
-                delegate?.toggleLeftPanel!()
+                toggleLeftMenu()
             }
         default:break
         }
     }
     
-    @objc private func scaled(sender: UIPinchGestureRecognizer) {
+    @objc func scaled(sender: UIPinchGestureRecognizer) {
         fontSize *= sqrt(sender.scale)
         sender.scale = 1.0
         loadTextManager(false)

@@ -146,7 +146,11 @@ extension SyncViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == servicesTable {
             tableView.deselectRow(at: indexPath, animated: true)
-            setSelected(service: services[indexPath.row])
+            if services.count > indexPath.row {
+                setSelected(service: services[indexPath.row])
+            } else {
+                scan()
+            }
         }
     }
 }

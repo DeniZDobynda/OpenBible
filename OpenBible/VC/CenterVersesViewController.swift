@@ -44,6 +44,7 @@ class CenterVersesViewController: CenterViewController {
                 search.text = nil
                 search.becomeFirstResponder()
             } else {
+                search.resignFirstResponder()
                 search.isHidden = true
                 search.text = nil
                 view.endEditing(true)
@@ -61,6 +62,7 @@ class CenterVersesViewController: CenterViewController {
     private var menuRect: CGRect?
     private var firstMenuRect: CGRect?
     private var timerScrollingMenu: Timer?
+    
     
     @IBAction func searchDidEnd(_ sender: SearchTextField) {
         if let text = sender.text {
@@ -136,12 +138,14 @@ class CenterVersesViewController: CenterViewController {
                 showMenu()
             }
         }
+        isInSearch = false
         delegate?.collapseSidePanels?()
         overlapped = false
         panInProgress = false
     }
     
     private func showMenu() {
+        isInSearch = false
         if let s = customTextView.getSelection(), let rect = menuRect {
             textToCopy = s
             becomeFirstResponder()
@@ -219,6 +223,13 @@ class CenterVersesViewController: CenterViewController {
 //        }
 //
 //    }
+    
+    override func scaled(sender: UIPinchGestureRecognizer) {
+        isInSearch = false
+        fontSize *= sqrt(sender.scale)
+        sender.scale = 1.0
+        loadTextManager(true)
+    }
 
     override func UIMenuControllerWillHide() {
         if !tapInProgress {
@@ -231,6 +242,7 @@ class CenterVersesViewController: CenterViewController {
         panInProgress = true
         tapInProgress = false
         menuRect = nil
+        isInSearch = false
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -241,6 +253,13 @@ class CenterVersesViewController: CenterViewController {
             self?.timerScrollingMenu = nil
             t.invalidate()
         }
+    }
+    
+    override func toggleLeftMenu() {
+        if isInSearch {
+            isInSearch = false
+        }
+        super.toggleLeftMenu()
     }
 }
 
