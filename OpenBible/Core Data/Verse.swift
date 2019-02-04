@@ -25,7 +25,7 @@ class Verse: NSManagedObject {
     
     var compound: String {
         if let t = text {
-            return " \(number) \(t)\n"
+            return " \(number) \(t)"
         }
         return " \(number)"
     }

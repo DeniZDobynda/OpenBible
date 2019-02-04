@@ -122,11 +122,11 @@ class VerseTextView: CustomTextView {
         
         let s = layoutManager.textStorage!.string
         var sub = String(s[..<s.index(s.startIndex, offsetBy:ixStart)])
-        var count = sub.indicesOf(string: "\n").count
+        var count = sub.indicesOf(string: "\r\n").count
 //        if boundingRectsForVerses?.1 != nil {
 //            count /= 2
 //        }
-        ixStart -= count
+        ixStart += count
 //        var charRange = layoutManager.characterRange(forGlyphRange: NSRange(ixStart - count..<ixEnd - count), actualGlyphRange: nil)
 //        while(charRange.lowerBound > 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.lowerBound - 1)])) {
 //            charRange.location -= 1
@@ -136,9 +136,9 @@ class VerseTextView: CustomTextView {
         
         sub = s[rangeCh.lowerBound - count..<rangeCh.upperBound - count]
         if boundingRectsForVerses?.1 != nil {
-            count += (sub.indicesOf(string: "\n").count - 1 ) / 2
+            count += (sub.indicesOf(string: "\r\n").count - 1)
         } else {
-            count += sub.indicesOf(string: "\n").count - 1
+            count += sub.indicesOf(string: "\r\n").count - 1
         }
         
 //        charRange.length -= count
@@ -146,7 +146,7 @@ class VerseTextView: CustomTextView {
 //            charRange.length += 1
 //            ixEnd += 1
 //        }
-        ixEnd -= count
+        ixEnd += count
         range = NSRange(ixStart...ixEnd)
         previousRange = range
         layoutManager.selectedRange = range

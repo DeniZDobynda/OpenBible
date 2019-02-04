@@ -46,7 +46,7 @@ class TextManager: NSObject {
 //             .baselineOffset : fontSize * 0.3,
 //             .foregroundColor : UIColor.gray.withAlphaComponent(0.7)]
 //
-        let nl = NSAttributedString(string: "\n", attributes: [.font:UIFont.systemFont(ofSize:fontSize / 5)])
+        let nl = NSAttributedString(string: "\n")//, attributes: [.font:UIFont.systemFont(ofSize:fontSize / 5)])
         var startRange = 0
 //        var lenghtOfStartingLine = 0
         for i in 0..<m {
@@ -79,9 +79,9 @@ class TextManager: NSObject {
             if m > 0 {
                 textStorage.append(nl)
 //                textStorage.append(nl)
-                startRange += 1
+//                startRange += 1
                 dividers.append(startRange)
-                startRange += 1
+                startRange += 2
             }
             while m < c {
                 let t1 = textToDisplayInFirst[m]/*NSMutableAttributedString(string: " ", attributes: font)
@@ -105,9 +105,9 @@ class TextManager: NSObject {
             if m > 0 {
                 textStorage.append(nl)
 //                textStorage.append(nl)
-                startRange += 1
+//                startRange += 1
                 dividers.append(startRange)
-                startRange += 1
+                startRange += 2
             }
             while m < c {
                 let t1 = textToDisplayInSecond[m]/*NSMutableAttributedString(string: " ", attributes: font)
@@ -123,7 +123,7 @@ class TextManager: NSObject {
                     //                    textStorage.append(nl)
                     
                     dividers.append(startRange)
-                    startRange += 1
+                    startRange += 2
                 }
                 m += 1
             }
