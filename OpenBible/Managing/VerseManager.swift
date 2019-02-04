@@ -13,6 +13,15 @@ class VerseManager: Manager {
     private var versesRanges: [Range<Int>]?
     var fontSize: CGFloat = AppDelegate.plistManager.getFontSize()
     
+    private var defaultModule: Module? {
+        if let m = try? Module.get(by: "kjv", from: context) {
+            return m
+        } else if let m = try? Module.get(by: "kjv-str", from: context) {
+            return m
+        }
+        return nil
+    }
+    
     func getVerses() -> ([NSAttributedString], [NSAttributedString]?) {
         fontSize = AppDelegate.plistManager.getFontSize()
         if module1 == nil {
@@ -72,6 +81,28 @@ class VerseManager: Manager {
     func setBook(by title: String) -> Bool {
         let t = title.lowercased()
         if let books = module1.books?.array as? [Book] {
+            for book in books {
+                if let name = book.name?.lowercased(),
+                    name.starts(with: t) {
+                    bookNumber = Int(book.number)
+                    chapterNumber = 1
+                    versesRanges = nil
+                    return true
+                }
+            }
+        }
+        if let books = module2?.books?.array as? [Book] {
+            for book in books {
+                if let name = book.name?.lowercased(),
+                    name.starts(with: t) {
+                    bookNumber = Int(book.number)
+                    chapterNumber = 1
+                    versesRanges = nil
+                    return true
+                }
+            }
+        }
+        if let books = defaultModule?.books?.array as? [Book] {
             for book in books {
                 if let name = book.name?.lowercased(),
                     name.starts(with: t) {

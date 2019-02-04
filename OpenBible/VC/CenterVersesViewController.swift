@@ -9,7 +9,7 @@
 import UIKit
 
 class CenterVersesViewController: CenterViewController {
-
+    
     var verseTextManager: VerseTextManager?
     var verseManager: VerseManager?
     var verseTextView: VerseTextView! { didSet{ verseTextView?.delegate = self }}
@@ -92,15 +92,15 @@ class CenterVersesViewController: CenterViewController {
     }
     
     override func loadTextManager(_ forced: Bool = true) {
-//        var first: [String] = []
-//        var second: [String] = []
-//        let texts = verseTextManager?.getTwoStrings()
-//        if let f = texts?.0 {
-//            first = f
-//        }
-//        if let s = texts?.1 {
-//            second = s
-//        }
+        //        var first: [String] = []
+        //        var second: [String] = []
+        //        let texts = verseTextManager?.getTwoStrings()
+        //        if let f = texts?.0 {
+        //            first = f
+        //        }
+        //        if let s = texts?.1 {
+        //            second = s
+        //        }
         if forced, let verses = verseManager?.getVerses() {
             verseTextManager = VerseTextManager(verses: verses)
             if let m = coreManager {
@@ -163,8 +163,11 @@ class CenterVersesViewController: CenterViewController {
     }
     
     private func parseSearch(text: String) {
-        if let match = text.capturedGroups(withRegex: String.regexForBookRefference),
-            match.count > 0 {
+        if text.matches(String.regexForChapter) {
+            let m = text.capturedGroups(withRegex: String.regexForChapter)!
+            verseManager?.setChapter(number: Int(m[0])!)
+        } else if text.matches(String.regexForBookRefference) {
+            let match = text.capturedGroups(withRegex: String.regexForBookRefference)!
             if let b = verseManager?.setBook(by: match[0]), b,
                 match.count > 1,
                 let n = Int(match[1]) {
@@ -176,53 +179,60 @@ class CenterVersesViewController: CenterViewController {
                     verseManager?.setVerses(from: v.map {$0[0]})
                 }
             }
+        } else if text.matches(String.regexForVerses) {
+            let verseMatch = text.replacingOccurrences(of: " ", with: "").matches(withRegex: String.regexForVerses)!
+            verseManager?.setChapter(number: Int(verseMatch[0][0])!)
+            let v = verseMatch[1...]
+            if v.count > 0 {
+                verseManager?.setVerses(from: v.map {$0[0]})
+            }
         }
         loadTextManager()
     }
     
-//    private func parseSearch(text: String) {
-//        guard text.count > 0,
-//            let matched = text.capturedGroups(withRegex: String.regexForBookRefference)
-//            else {return}
-//        let book = matched[0]
-//        _ = verseManager?.setBook(byTitle: book)
-//
-//        if matched.count > 1, let number = Int(matched[1]) {
-//            verseManager?.setChapter(number: number)
-//        }
-//        loadTextManager()
-//        if matched.count > 2 {
-//            verseTextView.executeRightAfterDrawingOnce = {
-//                if let v = Int(matched[2]), let rect = self.verseTextView.getRectOf(v) {
-//                    var r = rect
-//                    r.size.height = self.scrollView.bounds.height
-//                    let o = self.scrollView.convert(r.origin, from: self.verseTextView)
-//                    self.scrollView.setContentOffset(o, animated: true)
-//                    if matched.count > 3,
-//                        let last = matched.last,
-//                        let lastVerse = Int(last) {
-//                        self.verseTextView.highlight(v, throught: lastVerse)
-//                    }else {
-//                        self.verseTextView.highlight(v)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    //    private func parseSearch(text: String) {
+    //        guard text.count > 0,
+    //            let matched = text.capturedGroups(withRegex: String.regexForBookRefference)
+    //            else {return}
+    //        let book = matched[0]
+    //        _ = verseManager?.setBook(byTitle: book)
+    //
+    //        if matched.count > 1, let number = Int(matched[1]) {
+    //            verseManager?.setChapter(number: number)
+    //        }
+    //        loadTextManager()
+    //        if matched.count > 2 {
+    //            verseTextView.executeRightAfterDrawingOnce = {
+    //                if let v = Int(matched[2]), let rect = self.verseTextView.getRectOf(v) {
+    //                    var r = rect
+    //                    r.size.height = self.scrollView.bounds.height
+    //                    let o = self.scrollView.convert(r.origin, from: self.verseTextView)
+    //                    self.scrollView.setContentOffset(o, animated: true)
+    //                    if matched.count > 3,
+    //                        let last = matched.last,
+    //                        let lastVerse = Int(last) {
+    //                        self.verseTextView.highlight(v, throught: lastVerse)
+    //                    }else {
+    //                        self.verseTextView.highlight(v)
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
     
-//    private func highlight(_ rect: CGRect) {
-//        var r = rect
-//        r.size.width = scrollView.bounds.width
-//        let newView = UIView(frame: r)
-//        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
-//        scrollView.addSubview(newView)
-//        UIView.animate(withDuration: 1.0, delay: 1, animations: {
-//            newView.layer.opacity = 0
-//        }) { (_) in
-//            newView.removeFromSuperview()
-//        }
-//
-//    }
+    //    private func highlight(_ rect: CGRect) {
+    //        var r = rect
+    //        r.size.width = scrollView.bounds.width
+    //        let newView = UIView(frame: r)
+    //        newView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+    //        scrollView.addSubview(newView)
+    //        UIView.animate(withDuration: 1.0, delay: 1, animations: {
+    //            newView.layer.opacity = 0
+    //        }) { (_) in
+    //            newView.removeFromSuperview()
+    //        }
+    //
+    //    }
     
     override func scaled(sender: UIPinchGestureRecognizer) {
         isInSearch = false
@@ -230,7 +240,7 @@ class CenterVersesViewController: CenterViewController {
         sender.scale = 1.0
         loadTextManager(true)
     }
-
+    
     override func UIMenuControllerWillHide() {
         if !tapInProgress {
             verseTextView.clearSelection()
