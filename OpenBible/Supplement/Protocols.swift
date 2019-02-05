@@ -48,7 +48,8 @@ protocol SyncManagerDelegate {
     func syncManagerDidGetUpdate()
     func syncManagerDidTerminate()
     
-    func syncManagerDidStartSync()
+    func syncManagerDidStartSync(at: Int)
     func syncManagerDidSync(_ progress: Float)
-    func syncManagerDidEndSync()
+    func syncManagerDidEndSync(at: Int, with: Bool)
+    func syncManagerDidFinished()
 }

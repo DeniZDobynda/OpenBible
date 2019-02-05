@@ -198,7 +198,7 @@ extension NSAttributedString: StrongsLinkEmbeddable {
     }
     
     func embedStrongs(to link: String, using size: CGFloat, linking: Bool = true) -> NSAttributedString {
-        let newMAString = NSMutableAttributedString()
+        let newMAString = NSMutableAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: size)])
 //        var colorAttribute: [NSAttributedString.Key: Any]?
         let upperAttribute: [NSAttributedString.Key: Any] =
             [NSAttributedString.Key.baselineOffset : size * 0.333,
@@ -237,11 +237,21 @@ extension NSAttributedString: StrongsLinkEmbeddable {
             }
             i += 1
         }
-        if !newMAString.string.hasSuffix("\n ") {
-            newMAString.append(NSAttributedString(string: "\n"))
-        }
+//        if !newMAString.string.hasSuffix("\n ") {
+            newMAString.append(NSAttributedString(string: "\r\n"))
+//        }
         return newMAString
     }
     
     
+}
+
+extension Data {
+    static func from(chunks: [Data]) -> Data {
+        var d = Data()
+        for data in chunks {
+            d.append(data)
+        }
+        return d
+    }
 }

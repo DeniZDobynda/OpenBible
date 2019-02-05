@@ -13,7 +13,7 @@ class CustomTextView: UIView {
     var textManager: TextManager!
     var delegate: TextViewDelegate?
     
-    internal var layoutManager: CustomDebugLayoutManager { return textManager.layoutManager as! CustomDebugLayoutManager }
+    internal var layoutManager: CustomDebugLayoutManager { return textManager.layoutManager }
     internal var textContainer: NSTextContainer! { return textManager!.textContainer }
     internal var separators: [Character] = [" ", ".", ",", "?", ":", ";", "\n", "!", "(", ")"]
     internal var previousRange: NSRange?
@@ -77,6 +77,35 @@ class CustomTextView: UIView {
             }
         }
         return nil
+    }
+    
+    func getSelectionLink(at point: CGPoint) -> String? {
+        var f: CGFloat = 0
+        let ixStart = layoutManager.glyphIndex(for: point, in: textContainer, fractionOfDistanceThroughGlyph: &f)
+        
+        let s = layoutManager.textStorage!.string
+        let sub = String(s[..<s.index(s.startIndex, offsetBy:ixStart)])
+        let count = sub.indicesOf(string: "\r\n").count
+        let charRange = layoutManager.characterRange(forGlyphRange: NSRange(ixStart - count..<ixStart - count + 1), actualGlyphRange: nil)
+        let link = layoutManager.textStorage!.attributedSubstring(from: charRange).attribute(.link, at: 0, effectiveRange: nil) as? String
+        return link
+        /*
+        while(charRange.lowerBound > 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.lowerBound - 1)])) {
+            charRange.location -= 1
+            charRange.length += 1
+            ixStart -= 1
+        }
+        sub = String(s[s.index(s.startIndex, offsetBy: charRange.lowerBound)..<s.index(s.startIndex, offsetBy: charRange.upperBound)])
+        count = sub.indicesOf(string: "\r\n").count
+        charRange.length -= count
+        while(charRange.upperBound < s.count - 1 && !separators.contains(s[s.index(s.startIndex, offsetBy: charRange.upperBound + 1)])) {
+            charRange.length += 1
+            ixEnd += 1
+        }
+        range = NSRange(ixStart...ixEnd)
+        previousRange = range
+        layoutManager.selectedRange = range
+ */
     }
     
     func clearSelection() {

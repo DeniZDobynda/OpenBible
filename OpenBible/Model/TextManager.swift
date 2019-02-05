@@ -14,7 +14,7 @@ class TextManager: NSObject {
     var textToDisplayInSecond: [NSAttributedString]
     
     var textStorage: NSTextStorage!
-    var layoutManager: NSLayoutManager!
+    var layoutManager: CustomDebugLayoutManager!
     var textContainer: TwoColumnContainer!
     var fontSize: CGFloat = 30
     
@@ -137,6 +137,7 @@ class TextManager: NSObject {
         let (ranges, dividers) = placeText(into: &textStorage)
         
         layoutManager = CustomDebugLayoutManager()
+        layoutManager.width = bounds.width
         layoutManager.allowsNonContiguousLayout = false
         let containerSize = CGSize(width: bounds.width, height: .greatestFiniteMagnitude)
         textContainer = TwoColumnContainer(size: containerSize)

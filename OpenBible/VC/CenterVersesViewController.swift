@@ -63,6 +63,7 @@ class CenterVersesViewController: CenterViewController {
     private var firstMenuRect: CGRect?
     private var timerScrollingMenu: Timer?
     
+    private weak var presentedVC: UIViewController?
     
     @IBAction func searchDidEnd(_ sender: SearchTextField) {
         if let text = sender.text {
@@ -82,13 +83,22 @@ class CenterVersesViewController: CenterViewController {
         search.theme.bgColor = UIColor (red: 0.9, green: 0.9, blue: 0.9, alpha: 0.9)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(touch(sender: )))
-        tap.numberOfTapsRequired = 1
+        tap.numberOfTapsRequired = 2
         tap.numberOfTouchesRequired = 1
         scrollView.addGestureRecognizer(tap)
+        
+        let tapLink = UITapGestureRecognizer(target: self, action: #selector(touchLink(sender: )))
+        tapLink.numberOfTapsRequired = 1
+        tapLink.numberOfTouchesRequired = 1
+        scrollView.addGestureRecognizer(tapLink)
+        
+        
+//        Strong.printStats()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        Strong.printStats()
     }
     
     override func loadTextManager(_ forced: Bool = true) {
@@ -126,7 +136,7 @@ class CenterVersesViewController: CenterViewController {
         if sender.state == .ended && !panInProgress {
             if !overlapped, let rect = verseTextView.selectVerse(at: sender.location(in: scrollView)) {
                 tapInProgress = true
-                
+
                 switch firstMenuRect {
                 case .none:
                     menuRect = rect
@@ -142,6 +152,15 @@ class CenterVersesViewController: CenterViewController {
         delegate?.collapseSidePanels?()
         overlapped = false
         panInProgress = false
+    }
+    
+    @objc private func touchLink(sender: UITapGestureRecognizer) {
+        let link = verseTextView.getSelectionLink(at: sender.location(in: verseTextView))
+        print(link)
+        if let text = link {
+            let start = text.index(text.startIndex, offsetBy: AppDelegate.URLServerRoot.count)
+            openedURL(with: text[start...].split(separator: "/").map{String($0)})
+        }
     }
     
     private func showMenu() {
@@ -277,7 +296,15 @@ class CenterVersesViewController: CenterViewController {
 extension CenterVersesViewController: URLDelegate {
     func openedURL(with parameters: [String]) {
         if parameters.count > 1 {
-            
+            switch parameters[0] {
+            case "Hebrew", "Greek":
+                let vc = UIStoryboard.main().instantiateViewController(withIdentifier: "StrongVC") as! StrongViewController
+                vc.identifier = parameters[0]
+                vc.numbers = parameters[1].split(separator: "+").map {Int(String($0))!}
+                present(vc, animated: true, completion: nil)
+                presentedVC = vc
+            default: break
+            }
         } else {
             parseSearch(text: parameters[0])
         }

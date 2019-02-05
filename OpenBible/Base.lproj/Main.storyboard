@@ -215,6 +215,62 @@
             </objects>
             <point key="canvasLocation" x="-14" y="-27"/>
         </scene>
+        <!--Strong View Controller-->
+        <scene sceneID="HPY-ca-juT">
+            <objects>
+                <viewController storyboardIdentifier="StrongVC" id="5ZU-LU-4ds" customClass="StrongViewController" customModule="OpenBible" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Avb-bF-e2G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zlf-r7-vYx">
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Q7p-78-Pra">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="684"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hebrew" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxk-EK-luw">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1Ya-uW-Ksi">
+                                                <rect key="frame" x="0.0" y="40.333333333333314" width="375" height="643.66666666666674"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlC-AS-fuL">
+                                        <rect key="frame" x="0.0" y="704" width="375" height="30"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="closeAction:" destination="5ZU-LU-4ds" eventType="touchUpInside" id="lIs-dB-nEy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zlf-r7-vYx" firstAttribute="leading" secondItem="cTa-7z-rIr" secondAttribute="leading" id="4NF-tG-5rJ"/>
+                            <constraint firstItem="zlf-r7-vYx" firstAttribute="top" secondItem="cTa-7z-rIr" secondAttribute="top" id="55u-HJ-kBe"/>
+                            <constraint firstItem="cTa-7z-rIr" firstAttribute="bottom" secondItem="zlf-r7-vYx" secondAttribute="bottom" id="Vip-kO-yhN"/>
+                            <constraint firstItem="cTa-7z-rIr" firstAttribute="trailing" secondItem="zlf-r7-vYx" secondAttribute="trailing" id="dZ4-LE-o7E"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cTa-7z-rIr"/>
+                    </view>
+                    <connections>
+                        <outlet property="mainTextView" destination="1Ya-uW-Ksi" id="7gz-AM-auH"/>
+                        <outlet property="titleLabel" destination="Pxk-EK-luw" id="f02-AQ-npA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="339-gA-ulV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1141" y="364"/>
+        </scene>
         <!--History View Controller-->
         <scene sceneID="W02-eU-bMz">
             <objects>
@@ -562,8 +618,14 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Sg-Y9g">
-                                                                            <rect key="frame" x="282.66666666666669" y="1.3333333333333321" width="54.333333333333314" height="30.999999999999996"/>
+                                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NXD-OZ-Iqc">
+                                                                            <rect key="frame" x="282.66666666666669" y="7" width="52.333333333333314" height="20"/>
+                                                                        </activityIndicatorView>
+                                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="done" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-pT-4xm">
+                                                                            <rect key="frame" x="335" y="-20.666666666666664" width="0.0" height="75"/>
+                                                                        </imageView>
+                                                                        <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmz-Sg-Y9g">
+                                                                            <rect key="frame" x="335" y="1.3333333333333321" width="2" height="30.999999999999996"/>
                                                                             <connections>
                                                                                 <action selector="switched:" destination="PjN-ir-1ks" eventType="valueChanged" id="N0O-5Y-CGP"/>
                                                                             </connections>
@@ -580,7 +642,9 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
+                                                            <outlet property="activity" destination="NXD-OZ-Iqc" id="ehT-XE-nW5"/>
                                                             <outlet property="nameLabel" destination="0vI-mc-MeA" id="Rl3-X1-NrL"/>
+                                                            <outlet property="statusImageView" destination="xUW-pT-4xm" id="AaJ-jw-HEq"/>
                                                             <outlet property="switcher" destination="Xmz-Sg-Y9g" id="ddu-dS-F2V"/>
                                                         </connections>
                                                     </tableViewCell>
@@ -637,6 +701,7 @@
     </scenes>
     <resources>
         <image name="book" width="75" height="75"/>
+        <image name="done" width="75" height="75"/>
         <image name="load" width="75" height="75"/>
         <image name="menu" width="75" height="75"/>
         <image name="search" width="75" height="75"/>

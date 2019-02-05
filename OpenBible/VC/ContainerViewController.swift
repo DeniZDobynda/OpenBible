@@ -115,7 +115,7 @@ extension ContainerViewController:CenterViewControllerDelegate {
   }
 }
 
-private extension UIStoryboard {
+extension UIStoryboard {
   
   static func main() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
   

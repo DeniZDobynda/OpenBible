@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum SyncStatus {
+    case notStarted
+    case started
+    case success
+    case failure
+}
+
 class SyncViewController: UIViewController {
 
     private var type = "_thedenizbiblesync._tcp."
@@ -18,6 +25,7 @@ class SyncViewController: UIViewController {
     private var sharedValues: [String]?
     private var browser = Bonjour()
     private let refreshControl = UIRefreshControl()
+    private var statuses = [SyncStatus]()
     
     
     @IBOutlet private weak var servicesTable: UITableView!
@@ -25,6 +33,7 @@ class SyncViewController: UIViewController {
     @IBOutlet private weak var progressBar: UIProgressView!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var syncButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,10 +92,12 @@ class SyncViewController: UIViewController {
         syncButton.isHidden = true
         sharedKeys = nil
         sharedValues = nil
+        statuses = []
     }
     
     @IBAction func backAction(_ sender: UIButton) {
         closeConnectionAndRestoreView()
+        progressBar.isHidden = true
         scan()
     }
     
@@ -133,6 +144,7 @@ extension SyncViewController: UITableViewDataSource {
                 c.select = true
                 c.index = indexPath.row
                 c.delegate = self
+                c.status = statuses[indexPath.row]
             }
             return cell
         }
@@ -156,10 +168,12 @@ extension SyncViewController: UITableViewDelegate {
 }
 
 extension SyncViewController: SyncManagerDelegate {
-    func syncManagerDidStartSync() {
+    func syncManagerDidStartSync(at index: Int) {
         DispatchQueue.main.async { [weak self] in
             self?.progressBar.isHidden = false
             self?.progressBar.progress = 0.0
+            self?.statuses[index] = .started
+            self?.infoTable.reloadData()
         }
     }
     
@@ -169,13 +183,35 @@ extension SyncViewController: SyncManagerDelegate {
         }
     }
     
-    func syncManagerDidEndSync() {
+    func syncManagerDidEndSync(at index: Int, with status: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.progressBar.progress = 1.0
-        }
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (t) in
-            DispatchQueue.main.async { [weak self] in
+            self?.statuses[index] = status ? .success : .failure
+            self?.infoTable.reloadData()
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (t) in
                 self?.progressBar.isHidden = true
+                t.invalidate()
+            }
+        }
+    }
+    
+    func syncManagerDidFinished() {
+        DispatchQueue.main.async { [weak self] in
+            if self != nil {
+                for i in 0..<self!.statuses.count {
+                    if self!.statuses[i] == .notStarted {
+                       self!.statuses[i] = .failure
+                    }
+                }
+                self!.infoTable.reloadData()
+            }
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (t) in
+                if self != nil {
+                    for i in 0..<self!.statuses.count {
+                        self!.statuses[i] = .notStarted
+                    }
+                    self!.infoTable.reloadData()
+                }
                 t.invalidate()
             }
         }
@@ -188,6 +224,7 @@ extension SyncViewController: SyncManagerDelegate {
             for (key, value) in dict {
                 sharedKeys!.append(key)
                 sharedValues!.append(value)
+                statuses.append(.notStarted)
             }
         } else {
             sharedValues = nil

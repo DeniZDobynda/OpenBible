@@ -31,7 +31,7 @@ class VerseTextManager: TextManager {
                 r1.append(currentStartPoint..<endpoint)
 //                textToDisplayInFirst.append(verses.0[i])
                 currentStartPoint = endpoint// + 1
-                if let secondVerse = verses.1?[i] {
+                if verses.1 != nil, i < verses.1!.count, let secondVerse = verses.1?[i] {
                     let endpoint = secondVerse.string.count + currentStartPoint
                     r2.append(currentStartPoint..<endpoint)
 //                    textToDisplayInSecond.append(secondVerse)

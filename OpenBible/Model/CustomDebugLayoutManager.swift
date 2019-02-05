@@ -12,6 +12,7 @@ class CustomDebugLayoutManager: NSLayoutManager {
     
     var selectedRange: NSRange?
     var selectionColor: UIColor?
+    var width: CGFloat!
     
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         self.enumerateLineFragments(forGlyphRange:NSMakeRange(0, self.numberOfGlyphs)) {
@@ -41,4 +42,22 @@ class CustomDebugLayoutManager: NSLayoutManager {
         }
     }
     
+    override func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+        super.drawGlyphs(forGlyphRange: glyphsToShow, at: origin)
+        if let twoCol = textContainers[0] as? TwoColumnContainer {
+            
+        }
+    }
+    
+    override func glyphIndex(for point: CGPoint, in container: NSTextContainer) -> Int {
+        if let twoConlumn = container as? TwoColumnContainer, twoConlumn.manager!.dividers.count == 0  || point.y < width / 2 {
+            let index = super.glyphIndex(for: point, in: container)
+            print(index)
+            return index
+        } else {
+            let index = super.glyphIndex(for: point, in: container)
+            print(index)
+            return index
+        }
+    }
 }

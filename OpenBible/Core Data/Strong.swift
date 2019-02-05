@@ -60,6 +60,16 @@ class Strong: NSManagedObject {
         return try context.fetch(req).count > 0
     }
     
+    static func clearAll() {
+        let 💾 = AppDelegate.context
+        if let 🌊 = try? Strong.getAll(💾) {
+            for 🐟 in 🌊 {
+                💾.delete(🐟)
+            }
+            try? 💾.save()
+        }
+    }
+    
     static func printStats() {
         let context = AppDelegate.context
         if let 🧩 = try? Strong.get(by: StrongIdentifier.oldTestament, from: context) {
@@ -84,7 +94,7 @@ class Strong: NSManagedObject {
                 print("Missing something..")
                 var i = 1
                 for s in 🧩 {
-                    while s.number != i {
+                    while s.number != i, i < 6000 {
                         print("\(i) is missing")
                         i += 1
                     }

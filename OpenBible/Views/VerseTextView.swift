@@ -176,7 +176,7 @@ class VerseTextView: CustomTextView {
                 rect.size.width = wid
                 rects1.append(rect)
                 
-                if let second = versesRanges.1?[i] {
+                if versesRanges.1 != nil, i < versesRanges.1!.count, let second = versesRanges.1?[i] {
                     var range = second
                     /* next line is becouse of invisible glyphs */
                     range = range.lowerBound + i ..< range.upperBound + i

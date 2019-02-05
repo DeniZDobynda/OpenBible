@@ -13,6 +13,10 @@ class VerseManager: Manager {
     private var versesRanges: [Range<Int>]?
     var fontSize: CGFloat = AppDelegate.plistManager.getFontSize()
     
+    private var currentTestament: String {
+        return bookNumber <= 39 ? StrongIdentifier.oldTestament : StrongIdentifier.newTestament
+    }
+    
     private var defaultModule: Module? {
         if let m = try? Module.get(by: "kjv", from: context) {
             return m
@@ -35,7 +39,16 @@ class VerseManager: Manager {
         if var verses = chapter1?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            let attributed = verses.map { return $0.attributedCompound(size: fontSize) }
+            
+            var attributed: [NSAttributedString] = []//verses.map { return $0.attributedCompound(size: fontSize) }
+            for verse in verses {
+                let attr = verse.attributedCompound(size: fontSize)
+                if attr.strongNumbersAvailable {
+                    attributed.append(attr.embedStrongs(to: AppDelegate.URLServerRoot + currentTestament + "/", using: fontSize, linking: true))
+                } else {
+                    attributed.append(attr)
+                }
+            }
             if let ranges = versesRanges {
                 v1 = []
                 for range in ranges {
@@ -52,7 +65,16 @@ class VerseManager: Manager {
         if var verses = chapter2?.verses?.array as? [Verse],
             verses.count > 0 {
             verses.sort { $0.number < $1.number }
-            let attributed = verses.map { return $0.attributedCompound(size: fontSize) }
+//            let attributed = verses.map { return $0.attributedCompound(size: fontSize) }
+            var attributed: [NSAttributedString] = []//verses.map { return $0.attributedCompound(size: fontSize) }
+            for verse in verses {
+                let attr = verse.attributedCompound(size: fontSize)
+                if attr.strongNumbersAvailable {
+                    attributed.append(attr.embedStrongs(to: AppDelegate.URLServerRoot + currentTestament + "/", using: fontSize, linking: true))
+                } else {
+                    attributed.append(attr)
+                }
+            }
             if let ranges = versesRanges {
                 v2 = []
                 for range in ranges {
